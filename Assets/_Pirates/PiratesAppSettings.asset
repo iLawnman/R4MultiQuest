@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 068ab0a662b06456491e756a3835c20e, type: 3}
+  m_Name: PiratesAppSettings
+  m_EditorClassIdentifier: 
+  applicationName: "\u041F\u0438\u0440\u0430\u0442\u0441\u043A\u0438\u0439"
+  companyName: Innovative Marketing
+  applicationVersion: 2.10
+  applicationBuild: 210
+  bundleId: Pirates
+  category: Entertament
+  icon: pirates.jpg
+  GoogleSheet: 1-P_YElXhGf6H2NfwVIPiq8xQV55LbWsCmF_D4cc8EFw
+  GoogleSheetQuestTable: 1114989834
+  GoogleSheetAnswersTable: 578491861
+  GoogleSheetResourcesTable: 398153447
+  RemoteSettings: 201025029
+  AddressableKey: Pirates

@@ -1,0 +1,54 @@
+using System;
+using System.Collections;
+using UnityEngine;
+using UnityEngine.UI;
+using VContainer;
+
+public partial class GameActions
+{
+    public static Action<string, string> OnShowStartQuestPanel;
+    public static Action OffStartQuestPanel;
+}
+
+public class MainCanvasController : MonoBehaviour
+{
+    [SerializeField] private GameObject splashPanel;
+    [SerializeField] private GameObject introScreenPanel;
+    [SerializeField] private GameObject questPanel;
+    [SerializeField] private GameObject overlayPanel;
+    private void OnEnable()
+    {
+        GameActions.OnShowStartQuestPanel += ShowStartQuestPanel;
+    }
+
+    private void OnDisable()
+    {
+        GameActions.OnShowStartQuestPanel -= ShowStartQuestPanel;
+    }
+    
+    private void ShowStartQuestPanel(string signImag, string findTxt)
+    {
+       
+    }
+
+    public void ShowLoadAskPanel()
+    {
+        
+    }
+
+    public void SplashPanelSetActive(bool state)
+    {
+    }
+}
+
+public class StartScreen
+{
+     public string findTxt;
+     public Sprite signImg;
+
+     public StartScreen(Sprite signImage, string s)
+    {
+        signImg = signImage; 
+        findTxt = s;
+    }
+}

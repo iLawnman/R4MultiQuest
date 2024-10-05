@@ -16,12 +16,12 @@ MonoBehaviour:
   companyName: Innavative Marketing
   applicationVersion: 2.20
   applicationBuild: 220
-  bundleId: 
-  category: 
-  icon: 
-  GoogleSheet: 
-  GoogleSheetQuestTable: 
-  GoogleSheetAnswersTable: 
-  GoogleSheetResourcesTable: 
-  RemoteSettings: 
+  bundleId: neSkazka
+  category: Entertament
+  icon: neSkazka.jpg
+  GoogleSheet: 1gY76UXTpesVMNB1W5Zb9GaeH_zx6vVQ0cFY9suJHy78
+  GoogleSheetQuestTable: 182447128
+  GoogleSheetAnswersTable: 1754141130
+  GoogleSheetResourcesTable: 2002118978
+  RemoteSettings: 354898083
   AddressableKey: neSkazka

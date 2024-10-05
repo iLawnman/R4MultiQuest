@@ -1,0 +1,169 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 848409ee8ba454f42a5ddff137688a27, type: 3}
+  m_Name: PiratesReferenceImageLibrary
+  m_EditorClassIdentifier: 
+  m_GuidLow: 5727827540557064576
+  m_GuidHigh: 9738960685181143977
+  m_DataStore:
+    m_Storage: []
+  m_Images:
+  - m_SerializedGuid:
+      m_GuidLow: 5644808438898517509
+      m_GuidHigh: 9163091636575599793
+    m_SerializedTextureGuid:
+      m_GuidLow: 4956803917148850402
+      m_GuidHigh: 12902841056811881624
+    m_Size: {x: 0.2, y: 0.2}
+    m_SpecifySize: 1
+    m_Name: tgid0000
+    m_Texture: {fileID: 2800000, guid: 7eec08e21ae644ca98149938941910b3, type: 3}
+  - m_SerializedGuid:
+      m_GuidLow: 4775415366217727670
+      m_GuidHigh: 5563330976499882650
+    m_SerializedTextureGuid:
+      m_GuidLow: 15320811030532130949
+      m_GuidHigh: 3670577897569126745
+    m_Size: {x: 0.2, y: 0.2}
+    m_SpecifySize: 1
+    m_Name: tgid0002
+    m_Texture: {fileID: 2800000, guid: 89c108857475d49e590902792683f032, type: 3}
+  - m_SerializedGuid:
+      m_GuidLow: 5400893053958595770
+      m_GuidHigh: 14991815823954684856
+    m_SerializedTextureGuid:
+      m_GuidLow: 15290502762552901913
+      m_GuidHigh: 3560659330394817273
+    m_Size: {x: 0.2, y: 0.2}
+    m_SpecifySize: 1
+    m_Name: tgid0003
+    m_Texture: {fileID: 2800000, guid: ff184119c73fd432f9025dbacb006a31, type: 3}
+  - m_SerializedGuid:
+      m_GuidLow: 4726983628565062493
+      m_GuidHigh: 1693197563743561401
+    m_SerializedTextureGuid:
+      m_GuidLow: 14186464323567847943
+      m_GuidHigh: 2024950639530380539
+    m_Size: {x: 0.2, y: 0.2}
+    m_SpecifySize: 1
+    m_Name: tgid0004
+    m_Texture: {fileID: 2800000, guid: a1038a077223c4e0fb8ce8c4e0111a1c, type: 3}
+  - m_SerializedGuid:
+      m_GuidLow: 5345132703913913549
+      m_GuidHigh: 10912824175823658373
+    m_SerializedTextureGuid:
+      m_GuidLow: 10733300941733191974
+      m_GuidHigh: 13767103317863877720
+    m_Size: {x: 0.2, y: 0.2}
+    m_SpecifySize: 1
+    m_Name: tgid0005
+    m_Texture: {fileID: 2800000, guid: cb5f6126585694f458cc60bf86930ebf, type: 3}
+  - m_SerializedGuid:
+      m_GuidLow: 4953798387346355664
+      m_GuidHigh: 10661211386765842854
+    m_SerializedTextureGuid:
+      m_GuidLow: 12989895079096511872
+      m_GuidHigh: 694171753906087865
+    m_Size: {x: 0.2, y: 0.2}
+    m_SpecifySize: 1
+    m_Name: tgid0006
+    m_Texture: {fileID: 2800000, guid: 43246d8060c0b445b9a7ae448831a209, type: 3}
+  - m_SerializedGuid:
+      m_GuidLow: 5061510064771346277
+      m_GuidHigh: 1529221689575949503
+    m_SerializedTextureGuid:
+      m_GuidLow: 11852511303719551112
+      m_GuidHigh: 15146416632449940587
+    m_Size: {x: 0.2, y: 0.2}
+    m_SpecifySize: 1
+    m_Name: tgid0007
+    m_Texture: {fileID: 2800000, guid: c2818088943ba47c6b3c3f95ade132d2, type: 3}
+  - m_SerializedGuid:
+      m_GuidLow: 4635530721054564643
+      m_GuidHigh: 4822924056714987657
+    m_SerializedTextureGuid:
+      m_GuidLow: 9522260024263194787
+      m_GuidHigh: 12840788746127452744
+    m_Size: {x: 0.2, y: 0.2}
+    m_SpecifySize: 1
+    m_Name: tgid0008
+    m_Texture: {fileID: 2800000, guid: 7d1c38a3dd0a842548aac2c854a533b2, type: 3}
+  - m_SerializedGuid:
+      m_GuidLow: 5305157718169676783
+      m_GuidHigh: 816233719366550914
+    m_SerializedTextureGuid:
+      m_GuidLow: 16487244571268904226
+      m_GuidHigh: 7822169309530972987
+    m_Size: {x: 0.2, y: 0.2}
+    m_SpecifySize: 1
+    m_Name: tgid0009
+    m_Texture: {fileID: 2800000, guid: 9b7875227595e4ce3b638e1b8bed8d6c, type: 3}
+  - m_SerializedGuid:
+      m_GuidLow: 5139806658511010875
+      m_GuidHigh: 11870409711686144130
+    m_SerializedTextureGuid:
+      m_GuidLow: 2604403965412777996
+      m_GuidHigh: 11646955137563745291
+    m_Size: {x: 0.2, y: 0.2}
+    m_SpecifySize: 1
+    m_Name: tgid0010
+    m_Texture: {fileID: 2800000, guid: 9a0c200cb39b24240bdc6549fd4ba2a1, type: 3}
+  - m_SerializedGuid:
+      m_GuidLow: 4923905210935053324
+      m_GuidHigh: 8090330636570240954
+    m_SerializedTextureGuid:
+      m_GuidLow: 15325486012212650685
+      m_GuidHigh: 12864574649414227033
+    m_Size: {x: 0.2, y: 0.2}
+    m_SpecifySize: 1
+    m_Name: tgid0011
+    m_Texture: {fileID: 2800000, guid: 882722bd1054d4af5994d4f47b2688b2, type: 3}
+  - m_SerializedGuid:
+      m_GuidLow: 5389026816954918217
+      m_GuidHigh: 11326704412450493631
+    m_SerializedTextureGuid:
+      m_GuidLow: 17644333549514343524
+      m_GuidHigh: 17756622546414092457
+    m_Size: {x: 0.2, y: 0.2}
+    m_SpecifySize: 1
+    m_Name: tgid0012
+    m_Texture: {fileID: 2800000, guid: 2d4f446443e1f4dda940b49920326cf6, type: 3}
+  - m_SerializedGuid:
+      m_GuidLow: 5279545211295727180
+      m_GuidHigh: 7187443018669090225
+    m_SerializedTextureGuid:
+      m_GuidLow: 2618068418022089808
+      m_GuidHigh: 4688827265873277931
+    m_Size: {x: 0.2, y: 0.2}
+    m_SpecifySize: 1
+    m_Name: tgid0013
+    m_Texture: {fileID: 2800000, guid: e5e024503f5a2455ebf38a4b8e0f1241, type: 3}
+  - m_SerializedGuid:
+      m_GuidLow: 5704049759892979290
+      m_GuidHigh: 15919848592360499107
+    m_SerializedTextureGuid:
+      m_GuidLow: 3801926651187630167
+      m_GuidHigh: 13061655152647606075
+    m_Size: {x: 0.2, y: 0.2}
+    m_SpecifySize: 1
+    m_Name: tgid0014
+    m_Texture: {fileID: 2800000, guid: 52211057282534c33b0f3660285244b5, type: 3}
+  - m_SerializedGuid:
+      m_GuidLow: 4802105531138382040
+      m_GuidHigh: 16658279772762850737
+    m_SerializedTextureGuid:
+      m_GuidLow: 9565114383561632871
+      m_GuidHigh: 4392027270820266763
+    m_Size: {x: 0.2, y: 0.2}
+    m_SpecifySize: 1
+    m_Name: tgid0015
+    m_Texture: {fileID: 2800000, guid: 8c2bac671cda84be0b031269889df33c, type: 3}

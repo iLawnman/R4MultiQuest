@@ -17,52 +17,45 @@ public class GameScene : MonoBehaviour
         var settings = FindObjectOfType<Bootstrap>().GetSettings();
         Debug.Log("start " + settings.AddressableKey);
         
-        List<string> keys = new List<string> { "ARScene", "Pirates"};
-        
         Addressables.LoadResourceLocationsAsync(settings.AddressableKey, typeof(UnityEngine.ResourceManagement.ResourceProviders.SceneInstance))
             .Completed += OnLocationsLoaded;
-        
-        // var sceneHandler = Addressables.LoadSceneAsync("ARScene");
-        // while (!sceneHandler.IsDone)
-        // {
-        //     BootstrapActions.OnShowInfo?.Invoke("Loading Scene\n" + (sceneHandler.PercentComplete * 100).ToString("F0"));
-        //     await UniTask.Yield();
-        // }
     }
 
-    void OnLocationsLoaded(AsyncOperationHandle<IList<UnityEngine.ResourceManagement.ResourceLocations.IResourceLocation>> handle)
+    void OnLocationsLoaded(AsyncOperationHandle<IList<IResourceLocation>> handle)
     {
         if (handle.Status == AsyncOperationStatus.Succeeded)
         {
             var locations = handle.Result;
-
-            // Проверяем, есть ли доступные сцены с меткой "Pirates"
             if (locations.Count > 0)
             {
-                // Загружаем первую найденную сцену с меткой "Pirates"
-                Addressables.LoadSceneAsync(locations[0], LoadSceneMode.Single).Completed += OnSceneLoaded;
+                for (int i = 0; i < locations.Count; i++)
+                {
+                    BootstrapActions.OnShowInfo?.Invoke("Loading Scene " + locations[i].PrimaryKey);
+                    var loadMode = i == 0 ? LoadSceneMode.Single :  LoadSceneMode.Additive;
+                    Addressables.LoadSceneAsync(locations[i], loadMode).Completed += OnSceneLoaded;
+                }
             }
             else
             {
-                Debug.LogError("No scenes with label 'Pirates' found.");
+                Debug.LogError("No scenes with label found.");
             }
         }
         else
         {
-            Debug.LogError($"Failed to find resources with label 'Pirates': {handle.OperationException}");
+            Debug.LogError($"Failed to find {handle.DebugName} with label : {handle.OperationException}");
         }
     }
 
-    // Callback по завершении загрузки сцены
     void OnSceneLoaded(AsyncOperationHandle<UnityEngine.ResourceManagement.ResourceProviders.SceneInstance> handle)
     {
         if (handle.Status == AsyncOperationStatus.Succeeded)
         {
-            Debug.Log("Scene loaded successfully.");
+            BootstrapActions.OnShowInfo?.Invoke("Loaded " + handle.DebugName);
+            Debug.Log(handle.DebugName + " loaded successfully.");
         }
         else
         {
-            Debug.LogError($"Failed to load scene: {handle.OperationException}");
+            Debug.LogError($"Failed to load {handle.DebugName} with {handle.OperationException}");
         }
     }
 }

@@ -102,7 +102,7 @@ public class ResourcesService
         AsyncOperationHandle<IList<IResourceLocation>> handle
             = Addressables.LoadResourceLocationsAsync(
                 new string[] {key},
-                Addressables.MergeMode.None);
+                Addressables.MergeMode.Intersection);
 
         await handle;
         

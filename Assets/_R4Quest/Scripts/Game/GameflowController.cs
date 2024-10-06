@@ -1,18 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.XR.ARFoundation;
 
-public static partial class GameActions
-{
-    public static Action OnGameStarting;
-    public static Action OnGameStarted;
-    public static Action OnGamePaused;
-    public static Action OnGameResumed;
-    public static Action OnGameEnded;
-    public static Action<bool, string> SetReadyForTracking;
-}
 
 public class GameflowController : MonoBehaviour
     {
@@ -43,17 +32,13 @@ public class GameflowController : MonoBehaviour
         {
             Application.Quit();
         }
-
-        public void StartARSession()
-        {
-            FindFirstObjectByType<ARSession>(FindObjectsInactive.Include).gameObject.SetActive(true);
-        }
-        private void SetCurrentQuest(iQuest quest)
-        {
-            if(currentQuest != null)
-                previewsQuest = currentQuest;
-            currentQuest = quest;
-        }
+        
+        // private void SetCurrentQuest(iQuest quest)
+        // {
+        //     if(currentQuest != null)
+        //         previewsQuest = currentQuest;
+        //     currentQuest = quest;
+        // }
 
         private void OnDestroy()
         {
@@ -73,8 +58,8 @@ public class GameflowController : MonoBehaviour
         public void ClearStart()
         {
             PlayerPrefs.DeleteAll();
-            GetComponent<InfoPanelsController>().ShowStartSequence();
-            FindFirstObjectByType<TeamPresenter>()?.SetPanelActive(true);
+            // GetComponent<InfoPanelsController>()?.ShowStartSequence();
+            // FindFirstObjectByType<TeamPresenter>()?.SetPanelActive(true);
         }
         
         public void SaveCurrentStep (string savedQuestName)

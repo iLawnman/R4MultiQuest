@@ -313,32 +313,14 @@ public class ReadGoogleSheets
     {
         LoadWebClient3(url, callBack);
     }
-
-    private static async UniTask LoadWebClient3(string id, Action<string> callBack)
+    private static void LoadWebClient3(string id, Action<string> callBack)
     {
-        using (UnityWebRequest www = UnityWebRequest.Get(id))
-        {
-            //var operation = await www.SendWebRequest().ToUniTask();
-
-            if (www.result == UnityWebRequest.Result.Success)
-            {
-                callBack(www.downloadHandler.text);
-            }
-            else
-            {
-                Debug.LogError($"Error downloading {id}: {www.error}");
-                callBack(null); // or handle error as needed
-            }
-        }
+        WWW w = new WWW(id);
+        while (!w.isDone)
+            w.MoveNext();
+        //Debug.Log(w.text);
+        callBack(w.text);
     }
-    // private static void LoadWebClient3(string id, Action<string> callBack)
-    // {
-    //     // WWW w = new WWW(id);
-    //     // while (!w.isDone)
-    //     //     w.MoveNext();
-    //     // //Debug.Log(w.text);
-    //     // callBack(w.text);
-    // }
 
     // splits a CSV file into a 2D string array
     public static string[,] SplitCsvGrid(string csvText)

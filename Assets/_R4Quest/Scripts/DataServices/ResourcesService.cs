@@ -1,17 +1,20 @@
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
+using DataSakura.Runtime.Utilities;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.ResourceManagement.ResourceLocations;
 using UnityEngine.ResourceManagement.ResourceProviders;
+using VContainer;
 using Object = UnityEngine.Object;
 using Random = UnityEngine.Random;
 
 public class ResourcesService
 {
+    //[Inject] private LoadingService _loadingService;
+
     private ApplicationSettings currentSetting;
     private List<ApplicationRemoteSettings> currentRemoteSettings;
 
@@ -34,6 +37,8 @@ public class ResourcesService
 
     private async UniTask LoadDependencies()
     {
+        //await _loadingService.BeginLoading( new DependenciesLoadUnit(currentSetting.AddressableKey) );
+        
         var _depHandler = Addressables.DownloadDependenciesAsync(currentSetting.AddressableKey);
         
         while (!_depHandler.IsDone)
@@ -41,7 +46,7 @@ public class ResourcesService
             BootstrapActions.OnShowInfo?.Invoke("Loading Dependencies\n" + (_depHandler.PercentComplete * 100).ToString("F0"));
             await UniTask.Yield();
         }
-        _depHandler.Release();
+        //_depHandler.Release();
         
         //GetAllKeys();
         
@@ -111,7 +116,7 @@ public class ResourcesService
             Debug.Log("res  " + resource);
         }
         
-        handle.Release();
+        //handle.Release();
     }
 
     async Task CheckRemoteSettings()

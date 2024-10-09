@@ -5,12 +5,23 @@ using UnityEngine;
 [Serializable]
 public class ApplicationData
 {
-    public TextAsset Location = new TextAsset();
+    public TextAsset Location;
     public List<QuestData> Quests = new List<QuestData>();
     public List<AnswersData> Answers = new List<AnswersData>();
     public List<GameObject> Prefabs = new List<GameObject>();
     public List<Sprite> Sprites = new List<Sprite>();
     public List<Texture2D> Textures = new List<Texture2D>();
+    public List<ResourcesData> Resources = new List<ResourcesData>();
+}
+
+[Serializable]
+public class ResourcesData
+{
+    public string application;
+    public string recognitionImage;
+    public string pictures;
+    public string sounds;
+    public string maps;
 }
 
 [Serializable]

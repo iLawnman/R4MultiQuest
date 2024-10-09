@@ -8,7 +8,6 @@ public class GoogleSheetLoadUnit<T> : ILoadUnit where T : class, new()
 {
     private readonly string _googleSheetId;
     private string _sheetId;
-    private bool ready;
     public object Data;
 
     public GoogleSheetLoadUnit(string googleSheetId,
@@ -18,16 +17,15 @@ public class GoogleSheetLoadUnit<T> : ILoadUnit where T : class, new()
         _sheetId = sheetId;
     }
 
-    public async UniTask Load()
+    public UniTask Load()
     {
         ReadGoogleSheets.FillData<T>(_googleSheetId, _sheetId, list =>
-        {
-            List<T> data = new List<T>();
-            data = list;
-            Data = data;
-            ready = true;
-        });
-
-        await UniTask.WaitUntil(() => ready);
+                {
+                    List<T> data = new List<T>();
+                    data = list;
+                    Data = data;
+                }
+            );
+        return UniTask.CompletedTask;
     }
 }

@@ -1,24 +1,40 @@
+using System.Collections;
+using Cysharp.Threading.Tasks;
 using DataSakura.Runtime.Utilities;
 using DataSakura.Runtime.Utilities.Logging;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 using UnityEngine.SceneManagement;
 using VContainer.Unity;
 
 public class BootstrapFlow : IStartable
 {
-    private readonly LoadingService _loadingService;
-    private readonly DataContainer _dataContainer;
+    private readonly GoogleSheetDataLoadingService _loadingService;
+    private readonly ConfigDataContainer _configDataContainer;
+    private readonly ApplicationSettings _applicationSettings;
 
-    public BootstrapFlow(LoadingService loadingService, DataContainer dataContainer)
+    public BootstrapFlow(GoogleSheetDataLoadingService loadingService, 
+        ConfigDataContainer configDataContainer,
+        ApplicationSettings applicationSettings)
     {
         _loadingService = loadingService;
-        _dataContainer = dataContainer;
+        _configDataContainer = configDataContainer;
+        _applicationSettings = applicationSettings;
     }
 
     public async void Start()
     {
-        Log.Default.D("BootstrapFlow.Start()");
-        await _loadingService.BeginLoading(_dataContainer);
-        Debug.Log("loaded data " + _dataContainer.ApplicationData.Quests.Count + " / " + _dataContainer.ApplicationData.Answers.Count);
+        //return;
+        
+         if (Application.internetReachability == NetworkReachability.NotReachable)
+         {
+             Debug.Log("no internet");
+             return;
+         }
+        
+         Debug.Log("start loading data");
+        await _loadingService.Loading(_configDataContainer);
+        Debug.Log("loaded data " + _configDataContainer.ApplicationData.Quests.Count);
+
     }
 }

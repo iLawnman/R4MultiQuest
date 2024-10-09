@@ -17,8 +17,16 @@ public class BootstrapUI : MonoBehaviour
 
     private void Update()
     {
-        if(TextInfo.text != String.Empty)
-            Indicator.transform.RotateAround(Indicator.transform.position, Indicator.transform.forward, Time.deltaTime * IndicatorSpeed);
+        if (TextInfo.text != String.Empty)
+        {
+            Indicator.transform.parent.gameObject.SetActive(true);
+            Indicator.transform.RotateAround(Indicator.transform.position, Indicator.transform.forward,
+                Time.deltaTime * IndicatorSpeed);
+        }
+        else
+        {
+            Indicator.transform.parent.gameObject.SetActive(false);
+        }
     }
 
     private void OnShowInfo(string s)

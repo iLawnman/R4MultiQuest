@@ -313,13 +313,33 @@ public class ReadGoogleSheets
     {
         LoadWebClient3(url, callBack);
     }
-    private static void LoadWebClient3(string id, Action<string> callBack)
+    private static async UniTask LoadWebClient3(string id, Action<string> callBack)
     {
-        WWW w = new WWW(id);
-        while (!w.isDone)
-            w.MoveNext();
-        //Debug.Log(w.text);
-        callBack(w.text);
+        using (UnityWebRequest request = UnityWebRequest.Get(id))
+        {
+            var operation = request.SendWebRequest();
+
+            while (!operation.isDone)
+            {
+                await UniTask.Yield(); // Ожидание завершения запроса
+            }
+
+            if (request.result == UnityWebRequest.Result.Success)
+            {
+                string sheetData = request.downloadHandler.text;
+                //Debug.Log("sheet " + sheetData);
+                callBack.Invoke(sheetData);
+            }
+            else
+            {
+                Debug.LogError("Ошибка при загрузке данных с Google Sheet: " + request.error);
+            }
+        }
+            // WWW w = new WWW(id);
+            // while (!w.isDone)
+            //     w.MoveNext();
+            // //Debug.Log(w.text);
+            // callBack(w.text);
     }
 
     // splits a CSV file into a 2D string array

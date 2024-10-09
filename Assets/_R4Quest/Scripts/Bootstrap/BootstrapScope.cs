@@ -9,9 +9,9 @@ using VContainer.Unity;
 
         protected override void Configure(IContainerBuilder builder)
         {
-            builder.Register<LoadingService>(Lifetime.Scoped);
             builder.RegisterInstance(_applicationSettings);
-            builder.Register<DataContainer>(Lifetime.Singleton);
+            builder.Register<GoogleSheetDataLoadingService>(Lifetime.Scoped);
+            builder.Register<ConfigDataContainer>(Lifetime.Singleton);
             builder.RegisterEntryPoint<BootstrapFlow>();
         }
 }

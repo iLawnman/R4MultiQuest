@@ -6,14 +6,13 @@ using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
 using DataSakura.Runtime.Utilities;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
 using VContainer;
 
-    public class DataContainer :  ILoadUnit
+    public class ConfigDataContainer :  ILoadUnit
     {
         public ApplicationData ApplicationData = new ApplicationData();
         [Inject] private readonly ApplicationSettings _applicationSettings;
-        [Inject] private LoadingService _loadingService;
+        //[Inject] private LoadingService _loadingService;
 
         public async UniTask Load()
         {
@@ -24,14 +23,10 @@ using VContainer;
 
             if (TableEdited())
             {
-                BootstrapActions.OnShowInfo?.Invoke("Internet Reachable");
-
-                await Task.Delay(2000);
-
-                await LoadDependencies();
-
                 BootstrapActions.OnShowInfo?.Invoke("Loading Data");
 
+                //await _loadingService.BeginLoading(new DependencesLoadUnit(_applicationSettings.AddressableKey));
+                
                 GoogleSheetLoadUnit<QuestData> quests = new GoogleSheetLoadUnit<QuestData>(
                     _applicationSettings.GoogleSheet,
                     _applicationSettings.GoogleSheetQuestTable);
@@ -40,32 +35,19 @@ using VContainer;
                     _applicationSettings.GoogleSheet,
                     _applicationSettings.GoogleSheetAnswersTable);
                 
+                //await _loadingService.BeginLoading(answers);
 
-                await _loadingService.BeginLoading(quests);
-                await _loadingService.BeginLoading(answers);
+                GoogleSheetLoadUnit<ResourcesData> resources = new GoogleSheetLoadUnit<ResourcesData>(
+                    _applicationSettings.GoogleSheet,
+                    _applicationSettings.GoogleSheetResourcesTable);
+                
+                //await _loadingService.BeginLoading(resources);
 
                 ApplicationData.Quests = quests.Data as List<QuestData>;
                 ApplicationData.Answers = answers.Data as List<AnswersData>;
-                
-                BootstrapActions.OnShowInfo?.Invoke("Loaded Dependencies");
-
-                await Task.Delay(2000);
+                ApplicationData.Resources = resources.Data as List<ResourcesData>;
                 
                 BootstrapActions.OnShowInfo?.Invoke(string.Empty);
-
-            }
-        }
-
-        private async UniTask LoadDependencies()
-        {
-            await Addressables.InitializeAsync();
-            
-            var _depHandler = Addressables.DownloadDependenciesAsync(_applicationSettings.AddressableKey);
-            
-            while (!_depHandler.IsDone)
-            {
-                BootstrapActions.OnShowInfo?.Invoke("Loading Dependencies\n" + (_depHandler.PercentComplete * 100).ToString("F0"));
-                await UniTask.Yield();
             }
         }
         
@@ -74,8 +56,8 @@ using VContainer;
             return true;
             
             string fileId = "1-P_YElXhGf6H2NfwVIPiq8xQV55LbWsCmF_D4cc8EFw"; // Идентификатор файла Google Sheets
-            string apiKey = "your_api_key"; // Ваш API ключ Google
-            string url = $"https://www.googleapis.com/drive/v3/files/{fileId}?fields=modifiedTime";
+            string apiKey = "AIzaSyACKRzVQ-koaSkqmdRFFEjWDkt7GbHT0IM"; // Ваш API ключ Google
+            string url = $"https://www.googleapis.com/drive/v3/files/{fileId}?fields=modifiedTime&key={apiKey}";
 
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
             request.Method = "GET";
@@ -87,16 +69,15 @@ using VContainer;
                 using (StreamReader reader = new StreamReader(response.GetResponseStream()))
                 {
                     string result = reader.ReadToEnd();
-                    Console.WriteLine("Response: " + result);
-                    if (result != PlayerPrefs.GetString("GoogleSheetEdited"))
+                    if (PlayerPrefs.HasKey("GoogleSheetEdited") && result != PlayerPrefs.GetString("GoogleSheetEdited"))
                     {
                         PlayerPrefs.SetString("GoogleSheetEdited", result);
+                        Debug.Log("GS data edited at " + result + " and need update");
                         return true;
                     }
-                    else
-                    {
-                        return false;
-                    }
+                    
+                    Debug.Log("GS data don't changed");
+                    return false;
                 }
             }
             catch (WebException ex)

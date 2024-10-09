@@ -9,6 +9,8 @@ using DataSakura.Runtime.Utilities;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
+using UnityEngine.Networking;
+using VContainer;
 using Object = UnityEngine.Object;
 
 public class TEST_Mono : MonoBehaviour
@@ -16,50 +18,58 @@ public class TEST_Mono : MonoBehaviour
     [SerializeField] private ApplicationSettings settins;
     private ApplicationRemoteSettings remoteSettins;
     [SerializeField] private AssetReference _assetReference;
-    private LoadingService _loadingService;
+    [Inject] private GoogleSheetDataLoadingService _loadingService;
     private GoogleSheetLoadUnit<QuestData> data;
+    private ConfigDataContainer _configDataContainer = new ConfigDataContainer();
+    [SerializeField] private KeyCode keyCode;
 
+    private void Update()
+    {
+        if (Input.GetKeyUp(keyCode))
+        {
+            _loadingService.Loading(_configDataContainer);
+            // ReadGoogleSheets.FillData<QuestData>(settins.GoogleSheet,
+            //     settins.GoogleSheetQuestTable,
+            //     list =>
+            //     {
+            //         _configDataContainer.Quests = list;
+            //         Debug.Log("q " + _configDataContainer.Quests.Count);
+            //     });
+        }
+    }
 
     [ContextMenu("DO")]
-    public async void DO()
+    public void DO()
     {
-        await LoadGoogleTable();
+        //_loadingService = new LoadingService();
+        //LoadGoogleTable();
         //CheckTableEditedTime();
     }
 
-    private async Task LoadGoogleTable()
-    {
-        _loadingService = new LoadingService();
-        GoogleSheetLoadUnit<QuestData> a = new GoogleSheetLoadUnit<QuestData>(
-            settins.GoogleSheet, 
-            settins.GoogleSheetQuestTable);
-        await _loadingService.BeginLoading(a);
-        
-        Debug.Log("a " + a.Data);
-    }
-
-    private void CheckTableEditedTime()
+    private async UniTask CheckTableEditedTime()
     {
         string fileId = "1-P_YElXhGf6H2NfwVIPiq8xQV55LbWsCmF_D4cc8EFw"; // Идентификатор файла Google Sheets
         string apiKey = "AIzaSyACKRzVQ-koaSkqmdRFFEjWDkt7GbHT0IM"; // Ваш API ключ Google
         string url = $"https://www.googleapis.com/drive/v3/files/{fileId}?fields=modifiedTime&key={apiKey}";
 
-        HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
-        request.Method = "GET";
-        request.ContentType = "application/json";
+        using (UnityWebRequest request = UnityWebRequest.Get(url))
+        {
+            var operation = request.SendWebRequest();
 
-        try
-        {
-            using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
-            using (StreamReader reader = new StreamReader(response.GetResponseStream()))
+            while (!operation.isDone)
             {
-                string result = reader.ReadToEnd();
-                Debug.Log("Response: " + result);
+                await Task.Yield(); // Ожидание завершения запроса
             }
-        }
-        catch (WebException ex)
-        {
-            Debug.Log("Error: " + ex.Message);
+
+            if (request.result == UnityWebRequest.Result.Success)
+            {
+                string sheetData = request.downloadHandler.text;
+                Debug.Log("data " + sheetData);  // Обработка полученных данных
+            }
+            else
+            {
+                Debug.LogError("Ошибка при загрузке данных с Google Sheet: " + request.error);
+            }
         }
     }
 }

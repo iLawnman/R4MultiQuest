@@ -49,7 +49,6 @@ public class ResourcesService
         //_depHandler.Release();
         
         //GetAllKeys();
-        
         //await LoadResourceByKeyLabel("ARScene", "Pirates");
         //Debug.Log(resources);
         //await LoadResourcesLocators(currentSetting.AddressableKey);

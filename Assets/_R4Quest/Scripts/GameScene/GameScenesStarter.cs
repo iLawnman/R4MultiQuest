@@ -9,12 +9,9 @@ public class GameScenesStarter : MonoBehaviour
 {
     void Start()
     {
-        var settings = FindObjectOfType<Bootstrap>().GetSettings();
-        Debug.Log("start " + settings.AddressableKey);
-        
-        Addressables.LoadResourceLocationsAsync(settings.AddressableKey, 
-                typeof(UnityEngine.ResourceManagement.ResourceProviders.SceneInstance))
-            .Completed += OnLocationsLoaded;
+        // Addressables.LoadResourceLocationsAsync(settings.AddressableKey, 
+        //         typeof(UnityEngine.ResourceManagement.ResourceProviders.SceneInstance))
+        //     .Completed += OnLocationsLoaded;
     }
 
     void OnLocationsLoaded(AsyncOperationHandle<IList<IResourceLocation>> handle)

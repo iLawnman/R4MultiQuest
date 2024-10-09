@@ -6,7 +6,6 @@ using Random = UnityEngine.Random;
 
 public class Bootstrap : MonoBehaviour
 {
-    [SerializeField] private ApplicationSettings _applicationSettings;
     private ResourcesService _resourcesService;
 
     async void Start()
@@ -19,7 +18,6 @@ public class Bootstrap : MonoBehaviour
 
     public async void StartApplicationFromSettings(ApplicationSettings settings)
     {
-        _applicationSettings = settings;
         await _resourcesService.LoadApplicationDataFromSettings(settings);
         
         LoadGameScene();
@@ -29,10 +27,5 @@ public class Bootstrap : MonoBehaviour
     {
         BootstrapActions.OnShowInfo?.Invoke("Loading GameScene");
         SceneManager.LoadSceneAsync(1);
-    }
-
-    public ApplicationSettings GetSettings()
-    {
-        return _applicationSettings;
     }
 }

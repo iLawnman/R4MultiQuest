@@ -7,7 +7,7 @@ public class MultiQuestStarter : MonoBehaviour
 
     private void Start()
     {
-        if(!multiQuest)
-            GetComponent<Bootstrap>().StartApplicationFromSettings(_applicationSettings);
+       // if(!multiQuest)
+       //     GetComponent<Bootstrap>().StartApplicationFromSettings(_applicationSettings);
     }
 }

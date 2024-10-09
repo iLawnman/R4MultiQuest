@@ -1,6 +1,7 @@
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
 using DataSakura.Runtime.Utilities;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class GoogleSheetLoadUnit<T> : ILoadUnit where T : class, new()
@@ -19,28 +20,14 @@ public class GoogleSheetLoadUnit<T> : ILoadUnit where T : class, new()
 
     public async UniTask Load()
     {
-        T data = new T();
         ReadGoogleSheets.FillData<T>(_googleSheetId, _sheetId, list =>
         {
-            Debug.Log("list " + list[0]);
-            data = list[0];
+            List<T> data = new List<T>();
+            data = list;
+            Data = data;
             ready = true;
         });
 
         await UniTask.WaitUntil(() => ready);
-        Data = data;
-        Data = Data as T;
-    }
-    public async UniTask<T> Get()
-    {
-        T data = new T();
-        ReadGoogleSheets.FillData<T>(_googleSheetId, _sheetId, list =>
-        {
-            data = list[0];
-            ready = true;
-        });
-
-        await UniTask.WaitUntil(() => ready);
-        return data;
     }
 }

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using TMPro;
 using UnityEngine;
 
@@ -8,6 +9,7 @@ public class BootstrapUI : MonoBehaviour
 {
     [SerializeField] private GameObject Indicator;
     [SerializeField] private float IndicatorSpeed = 5;
+    [SerializeField] private float fadeTime = 1;
     [SerializeField] private TMP_Text TextInfo;
     void Start()
     {
@@ -23,16 +25,15 @@ public class BootstrapUI : MonoBehaviour
             Indicator.transform.RotateAround(Indicator.transform.position, Indicator.transform.forward,
                 Time.deltaTime * IndicatorSpeed);
         }
-        else
-        {
-            Indicator.transform.parent.gameObject.SetActive(false);
-        }
     }
 
     private void OnShowInfo(string s)
     {
         if (s == string.Empty)
+        {
+            IndicatorSpeed = 0;
             HideInfo();
+        }
         else
         {
             TextInfo.text = s;
@@ -44,7 +45,11 @@ public class BootstrapUI : MonoBehaviour
     {
         foreach (var spriteRenderer in Indicator.transform.parent.gameObject.GetComponentsInChildren<SpriteRenderer>())
         {
-            FXManager.PlayFx(spriteRenderer.gameObject, new HideRendererEffect(), 1);
+            spriteRenderer.DOFade(0, fadeTime);
+        }
+        foreach (var txt in Indicator.transform.parent.gameObject.GetComponentsInChildren<TMP_Text>())
+        {
+            txt.DOFade(0.1f, fadeTime);
         }
     }
 

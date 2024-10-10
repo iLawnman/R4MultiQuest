@@ -49,9 +49,8 @@ public class GoogleSheetDataLoadingService
             _applicationSettings.GoogleSheet,
             _applicationSettings.GoogleSheetResourcesTable);
 
-        BootstrapActions.OnShowInfo?.Invoke("Data Loaded");
-        await UniTask.Delay(2000);
+        BootstrapActions.OnShowInfo?.Invoke("LOADED");
         BootstrapActions.OnShowInfo?.Invoke(string.Empty);
-
+        await UniTask.Delay(2000);
     }
 }

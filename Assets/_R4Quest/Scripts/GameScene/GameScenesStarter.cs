@@ -52,7 +52,6 @@ public class GameScenesStarter : IStartable
     {
         if (handle.Status == AsyncOperationStatus.Succeeded)
         {
-            //BootstrapActions.OnShowInfo?.Invoke("Loaded " + handle.DebugName);
             Debug.Log(handle.DebugName + " loaded successfully.");
         }
         else

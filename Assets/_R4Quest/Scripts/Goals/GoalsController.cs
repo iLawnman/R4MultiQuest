@@ -78,7 +78,7 @@ public class GoalsController : MonoBehaviour
         if (state)
             successIndx.Add(goalsCounter);
 
-        FindFirstObjectByType<GameflowController>(FindObjectsInactive.Include).SaveCurrentStep(gameObjectName);
+        //FindFirstObjectByType<GameflowController>(FindObjectsInactive.Include).SaveCurrentStep(gameObjectName);
 
         //if (goalsCounter == 14)
         //TODO : get QuestListLastName and check

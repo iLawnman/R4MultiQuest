@@ -1,33 +1,46 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
-
+using VContainer;
 
 public class GameflowController : MonoBehaviour
-    {
-        private InfoPanelsController _infoPanel;
-        private GoalsController _goalsConteroller;
-        private MainCanvasController _mainCanvasController;
-        private AskPanel askPanel;
-        private iQuest currentQuest;
-        private iQuest previewsQuest;
-        private QuestsTimerController _questTimeController;
+{
+    [Inject] public ApplicationSettings applicationSettings;
+        // private InfoPanelsController _infoPanel;
+        // private GoalsController _goalsConteroller;
+        // private MainCanvasController _mainCanvasController;
+        // private AskPanel askPanel;
+        // private iQuest currentQuest;
+        // private iQuest previewsQuest;
+        // private QuestsTimerController _questTimeController;
 
-        private void Start()
+        public void Start()
         {
             Application.runInBackground = true;
             Application.targetFrameRate = 30;
-            _infoPanel = FindFirstObjectByType<InfoPanelsController>();
-            _goalsConteroller = FindFirstObjectByType<GoalsController>();
-            _mainCanvasController = FindFirstObjectByType<MainCanvasController>();
-            _questTimeController = FindFirstObjectByType<QuestsTimerController>();
+         
+            Debug.Log("start gameflow " + applicationSettings);
+
+            // _infoPanel = FindFirstObjectByType<InfoPanelsController>();
+            // _goalsConteroller = FindFirstObjectByType<GoalsController>();
+            // _mainCanvasController = FindFirstObjectByType<MainCanvasController>();
+            // _questTimeController = FindFirstObjectByType<QuestsTimerController>();
             
-            if (!PlayerPrefs.HasKey("SaveQuest"))
-                ClearStart();
-            else
-                LoadSavedStart();
+            // if (!PlayerPrefs.HasKey("SaveQuest"))
+            //     ClearStart();
+            // else
+            //     LoadSavedStart();
         }
 
+        private void Update()
+        {
+            if(Input.GetKeyUp(KeyCode.F1))
+                Debug.Log("appSettings " + applicationSettings.AddressableKey);
+        }
+
+        /*
         public void ApplicationQuit()
         {
             Application.Quit();
@@ -131,4 +144,5 @@ public class GameflowController : MonoBehaviour
             lstTime.ToList().ForEach(x => goalTime.Add(int.Parse(x)));
             FindFirstObjectByType<QuestsTimerController>(FindObjectsInactive.Include).GoalTime = goalTime.ToArray();
         }
+        */
     }

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
@@ -41,7 +42,7 @@ public class BootstrapUI : MonoBehaviour
         }
     }
 
-    private void HideInfo()
+    private async void HideInfo()
     {
         foreach (var spriteRenderer in Indicator.transform.parent.gameObject.GetComponentsInChildren<SpriteRenderer>())
         {
@@ -51,6 +52,16 @@ public class BootstrapUI : MonoBehaviour
         {
             txt.DOFade(0.1f, fadeTime);
         }
+        // await UniTask.Delay(2); 
+        //
+        // foreach (var spriteRenderer in Indicator.transform.parent.gameObject.GetComponentsInChildren<SpriteRenderer>())
+        // {
+        //     spriteRenderer.DOFade(1, 0);
+        // }
+        // foreach (var txt in Indicator.transform.parent.gameObject.GetComponentsInChildren<TMP_Text>())
+        // {
+        //     txt.DOFade(1f, 0);
+        // }
     }
 
     private void OnDestroy()

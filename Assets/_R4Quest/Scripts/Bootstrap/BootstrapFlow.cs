@@ -30,22 +30,34 @@ public class BootstrapFlow : IStartable
          if (Application.internetReachability == NetworkReachability.NotReachable)
          {
              Debug.Log("no internet");
-             return;
+             // load SO data from defoult data repo
+             await LoadDefaultDataSet();
+             //return;
          }
-        
-         BindInstanceToRootScope(_applicationSettings);
 
-         Debug.Log("start loading data");
-        await _loadingService.Loading(_configDataContainer);
-        Debug.Log("loaded data " + _configDataContainer.ApplicationData.Quests.Count
-                                 + " / " + _configDataContainer.ApplicationData.Answers.Count
-                                 + " / " + _configDataContainer.ApplicationData.Resources.Count);
+         else
+         {
+             Debug.Log("start loading data");
+             await _loadingService.Loading(_configDataContainer);
+             Debug.Log("loaded data " + _configDataContainer.ApplicationData.Quests.Count
+                                      + " / " + _configDataContainer.ApplicationData.Answers.Count
+                                      + " / " + _configDataContainer.ApplicationData.Resources.Count);
 
-        SceneManager.LoadSceneAsync(1);
+             BindInstanceToRootScope(_applicationSettings);
+         }
+
+         SceneManager.LoadSceneAsync(1);
+    }
+
+    private async UniTask LoadDefaultDataSet()
+    {
+        Debug.Log("need load startUp data");
+        await UniTask.CompletedTask;
     }
 
     private void BindInstanceToRootScope<T>(T Instance)
     {
+        Debug.Log("try rebind selected appsetting " + _applicationSettings.AddressableKey);
         var containerBuilder = new ContainerBuilder();
         containerBuilder.RegisterInstance(Instance).As<T>();
         //RootScope.RootContainer.Inject(containerBuilder);

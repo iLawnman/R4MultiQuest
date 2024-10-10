@@ -5,6 +5,7 @@ using DataSakura.Runtime.Utilities.Logging;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.SceneManagement;
+using VContainer;
 using VContainer.Unity;
 
 public class BootstrapFlow : IStartable
@@ -32,12 +33,21 @@ public class BootstrapFlow : IStartable
              return;
          }
         
-        Debug.Log("start loading data");
+         BindInstanceToRootScope(_applicationSettings);
+
+         Debug.Log("start loading data");
         await _loadingService.Loading(_configDataContainer);
         Debug.Log("loaded data " + _configDataContainer.ApplicationData.Quests.Count
                                  + " / " + _configDataContainer.ApplicationData.Answers.Count
                                  + " / " + _configDataContainer.ApplicationData.Resources.Count);
 
         SceneManager.LoadSceneAsync(1);
+    }
+
+    private void BindInstanceToRootScope<T>(T Instance)
+    {
+        var containerBuilder = new ContainerBuilder();
+        containerBuilder.RegisterInstance(Instance).As<T>();
+        //RootScope.RootContainer.Inject(containerBuilder);
     }
 }

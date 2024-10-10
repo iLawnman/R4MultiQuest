@@ -6,6 +6,7 @@ using VContainer.Unity;
 
 public class RootScope : LifetimeScope
 {
+    public static IObjectResolver RootContainer { get; private set; }
     public ApplicationSettings _applicationSettings;
 
     protected override void Configure(IContainerBuilder builder)
@@ -13,5 +14,6 @@ public class RootScope : LifetimeScope
         builder.RegisterInstance(_applicationSettings);
         builder.Register<FXManager>(Lifetime.Singleton);
         builder.Register<ConfigDataContainer>(Lifetime.Singleton);
+        RootContainer = this.Container;
     }
 }

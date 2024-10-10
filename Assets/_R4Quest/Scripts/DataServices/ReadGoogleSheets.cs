@@ -1,8 +1,11 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Net;
 using System.Reflection;
+using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Networking;
@@ -11,6 +14,43 @@ using Object = UnityEngine.Object;
 public class ReadGoogleSheets
 {
     public const char Determiner = ';';
+    
+    public static async UniTask<bool> CheckTableEditedAsync(string tableId, string apiKey)
+    {
+        //return true;
+            
+        //string tableId = "1-P_YElXhGf6H2NfwVIPiq8xQV55LbWsCmF_D4cc8EFw"; // Идентификатор файла Google Sheets
+        //string apiKey = "AIzaSyACKRzVQ-koaSkqmdRFFEjWDkt7GbHT0IM"; // Ваш API ключ Google
+        string url = $"https://www.googleapis.com/drive/v3/files/{tableId}?fields=modifiedTime&key={apiKey}";
+
+        HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
+        request.Method = "GET";
+        request.ContentType = "application/json";
+
+        try
+        {
+            using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
+            using (StreamReader reader = new StreamReader(response.GetResponseStream()))
+            {
+                string result = reader.ReadToEnd();
+                if (PlayerPrefs.HasKey("GoogleSheetEdited") && result != PlayerPrefs.GetString("GoogleSheetEdited"))
+                {
+                    PlayerPrefs.SetString("GoogleSheetEdited", result);
+                    Debug.Log("GS data edited at " + result + " and need update");
+                    return true;
+                }
+                    
+                Debug.Log("GS data don't changed");
+                return false;
+            }
+        }
+        catch (WebException ex)
+        {
+            Console.WriteLine("Error: " + ex.Message);
+        }
+
+        return false;
+    }
     
     public static UniTask<List<T>> FillDataAsync<T>(string sheetUrl, string tableName) where T : new()
     {

@@ -15,6 +15,16 @@ public class GoogleSheetDataLoadingService
         //     return;
 
         await Addressables.InitializeAsync();
+
+        bool updated = await ReadGoogleSheets.CheckTableEditedAsync(_applicationSettings.GoogleSheet,
+            _applicationSettings.GoogleSheetQuestTable);
+        
+        if (!updated)
+        {
+            Debug.Log("no need update, but temporally");
+            //return;
+        }
+
         BootstrapActions.OnShowInfo?.Invoke("Loading Dependencies");
         Debug.Log("loading dependencies");
         var handle = Addressables.DownloadDependenciesAsync(_applicationSettings.AddressableKey);

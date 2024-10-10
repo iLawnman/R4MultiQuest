@@ -24,39 +24,20 @@ public class GoogleSheetDataLoadingService
             await UniTask.Yield();
         }
         
-        BootstrapActions.OnShowInfo?.Invoke("Loading Data");
         Debug.Log("loading data");
+        BootstrapActions.OnShowInfo?.Invoke("Loading Quests");
+        configDataContainer.ApplicationData.Quests = await ReadGoogleSheets.FillDataAsync<QuestData>(_applicationSettings.GoogleSheet,
+            _applicationSettings.GoogleSheetQuestTable);
         
-        bool questReady = false;
-        bool answerReady = false;
-        bool resourcesReady = false;
+        BootstrapActions.OnShowInfo?.Invoke("Loading Answers");
+        configDataContainer.ApplicationData.Answers = await ReadGoogleSheets.FillDataAsync<AnswersData>(
+            _applicationSettings.GoogleSheet,
+            _applicationSettings.GoogleSheetAnswersTable);
         
-        ReadGoogleSheets.FillData<QuestData>(_applicationSettings.GoogleSheet,
-                _applicationSettings.GoogleSheetQuestTable,
-                list =>
-                {
-                    configDataContainer.ApplicationData.Quests = list;
-                    questReady = true;
-                });
-        ReadGoogleSheets.FillData<AnswersData>(_applicationSettings.GoogleSheet,
-                _applicationSettings.GoogleSheetAnswersTable,
-                list =>
-                {
-                    configDataContainer.ApplicationData.Answers = list;
-                    answerReady = true;
-                });
-        ReadGoogleSheets.FillData<ResourcesData>(_applicationSettings.GoogleSheet,
-                _applicationSettings.GoogleSheetResourcesTable,
-                list =>
-                {
-                    configDataContainer.ApplicationData.Resources = list;
-                    resourcesReady = true;
-                });
-        
-        while (!questReady && !answerReady && !resourcesReady)
-        {
-            await UniTask.Yield();
-        }
+        BootstrapActions.OnShowInfo?.Invoke("Loading Resources");
+        configDataContainer.ApplicationData.Resources = await ReadGoogleSheets.FillDataAsync<ResourcesData>(
+            _applicationSettings.GoogleSheet,
+            _applicationSettings.GoogleSheetResourcesTable);
 
         BootstrapActions.OnShowInfo?.Invoke("Data Loaded");
         await UniTask.Delay(2000);

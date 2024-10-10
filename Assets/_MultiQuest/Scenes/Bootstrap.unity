@@ -134,7 +134,7 @@ GameObject:
   - component: {fileID: 48921622}
   - component: {fileID: 48921621}
   - component: {fileID: 48921620}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: box
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -214,7 +214,7 @@ BoxCollider2D:
     m_Bits: 4294967295
   m_IsTrigger: 0
   m_UsedByEffector: 0
-  m_UsedByComposite: 0
+  m_UsedByComposite: 1
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
@@ -293,7 +293,7 @@ GameObject:
   - component: {fileID: 65611557}
   - component: {fileID: 65611556}
   - component: {fileID: 65611555}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: box
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -373,7 +373,7 @@ BoxCollider2D:
     m_Bits: 4294967295
   m_IsTrigger: 0
   m_UsedByEffector: 0
-  m_UsedByComposite: 0
+  m_UsedByComposite: 1
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
@@ -736,7 +736,7 @@ GameObject:
   - component: {fileID: 148114878}
   - component: {fileID: 148114877}
   - component: {fileID: 148114876}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: box
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -816,7 +816,7 @@ BoxCollider2D:
     m_Bits: 4294967295
   m_IsTrigger: 0
   m_UsedByEffector: 0
-  m_UsedByComposite: 0
+  m_UsedByComposite: 1
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
@@ -895,7 +895,7 @@ GameObject:
   - component: {fileID: 183002895}
   - component: {fileID: 183002894}
   - component: {fileID: 183002893}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: box
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -975,7 +975,7 @@ BoxCollider2D:
     m_Bits: 4294967295
   m_IsTrigger: 0
   m_UsedByEffector: 0
-  m_UsedByComposite: 0
+  m_UsedByComposite: 1
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
@@ -1188,7 +1188,7 @@ GameObject:
   - component: {fileID: 218093518}
   - component: {fileID: 218093517}
   - component: {fileID: 218093516}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: down
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1347,7 +1347,7 @@ GameObject:
   - component: {fileID: 230795085}
   - component: {fileID: 230795084}
   - component: {fileID: 230795083}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: box
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1427,7 +1427,7 @@ BoxCollider2D:
     m_Bits: 4294967295
   m_IsTrigger: 0
   m_UsedByEffector: 0
-  m_UsedByComposite: 0
+  m_UsedByComposite: 1
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
@@ -1506,7 +1506,7 @@ GameObject:
   - component: {fileID: 257203060}
   - component: {fileID: 257203059}
   - component: {fileID: 257203058}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: top
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1665,7 +1665,7 @@ GameObject:
   - component: {fileID: 277565967}
   - component: {fileID: 277565966}
   - component: {fileID: 277565965}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: left
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1908,7 +1908,7 @@ GameObject:
   - component: {fileID: 421452900}
   - component: {fileID: 421452899}
   - component: {fileID: 421452898}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: box
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1988,7 +1988,7 @@ BoxCollider2D:
     m_Bits: 4294967295
   m_IsTrigger: 0
   m_UsedByEffector: 0
-  m_UsedByComposite: 0
+  m_UsedByComposite: 1
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
@@ -2144,50 +2144,6 @@ MonoBehaviour:
   m_DeselectOnBackgroundClick: 1
   m_PointerBehavior: 0
   m_CursorLockBehavior: 0
---- !u!1 &457365913
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 457365915}
-  - component: {fileID: 457365914}
-  m_Layer: 0
-  m_Name: CoroutineService
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &457365914
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 457365913}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7f91edb6c92340b68fa0de862ed9a410, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!4 &457365915
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 457365913}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &464454160
 GameObject:
   m_ObjectHideFlags: 0
@@ -2917,7 +2873,7 @@ GameObject:
   - component: {fileID: 722765329}
   - component: {fileID: 722765328}
   - component: {fileID: 722765327}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: box
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2997,7 +2953,7 @@ BoxCollider2D:
     m_Bits: 4294967295
   m_IsTrigger: 0
   m_UsedByEffector: 0
-  m_UsedByComposite: 0
+  m_UsedByComposite: 1
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
@@ -3076,7 +3032,7 @@ GameObject:
   - component: {fileID: 783342761}
   - component: {fileID: 783342760}
   - component: {fileID: 783342759}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: box
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3156,7 +3112,7 @@ BoxCollider2D:
     m_Bits: 4294967295
   m_IsTrigger: 0
   m_UsedByEffector: 0
-  m_UsedByComposite: 0
+  m_UsedByComposite: 1
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
@@ -3235,7 +3191,7 @@ GameObject:
   - component: {fileID: 827007972}
   - component: {fileID: 827007971}
   - component: {fileID: 827007973}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: box
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3288,7 +3244,7 @@ BoxCollider2D:
     m_Bits: 4294967295
   m_IsTrigger: 0
   m_UsedByEffector: 0
-  m_UsedByComposite: 0
+  m_UsedByComposite: 1
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
@@ -3431,8 +3387,6 @@ MonoBehaviour:
   autoRun: 1
   autoInjectGameObjects:
   - {fileID: 1777094545}
-  _applicationSettings: {fileID: 11400000, guid: 32b7bc51aa16246b4af7ea9c94b09544,
-    type: 2}
 --- !u!1 &879389117
 GameObject:
   m_ObjectHideFlags: 0
@@ -3445,7 +3399,7 @@ GameObject:
   - component: {fileID: 879389121}
   - component: {fileID: 879389120}
   - component: {fileID: 879389119}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: right
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3831,7 +3785,7 @@ GameObject:
   - component: {fileID: 959784726}
   - component: {fileID: 959784725}
   - component: {fileID: 959784724}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: box
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3911,7 +3865,7 @@ BoxCollider2D:
     m_Bits: 4294967295
   m_IsTrigger: 0
   m_UsedByEffector: 0
-  m_UsedByComposite: 0
+  m_UsedByComposite: 1
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
@@ -3990,7 +3944,7 @@ GameObject:
   - component: {fileID: 966874498}
   - component: {fileID: 966874497}
   - component: {fileID: 966874496}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: box
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4070,7 +4024,7 @@ BoxCollider2D:
     m_Bits: 4294967295
   m_IsTrigger: 0
   m_UsedByEffector: 0
-  m_UsedByComposite: 0
+  m_UsedByComposite: 1
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
@@ -4149,7 +4103,7 @@ GameObject:
   - component: {fileID: 997045520}
   - component: {fileID: 997045519}
   - component: {fileID: 997045518}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: box
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4229,7 +4183,7 @@ BoxCollider2D:
     m_Bits: 4294967295
   m_IsTrigger: 0
   m_UsedByEffector: 0
-  m_UsedByComposite: 0
+  m_UsedByComposite: 1
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
@@ -4308,7 +4262,7 @@ GameObject:
   - component: {fileID: 1003755593}
   - component: {fileID: 1003755592}
   - component: {fileID: 1003755591}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: box
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4388,7 +4342,7 @@ BoxCollider2D:
     m_Bits: 4294967295
   m_IsTrigger: 0
   m_UsedByEffector: 0
-  m_UsedByComposite: 0
+  m_UsedByComposite: 1
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
@@ -4467,7 +4421,7 @@ GameObject:
   - component: {fileID: 1013849228}
   - component: {fileID: 1013849227}
   - component: {fileID: 1013849226}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: box
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4547,7 +4501,7 @@ BoxCollider2D:
     m_Bits: 4294967295
   m_IsTrigger: 0
   m_UsedByEffector: 0
-  m_UsedByComposite: 0
+  m_UsedByComposite: 1
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
@@ -4703,7 +4657,7 @@ GameObject:
   - component: {fileID: 1094865584}
   - component: {fileID: 1094865583}
   - component: {fileID: 1094865582}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: box
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4783,7 +4737,7 @@ BoxCollider2D:
     m_Bits: 4294967295
   m_IsTrigger: 0
   m_UsedByEffector: 0
-  m_UsedByComposite: 0
+  m_UsedByComposite: 1
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
@@ -4900,7 +4854,7 @@ GameObject:
   - component: {fileID: 1197162672}
   - component: {fileID: 1197162671}
   - component: {fileID: 1197162670}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: box
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4980,7 +4934,7 @@ BoxCollider2D:
     m_Bits: 4294967295
   m_IsTrigger: 0
   m_UsedByEffector: 0
-  m_UsedByComposite: 0
+  m_UsedByComposite: 1
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
@@ -5059,7 +5013,7 @@ GameObject:
   - component: {fileID: 1228831337}
   - component: {fileID: 1228831336}
   - component: {fileID: 1228831338}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: box
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5112,7 +5066,7 @@ BoxCollider2D:
     m_Bits: 4294967295
   m_IsTrigger: 0
   m_UsedByEffector: 0
-  m_UsedByComposite: 0
+  m_UsedByComposite: 1
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
@@ -5218,7 +5172,7 @@ GameObject:
   - component: {fileID: 1230922125}
   - component: {fileID: 1230922124}
   - component: {fileID: 1230922123}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: box
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5298,7 +5252,7 @@ BoxCollider2D:
     m_Bits: 4294967295
   m_IsTrigger: 0
   m_UsedByEffector: 0
-  m_UsedByComposite: 0
+  m_UsedByComposite: 1
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
@@ -5507,7 +5461,7 @@ GameObject:
   - component: {fileID: 1357764774}
   - component: {fileID: 1357764773}
   - component: {fileID: 1357764772}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: box
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5587,7 +5541,7 @@ BoxCollider2D:
     m_Bits: 4294967295
   m_IsTrigger: 0
   m_UsedByEffector: 0
-  m_UsedByComposite: 0
+  m_UsedByComposite: 1
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
@@ -5666,7 +5620,7 @@ GameObject:
   - component: {fileID: 1363834026}
   - component: {fileID: 1363834025}
   - component: {fileID: 1363834027}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: box
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5719,7 +5673,7 @@ BoxCollider2D:
     m_Bits: 4294967295
   m_IsTrigger: 0
   m_UsedByEffector: 0
-  m_UsedByComposite: 0
+  m_UsedByComposite: 1
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
@@ -5825,7 +5779,7 @@ GameObject:
   - component: {fileID: 1396775423}
   - component: {fileID: 1396775422}
   - component: {fileID: 1396775421}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: box
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5905,7 +5859,7 @@ BoxCollider2D:
     m_Bits: 4294967295
   m_IsTrigger: 0
   m_UsedByEffector: 0
-  m_UsedByComposite: 0
+  m_UsedByComposite: 1
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
@@ -5984,7 +5938,7 @@ GameObject:
   - component: {fileID: 1409039037}
   - component: {fileID: 1409039036}
   - component: {fileID: 1409039035}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: box
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6064,7 +6018,7 @@ BoxCollider2D:
     m_Bits: 4294967295
   m_IsTrigger: 0
   m_UsedByEffector: 0
-  m_UsedByComposite: 0
+  m_UsedByComposite: 1
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
@@ -6220,7 +6174,7 @@ GameObject:
   - component: {fileID: 1643129449}
   - component: {fileID: 1643129448}
   - component: {fileID: 1643129447}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: box
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6300,7 +6254,7 @@ BoxCollider2D:
     m_Bits: 4294967295
   m_IsTrigger: 0
   m_UsedByEffector: 0
-  m_UsedByComposite: 0
+  m_UsedByComposite: 1
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
@@ -6379,7 +6333,7 @@ GameObject:
   - component: {fileID: 1651904427}
   - component: {fileID: 1651904426}
   - component: {fileID: 1651904425}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: box
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6459,7 +6413,7 @@ BoxCollider2D:
     m_Bits: 4294967295
   m_IsTrigger: 0
   m_UsedByEffector: 0
-  m_UsedByComposite: 0
+  m_UsedByComposite: 1
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
@@ -6538,7 +6492,7 @@ GameObject:
   - component: {fileID: 1723234751}
   - component: {fileID: 1723234750}
   - component: {fileID: 1723234749}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: box
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6618,7 +6572,7 @@ BoxCollider2D:
     m_Bits: 4294967295
   m_IsTrigger: 0
   m_UsedByEffector: 0
-  m_UsedByComposite: 0
+  m_UsedByComposite: 1
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
@@ -6697,7 +6651,7 @@ GameObject:
   - component: {fileID: 1772715890}
   - component: {fileID: 1772715889}
   - component: {fileID: 1772715888}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: box
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6777,7 +6731,7 @@ BoxCollider2D:
     m_Bits: 4294967295
   m_IsTrigger: 0
   m_UsedByEffector: 0
-  m_UsedByComposite: 0
+  m_UsedByComposite: 1
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
@@ -6856,7 +6810,7 @@ GameObject:
   - component: {fileID: 1774246830}
   - component: {fileID: 1774246829}
   - component: {fileID: 1774246828}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: box
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6936,7 +6890,7 @@ BoxCollider2D:
     m_Bits: 4294967295
   m_IsTrigger: 0
   m_UsedByEffector: 0
-  m_UsedByComposite: 0
+  m_UsedByComposite: 1
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
@@ -7067,7 +7021,7 @@ GameObject:
   - component: {fileID: 1829594776}
   - component: {fileID: 1829594775}
   - component: {fileID: 1829594774}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: box
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7147,7 +7101,7 @@ BoxCollider2D:
     m_Bits: 4294967295
   m_IsTrigger: 0
   m_UsedByEffector: 0
-  m_UsedByComposite: 0
+  m_UsedByComposite: 1
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
@@ -7414,7 +7368,7 @@ GameObject:
   - component: {fileID: 1933896236}
   - component: {fileID: 1933896235}
   - component: {fileID: 1933896234}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: box
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7494,7 +7448,7 @@ BoxCollider2D:
     m_Bits: 4294967295
   m_IsTrigger: 0
   m_UsedByEffector: 0
-  m_UsedByComposite: 0
+  m_UsedByComposite: 1
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
@@ -7573,7 +7527,7 @@ GameObject:
   - component: {fileID: 1955826433}
   - component: {fileID: 1955826432}
   - component: {fileID: 1955826431}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: box
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7653,7 +7607,7 @@ BoxCollider2D:
     m_Bits: 4294967295
   m_IsTrigger: 0
   m_UsedByEffector: 0
-  m_UsedByComposite: 0
+  m_UsedByComposite: 1
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
@@ -7732,7 +7686,7 @@ GameObject:
   - component: {fileID: 1961643436}
   - component: {fileID: 1961643435}
   - component: {fileID: 1961643434}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: box
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7812,7 +7766,7 @@ BoxCollider2D:
     m_Bits: 4294967295
   m_IsTrigger: 0
   m_UsedByEffector: 0
-  m_UsedByComposite: 0
+  m_UsedByComposite: 1
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
@@ -8090,7 +8044,7 @@ GameObject:
   - component: {fileID: 2036166184}
   - component: {fileID: 2036166183}
   - component: {fileID: 2036166182}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: box
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8170,7 +8124,7 @@ BoxCollider2D:
     m_Bits: 4294967295
   m_IsTrigger: 0
   m_UsedByEffector: 0
-  m_UsedByComposite: 0
+  m_UsedByComposite: 1
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
@@ -8249,7 +8203,7 @@ GameObject:
   - component: {fileID: 2043523075}
   - component: {fileID: 2043523074}
   - component: {fileID: 2043523073}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: box
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8329,7 +8283,7 @@ BoxCollider2D:
     m_Bits: 4294967295
   m_IsTrigger: 0
   m_UsedByEffector: 0
-  m_UsedByComposite: 0
+  m_UsedByComposite: 1
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
@@ -8408,7 +8362,7 @@ GameObject:
   - component: {fileID: 2085440358}
   - component: {fileID: 2085440357}
   - component: {fileID: 2085440359}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: box
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8461,7 +8415,7 @@ BoxCollider2D:
     m_Bits: 4294967295
   m_IsTrigger: 0
   m_UsedByEffector: 0
-  m_UsedByComposite: 0
+  m_UsedByComposite: 1
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
@@ -8566,4 +8520,3 @@ SceneRoots:
   - {fileID: 1870787439}
   - {fileID: 617573071}
   - {fileID: 1777094547}
-  - {fileID: 457365915}

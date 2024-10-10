@@ -11,6 +11,19 @@ using Object = UnityEngine.Object;
 public class ReadGoogleSheets
 {
     public const char Determiner = ';';
+    
+    public static UniTask<List<T>> FillDataAsync<T>(string sheetUrl, string tableName) where T : new()
+    {
+        var taskCompletionSource = new UniTaskCompletionSource<List<T>>();
+
+        FillData<T>(sheetUrl, tableName, data =>
+        {
+            taskCompletionSource.TrySetResult(data);  // Устанавливаем результат
+        });
+
+        return taskCompletionSource.Task;
+    }
+    
     public static void FillData<T>(string id, string gridId, Action<List<T>> calBack) where T : new()
     {
         List<Sprite> listSprites = null;

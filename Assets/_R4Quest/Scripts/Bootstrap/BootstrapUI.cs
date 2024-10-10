@@ -31,8 +31,21 @@ public class BootstrapUI : MonoBehaviour
 
     private void OnShowInfo(string s)
     {
-        TextInfo.text = s;
-        IndicatorSpeed *= -1;
+        if (s == string.Empty)
+            HideInfo();
+        else
+        {
+            TextInfo.text = s;
+            IndicatorSpeed *= -1;
+        }
+    }
+
+    private void HideInfo()
+    {
+        foreach (var spriteRenderer in Indicator.transform.parent.gameObject.GetComponentsInChildren<SpriteRenderer>())
+        {
+            FXManager.PlayFx(spriteRenderer.gameObject, new HideRendererEffect(), 1);
+        }
     }
 
     private void OnDestroy()

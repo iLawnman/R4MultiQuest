@@ -4,14 +4,23 @@ using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.ResourceManagement.ResourceLocations;
 using UnityEngine.SceneManagement;
+using VContainer.Unity;
 
-public class GameScenesStarter : MonoBehaviour
+public class GameScenesStarter : IStartable
 {
-    void Start()
+    private readonly ApplicationSettings _applicationSettings;
+
+    public GameScenesStarter(ApplicationSettings applicationSettings)
     {
-        // Addressables.LoadResourceLocationsAsync(settings.AddressableKey, 
-        //         typeof(UnityEngine.ResourceManagement.ResourceProviders.SceneInstance))
-        //     .Completed += OnLocationsLoaded;
+        _applicationSettings = applicationSettings;
+    }
+    public void Start()
+    {
+        Debug.Log("start gamescene with addressable setting " + _applicationSettings.AddressableKey);
+        
+        Addressables.LoadResourceLocationsAsync(_applicationSettings.AddressableKey, 
+                typeof(UnityEngine.ResourceManagement.ResourceProviders.SceneInstance))
+            .Completed += OnLocationsLoaded;
     }
 
     void OnLocationsLoaded(AsyncOperationHandle<IList<IResourceLocation>> handle)
@@ -23,7 +32,7 @@ public class GameScenesStarter : MonoBehaviour
             {
                 for (int i = 0; i < locations.Count; i++)
                 {
-                    BootstrapActions.OnShowInfo?.Invoke("Loading Scene " + locations[i].PrimaryKey);
+                    //BootstrapActions.OnShowInfo?.Invoke("Loading Scene " + locations[i].PrimaryKey);
                     var loadMode = i == 0 ? LoadSceneMode.Single :  LoadSceneMode.Additive;
                     Addressables.LoadSceneAsync(locations[i], loadMode).Completed += OnSceneLoaded;
                 }
@@ -43,7 +52,7 @@ public class GameScenesStarter : MonoBehaviour
     {
         if (handle.Status == AsyncOperationStatus.Succeeded)
         {
-            BootstrapActions.OnShowInfo?.Invoke("Loaded " + handle.DebugName);
+            //BootstrapActions.OnShowInfo?.Invoke("Loaded " + handle.DebugName);
             Debug.Log(handle.DebugName + " loaded successfully.");
         }
         else

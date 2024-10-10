@@ -32,9 +32,12 @@ public class BootstrapFlow : IStartable
              return;
          }
         
-         Debug.Log("start loading data");
+        Debug.Log("start loading data");
         await _loadingService.Loading(_configDataContainer);
-        Debug.Log("loaded data " + _configDataContainer.ApplicationData.Quests.Count);
+        Debug.Log("loaded data " + _configDataContainer.ApplicationData.Quests.Count
+                                 + " / " + _configDataContainer.ApplicationData.Answers.Count
+                                 + " / " + _configDataContainer.ApplicationData.Resources.Count);
 
+        SceneManager.LoadSceneAsync(1);
     }
 }

@@ -68,7 +68,7 @@ public class QuestsTimerController : MonoBehaviour
         {
             var time = (GoalTime[i] / 60).ToString() + ":" + (GoalTime[i] % 60).ToString("D2");
                 
-            if(GetComponent<GoalsController>().goalsUIs[i].GetComponent<Image>().color == Color.red)
+            if(GetComponent<GoalsUI>().goalsUIs[i].GetComponent<Image>().color == Color.red)
                 final += "<color=red>Задача " + (i + 1) + " - " + " / " +  time + " сек</color>\n";
             else
                 final += "Задача " + (i + 1)+ " - " + " / " +  time + " сек\n";

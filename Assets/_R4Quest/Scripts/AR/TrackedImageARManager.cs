@@ -50,6 +50,7 @@ public class TrackedImageARManager : MonoBehaviour
             {
                 trackedImages.Add(trackedImage);
                 ARSceneActions.OnARTrackedImageAdded?.Invoke(trackedImage);
+                Debug.Log("recognition " + trackedImage.referenceImage.name);
             }
         }
 

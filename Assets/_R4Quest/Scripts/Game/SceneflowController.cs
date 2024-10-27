@@ -5,6 +5,7 @@ using UnityEngine.XR.ARFoundation;
 
 public static partial class GameActions
 {
+    public static Action<bool, string> SetReadyForTracking;
     public static Action OnSceneStarting;
     public static Action OnSceneStarted;
     public static Action OnScenePaused;
@@ -15,7 +16,7 @@ public static partial class GameActions
 public class SceneflowController : MonoBehaviour
     {
         private InfoPanelsController _infoPanel;
-        private GoalsController _goalsConteroller;
+        private GoalsUI _goalsConteroller;
         private MainCanvasController _mainCanvasController;
         private AskPanel askPanel;
 
@@ -24,7 +25,7 @@ public class SceneflowController : MonoBehaviour
             Application.runInBackground = true;
             Application.targetFrameRate = 30;
             _infoPanel = FindFirstObjectByType<InfoPanelsController>();
-            _goalsConteroller = FindFirstObjectByType<GoalsController>();
+            _goalsConteroller = FindFirstObjectByType<GoalsUI>();
             _mainCanvasController = FindFirstObjectByType<MainCanvasController>();
             
             if (!PlayerPrefs.HasKey("SaveQuest"))

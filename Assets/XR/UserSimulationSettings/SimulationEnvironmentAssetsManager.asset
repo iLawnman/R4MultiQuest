@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: SimulationEnvironmentAssetsManager
   m_EditorClassIdentifier: 
   m_EnvironmentPrefabPaths:
-  - Assets/_Pirates/Pirates0000.prefab
+  - Assets/_Pirates/Pirates0000SimEnvironment.prefab
   - Packages/com.unity.xr.arfoundation/Assets/Prefabs/DefaultSimulationEnvironment.prefab
   m_FallbackAtEndOfList: 0

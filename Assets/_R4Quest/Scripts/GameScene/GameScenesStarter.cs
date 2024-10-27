@@ -4,21 +4,24 @@ using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.ResourceManagement.ResourceLocations;
 using UnityEngine.SceneManagement;
+using VContainer;
 using VContainer.Unity;
 
 public class GameScenesStarter : IStartable
 {
-    private readonly ApplicationSettings _applicationSettings;
+    private ApplicationSettings applicationSettings => configDataContainer.ApplicationSettings;
+    private readonly ConfigDataContainer configDataContainer;
 
-    public GameScenesStarter(ApplicationSettings applicationSettings)
+    public GameScenesStarter(IObjectResolver container)
     {
-        _applicationSettings = applicationSettings;
+        configDataContainer = container.Resolve<ConfigDataContainer>();
     }
+    
     public void Start()
     {
-        Debug.Log("start gamescene with addressable setting " + _applicationSettings.AddressableKey);
+        Debug.Log("start gamescene with addressable setting " + applicationSettings.AddressableKey);
         
-        Addressables.LoadResourceLocationsAsync(_applicationSettings.AddressableKey, 
+        Addressables.LoadResourceLocationsAsync(applicationSettings.AddressableKey, 
                 typeof(UnityEngine.ResourceManagement.ResourceProviders.SceneInstance))
             .Completed += OnLocationsLoaded;
     }

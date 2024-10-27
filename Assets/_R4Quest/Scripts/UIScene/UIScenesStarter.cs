@@ -3,11 +3,12 @@ using VContainer.Unity;
 
 public class UIScenesStarter : IStartable
 {
-    private readonly ApplicationSettings _applicationSettings;
+    private ApplicationSettings _applicationSettings => _dataContainer.ApplicationSettings;
+    private readonly ConfigDataContainer _dataContainer;
 
-    public UIScenesStarter(ApplicationSettings applicationSettings)
+    public UIScenesStarter(ConfigDataContainer dataContainer)
     {
-        _applicationSettings = applicationSettings;
+        _dataContainer = dataContainer;
     }
 
     public void Start()

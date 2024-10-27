@@ -11,5 +11,5 @@ using VContainer;
     public class ConfigDataContainer
     {
         public ApplicationData ApplicationData = new ApplicationData();
-        [Inject] private readonly ApplicationSettings _applicationSettings;
+        public ApplicationSettings ApplicationSettings;
     }

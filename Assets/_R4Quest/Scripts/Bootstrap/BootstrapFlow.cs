@@ -11,42 +11,42 @@ using VContainer.Unity;
 public class BootstrapFlow : IStartable
 {
     private readonly GoogleSheetDataLoadingService _loadingService;
-    private readonly ConfigDataContainer _configDataContainer;
-    private readonly ApplicationSettings _applicationSettings;
+    private ConfigDataContainer _configDataContainer;
+    private readonly IObjectResolver _container;
 
-    public BootstrapFlow(GoogleSheetDataLoadingService loadingService, 
-        ConfigDataContainer configDataContainer,
-        ApplicationSettings applicationSettings)
+    public BootstrapFlow(IObjectResolver container,
+        GoogleSheetDataLoadingService loadingService)
     {
+        _container = container;
         _loadingService = loadingService;
-        _configDataContainer = configDataContainer;
-        _applicationSettings = applicationSettings;
     }
 
     public async void Start()
     {
         //return;
-        
-         if (Application.internetReachability == NetworkReachability.NotReachable)
-         {
-             Debug.Log("no internet");
-             // load SO data from defoult data repo
-             await LoadDefaultDataSet();
-             //return;
-         }
 
-         else
-         {
+        if (Application.internetReachability == NetworkReachability.NotReachable)
+        {
+            Debug.Log("no internet");
+            // load SO data from defoult data repo
+            await LoadDefaultDataSet();
+            //return;
+        }
+        else
+            BootstrapActions.OnSelectApplication += StartAsync;
+    }
+    
+    public async void StartAsync(ApplicationSettings applicationSettings)
+    {
+             BindInstanceToRootScope(applicationSettings);
+
              Debug.Log("start loading data");
-             await _loadingService.Loading(_configDataContainer);
+             await _loadingService.Loading(applicationSettings, _configDataContainer);
              Debug.Log("loaded data " + _configDataContainer.ApplicationData.Quests.Count
                                       + " / " + _configDataContainer.ApplicationData.Answers.Count
                                       + " / " + _configDataContainer.ApplicationData.Resources.Count);
 
-             BindInstanceToRootScope(_applicationSettings);
-         }
-
-         SceneManager.LoadSceneAsync(1);
+             SceneManager.LoadSceneAsync(1);
     }
 
     private async UniTask LoadDefaultDataSet()
@@ -57,9 +57,8 @@ public class BootstrapFlow : IStartable
 
     private void BindInstanceToRootScope<T>(T Instance)
     {
-        Debug.Log("try rebind selected appsetting " + _applicationSettings.AddressableKey);
-        var containerBuilder = new ContainerBuilder();
-        containerBuilder.RegisterInstance(Instance).As<T>();
-        //RootScope.RootContainer.Inject(containerBuilder);
+        Debug.Log("try rebind selected appsetting " + Instance);
+        _container.Inject(Instance);
+        _configDataContainer = _container.Resolve<ConfigDataContainer>();
     }
 }

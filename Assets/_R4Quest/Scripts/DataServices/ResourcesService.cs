@@ -138,4 +138,9 @@ public class ResourcesService
         BootstrapActions.OnShowInfo?.Invoke("Loading GameScene Data");
         await Task.Delay(timeOut);
     }
+
+    public void LoadApplicationSettings(string application)
+    {
+        Debug.Log("call load gs table " + application);
+    }
 }

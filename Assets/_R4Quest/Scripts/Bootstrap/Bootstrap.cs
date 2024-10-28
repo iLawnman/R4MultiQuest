@@ -2,18 +2,19 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using VContainer;
 using Random = UnityEngine.Random;
 
 public class Bootstrap : MonoBehaviour
 {
-    private ResourcesService _resourcesService;
+    [Inject] private ResourcesService _resourcesService;
 
     async void Start()
     {
         DontDestroyOnLoad(this);
         
         // bind all services
-        _resourcesService = new ResourcesService();
+        //_resourcesService = new ResourcesService();
     }
 
     public async void StartApplicationFromSettings(ApplicationSettings settings)

@@ -23,53 +23,23 @@ public class TEST_Mono : MonoBehaviour
     private ConfigDataContainer _configDataContainer = new ConfigDataContainer();
     [SerializeField] private KeyCode keyCode;
 
+    private void Start()
+    {
+        
+    }
+
     private void Update()
     {
         if (Input.GetKeyUp(keyCode))
         {
-            //_loadingService.Loading(_configDataContainer);
-            // ReadGoogleSheets.FillData<QuestData>(settins.GoogleSheet,
-            //     settins.GoogleSheetQuestTable,
-            //     list =>
-            //     {
-            //         _configDataContainer.Quests = list;
-            //         Debug.Log("q " + _configDataContainer.Quests.Count);
-            //     });
+            GetRemoteSprite();
         }
     }
 
-    [ContextMenu("DO")]
-    public void DO()
+    private void GetRemoteSprite()
     {
-        //_loadingService = new LoadingService();
-        //LoadGoogleTable();
-        //CheckTableEditedTime();
-    }
-
-    private async UniTask CheckTableEditedTime()
-    {
-        string fileId = "1-P_YElXhGf6H2NfwVIPiq8xQV55LbWsCmF_D4cc8EFw"; // Идентификатор файла Google Sheets
-        string apiKey = "AIzaSyACKRzVQ-koaSkqmdRFFEjWDkt7GbHT0IM"; // Ваш API ключ Google
-        string url = $"https://www.googleapis.com/drive/v3/files/{fileId}?fields=modifiedTime&key={apiKey}";
-
-        using (UnityWebRequest request = UnityWebRequest.Get(url))
-        {
-            var operation = request.SendWebRequest();
-
-            while (!operation.isDone)
-            {
-                await Task.Yield(); // Ожидание завершения запроса
-            }
-
-            if (request.result == UnityWebRequest.Result.Success)
-            {
-                string sheetData = request.downloadHandler.text;
-                Debug.Log("data " + sheetData);  // Обработка полученных данных
-            }
-            else
-            {
-                Debug.LogError("Ошибка при загрузке данных с Google Sheet: " + request.error);
-            }
-        }
+        //get Gtable
+        //get data resources from table
+        //fill repository
     }
 }

@@ -9,10 +9,11 @@ public class GoogleSheetDataLoadingService
 {
     public async UniTask Loading(ApplicationSettings applicationSettings, ConfigDataContainer configDataContainer)
     {
+        await Addressables.InitializeAsync();
+        
         configDataContainer.ApplicationSettings = applicationSettings;
         // if(!AddressableUtils.AddressableResourceExists(_applicationSettings.AddressableKey).Result)
         //     return;
-        await Addressables.InitializeAsync();
 
         Debug.Log("application " + applicationSettings.applicationName);
         bool updated = await ReadGoogleSheets.CheckTableEditedAsync(applicationSettings.GoogleSheet,

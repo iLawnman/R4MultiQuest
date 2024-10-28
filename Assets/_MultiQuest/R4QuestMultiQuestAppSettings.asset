@@ -12,3 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 068ab0a662b06456491e756a3835c20e, type: 3}
   m_Name: R4QuestMultiQuestAppSettings
   m_EditorClassIdentifier: 
+  applicationName: MultiQuest
+  companyName: 
+  applicationVersion: 
+  applicationBuild: 
+  bundleId: 
+  category: 
+  icon: 
+  GoogleSheet: 1r126nBWT0kMIyZIJONteKrGTDidYMU867MbnnAR19-0
+  GoogleSheetQuestTable: 
+  GoogleSheetAnswersTable: 
+  GoogleSheetResourcesTable: 
+  RemoteSettings: 
+  AddressableKey: MultiQuest

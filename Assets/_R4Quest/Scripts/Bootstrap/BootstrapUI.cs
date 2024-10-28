@@ -15,7 +15,7 @@ public class BootstrapUI : MonoBehaviour
 
     private void OnEnable()
     {
-        throw new NotImplementedException();
+        //throw new NotImplementedException();
     }
 
     private void OnShowInfo(string s)

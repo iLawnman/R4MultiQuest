@@ -9,5 +9,7 @@ using VContainer.Unity;
         {
             builder.Register<GoogleSheetDataLoadingService>(Lifetime.Scoped);
             builder.RegisterEntryPoint<BootstrapFlow>();
+            builder.Register<ResourcesService>(Lifetime.Scoped);
+            builder.RegisterComponentInHierarchy<QuestSelectorUI>();
         }
 }

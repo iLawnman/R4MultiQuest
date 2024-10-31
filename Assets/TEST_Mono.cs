@@ -1,23 +1,11 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Net;
-using System.Runtime.Remoting.Activation;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
-using DataSakura.Runtime.Utilities;
 using Newtonsoft.Json;
-using Sirenix.OdinInspector;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
 using UnityEngine.Networking;
-using UnityEngine.Serialization;
-using VContainer;
-using Object = UnityEngine.Object;
 
 public class TEST_Mono : MonoBehaviour
 {
@@ -54,7 +42,14 @@ public class TEST_Mono : MonoBehaviour
             GetFileList().Forget();
         }
     }
-    
+
+    [ContextMenu("CreateReferenceLibrary")]
+    public async UniTask CreateReferenceLibrary()
+    {
+        //get all targets from cache
+        //create library
+    }
+
     [ContextMenu("GetFiles")]
     public async UniTask GetFileList()
     {
@@ -89,6 +84,7 @@ public class TEST_Mono : MonoBehaviour
                 throw;
             }
         }
+        Debug.Log("cache files updated");
     }
 
     private async UniTask<Dictionary<string, DateTime>> FetchMetadataAsync(string MetadataUrl)

@@ -16,6 +16,7 @@ public class QuestSelectorUI : MonoBehaviour
     [SerializeField] private Button closeButton;
     [SerializeField] private GameObject buttonPrefab;
     [SerializeField] private BootstrapUI bootstrap;
+    private bool menuDone;
 
     void Start()
     {
@@ -75,6 +76,7 @@ public class QuestSelectorUI : MonoBehaviour
             button.GetComponentInChildren<Button>().onClick.AddListener(() =>
             {
                 OnSelect(tmpTxt.text);
+                menuDone = true;
             });
         }
     }
@@ -98,6 +100,9 @@ public class QuestSelectorUI : MonoBehaviour
 
     private void OnSelect(string tmpTxt)
     {
+        if(menuDone)
+            return;
+        
         bootstrap.gameObject.SetActive(true);
         var setting = _applicationSettings.FirstOrDefault(x => x.applicationName.Contains(tmpTxt));
         BootstrapActions.OnSelectApplication?.Invoke(setting);

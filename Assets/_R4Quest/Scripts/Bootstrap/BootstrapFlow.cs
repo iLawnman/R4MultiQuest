@@ -13,12 +13,15 @@ public class BootstrapFlow : IStartable
     private readonly GoogleSheetDataLoadingService _loadingService;
     private ConfigDataContainer _configDataContainer;
     private readonly IObjectResolver _container;
+    private FileSyncService _fileSyncService;
 
     public BootstrapFlow(IObjectResolver container,
-        GoogleSheetDataLoadingService loadingService)
+        GoogleSheetDataLoadingService loadingService,
+        FileSyncService fileSyncService)
     {
         _container = container;
         _loadingService = loadingService;
+        _fileSyncService = fileSyncService;
     }
 
     public async void Start()
@@ -28,9 +31,7 @@ public class BootstrapFlow : IStartable
         if (Application.internetReachability == NetworkReachability.NotReachable)
         {
             Debug.Log("no internet");
-            // load SO data from defoult data repo
             await LoadDefaultDataSet();
-            //return;
         }
         else
             BootstrapActions.OnSelectApplication += StartAsync;
@@ -39,14 +40,16 @@ public class BootstrapFlow : IStartable
     public async void StartAsync(ApplicationSettings applicationSettings)
     {
              BindInstanceToRootScope(applicationSettings);
-
-             Debug.Log("start loading data");
-             await _loadingService.Loading(applicationSettings, _configDataContainer);
-             Debug.Log("loaded data " + _configDataContainer.ApplicationData.Quests.Count
-                                      + " / " + _configDataContainer.ApplicationData.Answers.Count
-                                      + " / " + _configDataContainer.ApplicationData.Resources.Count);
-
-             SceneManager.LoadSceneAsync(1);
+             
+             //await _fileSyncService.Initilize(applicationSettings);
+             //
+             // Debug.Log("start loading data");
+             // await _loadingService.Loading(applicationSettings, _configDataContainer);
+             // Debug.Log("loaded data " + _configDataContainer.ApplicationData.Quests.Count
+             //                          + " / " + _configDataContainer.ApplicationData.Answers.Count
+             //                          + " / " + _configDataContainer.ApplicationData.Resources.Count);
+             //
+             // SceneManager.LoadSceneAsync(1);
     }
 
     private async UniTask LoadDefaultDataSet()

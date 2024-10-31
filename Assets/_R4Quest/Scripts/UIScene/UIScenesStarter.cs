@@ -13,6 +13,6 @@ public class UIScenesStarter : IStartable
 
     public void Start()
     {
-        Debug.Log("start uiscene with addressable setting " + _applicationSettings.AddressableKey);
+        Debug.Log("start uiscene with addressable setting "); // + _applicationSettings.AddressableKey);
     }
 }

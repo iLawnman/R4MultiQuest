@@ -1,45 +1,164 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
+using System.Linq;
 using System.Net;
+using System.Runtime.Remoting.Activation;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
 using DataSakura.Runtime.Utilities;
+using Newtonsoft.Json;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.Networking;
+using UnityEngine.Serialization;
 using VContainer;
 using Object = UnityEngine.Object;
 
 public class TEST_Mono : MonoBehaviour
 {
-    [SerializeField] private ApplicationSettings settins;
-    private ApplicationRemoteSettings remoteSettins;
-    [SerializeField] private AssetReference _assetReference;
-    [Inject] private GoogleSheetDataLoadingService _loadingService;
-    private GoogleSheetLoadUnit<QuestData> data;
-    private ConfigDataContainer _configDataContainer = new ConfigDataContainer();
     [SerializeField] private KeyCode keyCode;
-
-    private void Start()
+    [SerializeField] List<string> localDirectories = new List<string>(){"Assets/_Pirates/PiratesPictures", "Assets/_Pirates/RecognitionImages", "Assets/_Pirates/PiratesSounds"};
+    [SerializeField] List<string> remoteDirectories = new List<string>(){"Pictures/", "RecognitionImages/", "Sounds/"};
+    [SerializeField] private string siteUrl = "http://r4quest.ru/r4questdata/Pirates/";
+    [SerializeField] private string cachePath = "/Cache/"; 
+    
+    [ContextMenu("DO metadata")]
+    private void DoMetadata()
     {
-        
+        foreach (var directory in localDirectories)
+        {
+            string[] filePaths = Directory.GetFiles(directory);
+            List<string> _fileNames = filePaths.Select(Path.GetFileName).ToList();
+            List<string> fileNames = new List<string>();
+            _fileNames.ForEach(x=>
+            {
+                if(!x.Contains(".meta") && !x.Contains(".DS_Store")&& !x.Contains(".json"))
+                    fileNames.Add(x);
+            });
+            string json = JsonConvert.SerializeObject(fileNames, Formatting.Indented);
+            File.WriteAllText(Path.Combine(directory, "metadata.json"), json);
+
+            Debug.Log("Список имен файлов сохранен в metadata.json");
+        }
     }
 
     private void Update()
     {
         if (Input.GetKeyUp(keyCode))
         {
-            GetRemoteSprite();
+            GetFileList().Forget();
+        }
+    }
+    
+    [ContextMenu("GetFiles")]
+    public async UniTask GetFileList()
+    {
+        foreach (var directory in remoteDirectories)
+        {
+            try
+            {
+                var url = siteUrl + directory;
+                Dictionary<string, DateTime> remoteFiles = await FetchMetadataAsync(url);
+                
+                foreach (var file in remoteFiles)
+                {
+                    if (File.Exists(cachePath + file.Key))
+                    {
+                        DateTime localUpdated = File.GetLastWriteTimeUtc(cachePath);
+                        if (file.Value > localUpdated)
+                        {
+                            Debug.Log("update " + file.Key + " with " + file.Value + " / " + localUpdated);
+                            await DownloadFileAsync(file.Key, url, cachePath);
+                        }
+                    }
+                    else
+                    {
+                        Debug.Log("download " + file.Key);
+                        await DownloadFileAsync(file.Key, url, cachePath);
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
         }
     }
 
-    private void GetRemoteSprite()
+    private async UniTask<Dictionary<string, DateTime>> FetchMetadataAsync(string MetadataUrl)
     {
-        //get Gtable
-        //get data resources from table
-        //fill repository
+        Dictionary<string, DateTime> remoteFiles = new Dictionary<string, DateTime>();
+        var request = UnityWebRequest.Get(MetadataUrl + "/metadata.json");
+        await request.SendWebRequest();
+
+        if (request.result != UnityWebRequest.Result.Success)
+        {
+            Debug.LogError("Не удалось получить metadata.json: " + request.error);
+            return null;
+        }
+
+        string json = request.downloadHandler.text;
+        var files = JsonConvert.DeserializeObject<List<string>>(json);
+        foreach (var x in files)
+        {
+            var filePath = MetadataUrl + x;
+            using var requestHead = UnityWebRequest.Head(filePath);
+            await requestHead.SendWebRequest();
+
+            var fileDate = DateTime.Parse(requestHead.GetResponseHeader("Last-Modified"));
+            remoteFiles.Add(x, fileDate);
+        };
+
+        return remoteFiles;
+    }
+
+    private async UniTask DownloadFileAsync(string name, string url, string cachePath)
+    {
+        var fullFilePath = Path.Combine(cachePath, name);
+
+        var directoryPath = Path.GetDirectoryName(fullFilePath);
+        if (!Directory.Exists(directoryPath))
+        {
+            Directory.CreateDirectory(directoryPath);
+        }
+        
+        using var request = UnityWebRequest.Get(url + name);
+        await request.SendWebRequest();
+
+        if (request.result != UnityWebRequest.Result.Success)
+        {
+            Debug.LogError($"Не удалось загрузить файл {name}: {request.error}");
+            return;
+        }
+
+        try
+        {
+            File.WriteAllBytes(fullFilePath, request.downloadHandler.data);
+            Debug.Log($"Файл {fullFilePath} обновлен.");
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+    }
+
+    [Serializable]
+    public class MetadataList
+    {
+        public List<FileMetadata> files;
+    }
+
+    [Serializable]
+    public class FileMetadata
+    {
+        public string filename;
+        public DateTime updated;
     }
 }

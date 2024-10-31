@@ -12,9 +12,12 @@ public class TrackedImageARManager : MonoBehaviour
     private ARTrackedImageManager aRTrackedImageManager;
     private List<ARTrackedImage> trackedImages = new List<ARTrackedImage>();
     public bool readyForTracking = true;
+    private ResourcesService resourcesService;
     
     private void Start()
     {
+        //check CustomReferenceLibrary in LocalRepository
+        
         aRTrackedImageManager = FindObjectOfType<ARTrackedImageManager>();
         aRTrackedImageManager.trackedImagesChanged += OnTrackedImagesChanged;
         ARSceneActions.OnARSession += OnARSession;

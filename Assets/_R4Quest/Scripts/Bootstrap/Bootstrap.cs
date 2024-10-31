@@ -8,6 +8,7 @@ using Random = UnityEngine.Random;
 public class Bootstrap : MonoBehaviour
 {
     [Inject] private ResourcesService _resourcesService;
+    [Inject] private FileSyncService _fileSyncService;
 
     async void Start()
     {

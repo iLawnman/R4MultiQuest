@@ -28,11 +28,18 @@ public class ResourcesService
             await CheckRemoteSettings();
 
             await LoadDependencies();
+
+            await LoadRemoteRepository();
         }
         else
         {
             BootstrapActions.OnShowInfo?.Invoke("NO INTERNET CONNECTION");
         }
+    }
+
+    private async UniTask LoadRemoteRepository()
+    {
+        string remoteAddress = "https://r4quest.ru/r4questdata/";
     }
 
     private async UniTask LoadDependencies()
@@ -114,8 +121,6 @@ public class ResourcesService
         {
             Debug.Log("res  " + resource);
         }
-        
-        //handle.Release();
     }
 
     async Task CheckRemoteSettings()
@@ -126,21 +131,5 @@ public class ResourcesService
         //     currentRemoteSettings = list;
         // });
         await Task.Delay(timeOut);
-    }
-
-    async Task CheckResourcesInCache()
-    {
-        BootstrapActions.OnShowInfo?.Invoke("Check Resources In Cache");
-    }
-
-    async Task LoadGameSceneData()
-    {
-        BootstrapActions.OnShowInfo?.Invoke("Loading GameScene Data");
-        await Task.Delay(timeOut);
-    }
-
-    public void LoadApplicationSettings(string application)
-    {
-        Debug.Log("call load gs table " + application);
     }
 }

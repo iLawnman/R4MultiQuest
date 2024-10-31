@@ -27,6 +27,8 @@ public class QuestUI : MonoBehaviour, IUISkin
 
     public void SetSkin(UISkin introSkin)
     {
+        Debug.Log("set skin " + introSkin);
+
         skin = introSkin as QuestUISkin;
         questStartPanel.GetComponent<Image>().sprite = skin.questStartBack;
         continueButton.GetComponent<Image>().sprite = skin.continueButton;

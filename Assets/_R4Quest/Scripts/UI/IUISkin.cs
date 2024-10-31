@@ -1,4 +1,4 @@
 public interface IUISkin
 { 
-    void SetSkin(UISkin introSkin);
+    public void SetSkin(UISkin introSkin);
 }

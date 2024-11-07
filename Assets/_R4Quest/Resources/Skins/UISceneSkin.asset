@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a34b449d340a4506952d5f72e444780b, type: 3}
   m_Name: UISceneSkin
   m_EditorClassIdentifier: 
-  background: {fileID: 2800000, guid: 20d9975f903014c148b9e0c0d6fb8dff, type: 3}
+  background: {fileID: 2800000, guid: 7eec08e21ae644ca98149938941910b3, type: 3}
   button: {fileID: 10305, guid: 0000000000000000f000000000000000, type: 0}

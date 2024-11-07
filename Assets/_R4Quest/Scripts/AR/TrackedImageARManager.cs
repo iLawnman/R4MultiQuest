@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.XR.ARFoundation;
@@ -53,7 +54,13 @@ public class TrackedImageARManager : MonoBehaviour
             {
                 trackedImages.Add(trackedImage);
                 ARSceneActions.OnARTrackedImageAdded?.Invoke(trackedImage);
-                Debug.Log("recognition " + trackedImage.referenceImage.name);
+                Debug.Log("recognition " + trackedImage);
+                Debug.Log("recognition " + trackedImage.referenceImage.texture);
+
+                foreach (var refer in aRTrackedImageManager.referenceLibrary as MutableRuntimeReferenceImageLibrary)
+                {
+                    Debug.Log("ref " + refer.texture.name);
+                }
             }
         }
 

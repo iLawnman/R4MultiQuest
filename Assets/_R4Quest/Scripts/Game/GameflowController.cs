@@ -17,22 +17,15 @@ public class GameflowController : MonoBehaviour
     {
         Application.runInBackground = true;
         //Application.targetFrameRate = 30;
-
         Debug.Log("start gameflow " + applicationSettings);
-
         // skin picture update
-        
-        
     }
 }
-
-         /*
-         
+         /*        
              _infoPanel = FindFirstObjectByType<InfoPanelsController>();
              _goalsConteroller = FindFirstObjectByType<GoalsController>();
              _mainCanvasController = FindFirstObjectByType<MainCanvasController>();
              _questTimeController = FindFirstObjectByType<QuestsTimerController>();
-
              if (!PlayerPrefs.HasKey("SaveQuest"))
                  ClearStart();
              else

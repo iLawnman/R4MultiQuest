@@ -46,9 +46,6 @@ public class SplashScreensUI : MonoBehaviour, IUISkin
             
             if (CacheService.GetCachedImage(x.Logo))
                 logo.sprite = CacheService.GetCachedImage(x.Logo);
-            
-            if(!string.IsNullOrWhiteSpace(x.Text))
-                text.text = x.Text;
 
             if (CacheService.GetCachedImage(x.okButton))
                 okButton.GetComponent<Image>().sprite = CacheService.GetCachedImage(x.okButton);
@@ -65,11 +62,6 @@ public class SplashScreensUI : MonoBehaviour, IUISkin
             if (CacheService.GetCachedImage(x.R4QLogo))
                 r4logo.sprite = CacheService.GetCachedImage(x.R4QLogo);
             
-            if(!string.IsNullOrWhiteSpace(x.Name1))
-                name1text.text = x.Name1;
-            if(!string.IsNullOrWhiteSpace(x.Name2))
-                name2text.text = x.Name2;
-            
             if (CacheService.GetCachedImage(x.AskPanelBack))
                 askPanelBack.sprite = CacheService.GetCachedImage(x.AskPanelBack);
             if(!string.IsNullOrWhiteSpace(x.AskText))
@@ -80,6 +72,16 @@ public class SplashScreensUI : MonoBehaviour, IUISkin
             
             if (CacheService.GetCachedImage(x.NoButton))
                 noButton.GetComponent<Image>().sprite = CacheService.GetCachedImage(x.NoButton);
+            
+            if(!string.IsNullOrWhiteSpace(x.Name1))
+                name1text.text = x.Name1;
+            
+            if(!string.IsNullOrWhiteSpace(x.Name2))
+                name2text.text = x.Name2;
+            
+            if(!string.IsNullOrWhiteSpace(x.Text))
+                text.text = x.Text;
+            
         });
     }
 

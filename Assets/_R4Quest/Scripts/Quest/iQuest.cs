@@ -4,6 +4,7 @@ using UnityEngine;
 public static partial class GameActions
     {
         public static Action<iQuest> OnQuestStart;
+        public static Action OnQuestStarting;
     }
 
     public abstract class iQuest : MonoBehaviour

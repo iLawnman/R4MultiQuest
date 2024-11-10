@@ -51,7 +51,7 @@ public class SceneflowController : MonoBehaviour
         public void ClearStart()
         {
             PlayerPrefs.DeleteAll();
-            _infoPanel.ShowStartSequence();
+            //_infoPanel.ShowStartSequence();
         }
 
         private void OnDestroy()
@@ -63,7 +63,7 @@ public class SceneflowController : MonoBehaviour
 
         private void LoadSavedStart()
         {
-            _infoPanel.startPanel.SetActive(false);
+            _infoPanel.panelPrefab.SetActive(false);
             // askPanel = _mainCanvasController.ShowLoadAskPanel();
             // askPanel.Yes.onClick.AddListener(LoadData);
             // askPanel.No.onClick.AddListener(ClearStart);

@@ -1,9 +1,13 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class GoalsUI : MonoBehaviour
 {
+    [SerializeField] GameObject panel;
     [SerializeField] GoalsUISkin goalsUISkin;
     [SerializeField] public List<GameObject> goalsUIs;
     [SerializeField] Sprite goalSuccessImgBack;
@@ -14,8 +18,26 @@ public class GoalsUI : MonoBehaviour
     [SerializeField] internal List<int> successIndx = new List<int>();
     [SerializeField] private bool _colorMarkedResult;
     [SerializeField] private AudioClip successFX;
-    
-    private void OnEnable()
+
+    private async void Start()
+    {
+        await LoadSetCachedResources();
+
+        GameActions.OnQuestStarting += OnActive;
+    }
+
+    private void OnActive()
+    {
+        panel.SetActive(true);
+        SetImgsBack();
+    }
+
+    private async UniTask LoadSetCachedResources()
+    {
+        // load goal skin async
+    }
+
+    private void SetImgsBack()
     {
         if (goalSuccessImgBack)
             goalsUIs.ForEach(x => x.GetComponent<Image>().sprite = goalSuccessImgBack);

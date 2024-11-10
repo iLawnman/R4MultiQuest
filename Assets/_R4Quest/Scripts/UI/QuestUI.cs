@@ -13,13 +13,21 @@ public class QuestUI : MonoBehaviour, IUISkin
 
     void Start()
     {
+        GameActions.OnQuestStarting += OnActive;
         ARSceneActions.OnARTrackedImageAdded += OnARTrackedImageAdded;
         SetSkin(skin);
+    }
+
+    private void OnActive()
+    {
+        questStartPanel?.SetActive(true);
     }
 
     void OnDestroy()
     {
         ARSceneActions.OnARTrackedImageAdded -= OnARTrackedImageAdded;
+        GameActions.OnQuestStarting -= OnActive;
+
     }
 
     private void OnARTrackedImageAdded(ARTrackedImage obj)
@@ -32,7 +40,7 @@ public class QuestUI : MonoBehaviour, IUISkin
         //skin = uiSkin as QuestUISkin;
         //questStartPanel.GetComponent<Image>().sprite = skin.questStartBack.LoadAssetAsync<Sprite>().WaitForCompletion();
         //if(skin.questStartBack.)
-//            questStartPanel.GetComponent<Image>().sprite = CacheService.GetCachedImage(skin.questStartBack.name);
-        continueButton.GetComponent<Image>().sprite = skin.continueButton;
+        //    questStartPanel.GetComponent<Image>().sprite = CacheService.GetCachedImage(skin.questStartBack.name);
+        //continueButton.GetComponent<Image>().sprite = skin.continueButton;
     }
 }

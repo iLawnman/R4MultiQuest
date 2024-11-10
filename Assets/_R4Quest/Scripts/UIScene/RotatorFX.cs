@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
@@ -11,19 +12,25 @@ public class RotatorFX : UIFXBase
 {
     [SerializeField] private Transform boxParent;
     private SpriteRenderer[] boxes;
-    private List<int> downList = new List<int>();
     [SerializeField] private Color targetColor;
     [SerializeField] private GameObject Indicator;
     [SerializeField] private float IndicatorSpeed = 5;
     [SerializeField] private float fadeTime = 1;
     [SerializeField] private TMP_Text TextInfo;
     [SerializeField] private float duration = 0.2f;
+    [SerializeField] private int boxSwithPause = 1;
     void Start()
     {
+        BootstrapActions.OnShowInfo += ChangeTextFX; 
         boxes = boxParent.GetComponentsInChildren<SpriteRenderer>()
             .Where(x => x.name == "box")
             .Where(y => y.GetComponent<Rigidbody2D>().gravityScale == -1)
             .ToArray();
+    }
+
+    private void ChangeTextFX(string obj)
+    {
+        IndicatorSpeed *= -1;
     }
 
     private void OnEnable()
@@ -45,8 +52,7 @@ public class RotatorFX : UIFXBase
 
             boxes[rIndx].DOColor(targetColor, duration).SetEase(Ease.Linear);
             boxes[rIndx].transform.DOScale(new Vector3(0.15f, 0.15f, 0.15f), duration).SetEase(Ease.Linear);
-            boxes[rIndx].GetComponent<Rigidbody2D>().gravityScale = 1;
-            downList.Add(rIndx);
+            boxes[rIndx].GetComponent<Rigidbody2D>().gravityScale *= -1;
         }
     }
     private void Update()

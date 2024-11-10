@@ -20,6 +20,7 @@ public class BootstrapUI : MonoBehaviour
 
     private void OnShowInfo(string s)
     {
+        
         if (s == string.Empty)
             HideInfo();
         else

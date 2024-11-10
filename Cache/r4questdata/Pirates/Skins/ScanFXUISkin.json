@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 808cac94bf3f417b993cf8a259f19444, type: 3}
+  m_Name: ScanFXUISkin
+  m_EditorClassIdentifier: 
+  FrameSprite: {fileID: 21300000, guid: e2d1c4c7ddc314d618e09364a3c941ff, type: 3}
+  fxColor: {r: 0.0039215684, g: 0.46666667, b: 0.4526429, a: 1}
+  TxtFont: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}

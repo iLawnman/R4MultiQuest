@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 [CreateAssetMenu(fileName = "AppSettings", menuName = "iLawn/AppSettings")]
 public class ApplicationSettings : ScriptableObject
@@ -17,5 +18,8 @@ public class ApplicationSettings : ScriptableObject
     public string GoogleSheetAnswersTable;
     public string GoogleSheetResourcesTable;
     public string RemoteSettings;
+    public string GoogleSheetSplashTable;
+    public string GoogleSheetIntroTable;
+    public string GoogleSheetOutroTable;
     public string AddressableKey;
 }

@@ -1,4 +1,6 @@
+using UnityEngine;
+
 public interface IUISkin
-{ 
-    public void SetSkin(UISkin introSkin);
+{
+    void SetSkin(UISkin uiSkin);
 }

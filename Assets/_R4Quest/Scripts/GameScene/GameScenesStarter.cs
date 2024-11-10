@@ -9,19 +9,20 @@ using VContainer.Unity;
 
 public class GameScenesStarter : IStartable
 {
-    private ApplicationSettings applicationSettings => configDataContainer.ApplicationSettings;
-    private readonly ConfigDataContainer configDataContainer;
+    private ConfigDataContainer _container;
 
-    public GameScenesStarter(IObjectResolver container)
+    public GameScenesStarter(ConfigDataContainer container)
     {
-        configDataContainer = container.Resolve<ConfigDataContainer>();
+        _container = container;
     }
-    
     public void Start()
     {
-        Debug.Log("start gamescene with addressable setting " + applicationSettings.AddressableKey);
+        Debug.Log("cont " + _container);
+        //applicationSettings = container.ApplicationSettings;
+
+        Debug.Log("start gamescene with addressable setting " + _container.ApplicationSettings.AddressableKey);
         
-        Addressables.LoadResourceLocationsAsync(applicationSettings.AddressableKey, 
+        Addressables.LoadResourceLocationsAsync(_container.ApplicationSettings.AddressableKey, 
                 typeof(UnityEngine.ResourceManagement.ResourceProviders.SceneInstance))
             .Completed += OnLocationsLoaded;
     }

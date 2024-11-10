@@ -33,9 +33,9 @@ public class IntroScreensUI : MonoBehaviour, IUISkin
         SetSkin(skin);
     }
 
-    public void SetSkin(UISkin introSkin)
+    public void SetSkin(UISkin uiSkin)
     {
-        skin = introSkin as IntroUISkin;
+        skin = uiSkin as IntroUISkin;
         text.font = skin.text;
         taptext.font = skin.taptext;
         credits.font = skin.credits;

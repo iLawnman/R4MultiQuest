@@ -5,237 +5,156 @@ using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Networking;
 using Cysharp.Threading.Tasks;
-using VContainer;
-using VContainer.Unity;
+using Newtonsoft.Json;
 
 public class FileSyncService
 {
-    private Dictionary<string, string> remoteFolders = new Dictionary<string, string>
-    {
-        { "pictures", "Pictures/" },
-        { "recongitionImages", "RecognitionImages/" },
-        { "sounds", "Sounds/" }
-    };
+    List<string> remoteDirectories = new List<string>()
+        { "Pictures/", "RecognitionImages/", "Sounds/", "Skins/" };
 
-    private string localCachePath = Application.persistentDataPath + "/Cache";
-
-    private Dictionary<string, Dictionary<string, DateTime>> folderFileDates = new Dictionary<string, Dictionary<string, DateTime>>();
     private string siteUrl = "https://r4quest.ru/r4questdata/";
+    private string cachePath = Application.persistentDataPath + "/Cache/";
+
     private ApplicationSettings _currentSettings;
-    
+
     public async UniTask Initilize(ApplicationSettings applicationSettings)
     {
         _currentSettings = applicationSettings;
+        siteUrl += _currentSettings.AddressableKey + "/";
         await Start();
+
+        BootstrapActions.OnShowInfo("All Downloaded");
     }
 
     private async UniTask Start()
     {
-        LoadLocalMetadata();
-        await SyncFilesWithRemote();
-        SaveLocalMetadata();
+        await GetFileList();
     }
-    
-    private void LoadLocalMetadata()
+
+    public async UniTask GetFileList()
     {
-        foreach (var folderType in remoteFolders.Keys)
+        foreach (var directory in remoteDirectories)
         {
-            string metadataPath = Path.Combine(localCachePath, folderType, "metadata.json");
-            if (File.Exists(metadataPath))
-            {
-                string json = File.ReadAllText(metadataPath);
-                var fileDates = JsonUtility.FromJson<Dictionary<string, DateTime>>(json);
-                folderFileDates[folderType] = fileDates;
-            }
-            else
-            {
-                folderFileDates[folderType] = new Dictionary<string, DateTime>();
-            }
+            await GetDrectoryFiles(directory);
         }
+
+        Debug.Log("cache files updated");
     }
 
-    private void SaveLocalMetadata()
+    private async Task GetDrectoryFiles(string directory)
     {
-        foreach (var folderEntry in folderFileDates)
+        try
         {
-            string folderType = folderEntry.Key;
-            string metadataPath = Path.Combine(localCachePath, folderType, "metadata.json");
+            var url = siteUrl + directory;
 
-            string json = JsonUtility.ToJson(folderEntry.Value);
-            Directory.CreateDirectory(Path.GetDirectoryName(metadataPath));
-            File.WriteAllText(metadataPath, json);
-        }
-    }
+            Debug.Log("get remote directory " + url);
+            BootstrapActions.OnShowInfo?.Invoke("Fetch remote metadata\n" + directory.Replace("/", string.Empty));
+            Dictionary<string, DateTime> remoteFiles = await FetchMetadataAsync(url);
 
-    private async UniTask SyncFilesWithRemote()
-    {
-        foreach (var folderEntry in remoteFolders)
-        {
-            string folderType = folderEntry.Key;
-            string folderUrl = folderEntry.Value;
-            var fileDates = folderFileDates[folderType];
-
-            List<string> remoteFiles = await GetRemoteFileList(folderUrl);
-
-            // Удаляем локальные записи, которых нет на сервере
-            foreach (var fileName in new List<string>(fileDates.Keys))
+            foreach (var file in remoteFiles)
             {
-                if (!remoteFiles.Contains(fileName))
+                if (File.Exists(cachePath + file.Key))
                 {
-                    fileDates.Remove(fileName);
-                    string localFilePath = Path.Combine(localCachePath, folderType, fileName);
-                    if (File.Exists(localFilePath))
+                    DateTime localUpdated = File.GetLastWriteTimeUtc(cachePath);
+                    if (file.Value > localUpdated)
                     {
-                        File.Delete(localFilePath);
-                        Debug.Log($"Локальный файл {fileName} удален, так как его нет на сервере.");
+                        Debug.Log("update " + file.Key + " with " + file.Value + " / " + localUpdated);
+                        await DownloadFileAsync(file.Key, url, cachePath);
                     }
                 }
-            }
-
-            // Скачиваем или обновляем недостающие файлы
-            foreach (var fileName in remoteFiles)
-            {
-                DateTime localDate = fileDates.ContainsKey(fileName) ? fileDates[fileName] : DateTime.MinValue;
-                DateTime? remoteDate = await GetRemoteFileLastModified(folderUrl, fileName);
-
-                if (remoteDate.HasValue && (remoteDate > localDate || !fileDates.ContainsKey(fileName)))
+                else
                 {
-                    await DownloadFile(folderType, folderUrl, fileName);
-                    fileDates[fileName] = remoteDate.Value;
+                    Debug.Log("download " + file.Key);
+                    await DownloadFileAsync(file.Key, url, cachePath);
                 }
             }
         }
-    }
-
-    private async UniTask<List<string>> GetRemoteFileList(string folderUrl)
-    {
-        List<string> fileList = new List<string>();
-        var _folderUrl = siteUrl + folderUrl;
-        
-        var info = new DirectoryInfo(_folderUrl);
-        var fileInfo = info.GetFiles();
-        foreach (var file in fileInfo)
+        catch (Exception e)
         {
-            Debug.Log("file " + file);
-            fileList.Add(file.Name);
+            Console.WriteLine(e);
+            throw;
         }
-        
-        // using (UnityWebRequest request = UnityWebRequest.Get(_folderUrl))
-        // {
-        //     await request.SendWebRequest();
-        //
-        //     if (request.result != UnityWebRequest.Result.Success)
-        //     {
-        //         Debug.LogError($"Ошибка при получении списка файлов из {_folderUrl}");
-        //         return fileList;
-        //     }
-        //
-        //     string json = request.downloadHandler.text;
-        //     fileList = JsonUtility.FromJson<List<string>>(json);
-        // }
-
-        return fileList;
     }
 
-    private async UniTask<DateTime?> GetRemoteFileLastModified(string folderUrl, string fileName)
+    private async UniTask<Dictionary<string, DateTime>> FetchMetadataAsync(string MetadataUrl)
     {
-        using (UnityWebRequest request = UnityWebRequest.Head(folderUrl + fileName))
-        {
-            await request.SendWebRequest().ToUniTask();
+        Dictionary<string, DateTime> remoteFiles = new Dictionary<string, DateTime>();
+        var request = UnityWebRequest.Get(MetadataUrl + "/metadata.json");
+        Debug.Log("fetch " + MetadataUrl + "/metadata.json");
+        await request.SendWebRequest();
 
+        try
+        {
+            string json = request.downloadHandler.text;
+            var files = JsonConvert.DeserializeObject<List<string>>(json);
+            foreach (var x in files)
+            {
+                var filePath = MetadataUrl + x;
+                using var requestHead = UnityWebRequest.Head(filePath);
+                await requestHead.SendWebRequest();
+
+                var fileDate = DateTime.Parse(requestHead.GetResponseHeader("Last-Modified"));
+                remoteFiles.Add(x, fileDate);
+            }
+        }
+        catch (Exception e)
+        {
             if (request.result != UnityWebRequest.Result.Success)
             {
-                Debug.LogWarning($"Ошибка при проверке даты обновления файла: {fileName}");
+                Debug.LogError($"Не удалось получить {request} metadata.json: " + request.error);
                 return null;
             }
+            Console.WriteLine(e);
+            throw;
+        }
 
-            string lastModifiedString = request.GetResponseHeader("Last-Modified");
-            if (DateTime.TryParse(lastModifiedString, out DateTime remoteDate))
+        return remoteFiles;
+    }
+
+    private async UniTask DownloadFileAsync(string name, string url, string cachePath)
+    {
+        BootstrapActions.OnShowInfo("downloading\n" + name);
+
+        var fullFilePath = Path.Combine(cachePath, name);
+
+        var directoryPath = Path.GetDirectoryName(fullFilePath);
+        if (!Directory.Exists(directoryPath))
+        {
+            Directory.CreateDirectory(directoryPath);
+        }
+
+        using var request = UnityWebRequest.Get(url + name);
+        await request.SendWebRequest();
+
+        try
+        {
+            File.WriteAllBytes(fullFilePath, request.downloadHandler.data);
+            Debug.Log($"Файл {fullFilePath} обновлен.");
+
+            CacheService.UpdateCache();
+        }
+        catch (Exception e)
+        {
+            if (request.result != UnityWebRequest.Result.Success)
             {
-                return remoteDate;
+                Debug.LogError($"Не удалось загрузить файл {name}: {request.error}");
+                return;
             }
-            else
-            {
-                Debug.LogWarning($"Невозможно разобрать Last-Modified для файла: {fileName}");
-                return null;
-            }
+            Console.WriteLine(e);
+            throw;
         }
     }
 
-    private async UniTask DownloadFile(string folderType, string folderUrl, string fileName)
+    [Serializable]
+    public class MetadataList
     {
-        string filePath = Path.Combine(localCachePath, folderType, fileName);
-        Directory.CreateDirectory(Path.GetDirectoryName(filePath));
-
-        if (fileName.EndsWith(".png"))
-        {
-            using (UnityWebRequest request = UnityWebRequestTexture.GetTexture(folderUrl + fileName))
-            {
-                await request.SendWebRequest().ToUniTask();
-
-                if (request.result != UnityWebRequest.Result.Success)
-                {
-                    Debug.LogError($"Ошибка при загрузке изображения: {fileName}");
-                    return;
-                }
-
-                Texture2D texture = DownloadHandlerTexture.GetContent(request);
-                byte[] textureData = texture.EncodeToPNG();
-                await UniTask.SwitchToThreadPool();
-                File.WriteAllBytes(filePath, textureData);
-                await UniTask.SwitchToMainThread();
-                Debug.Log($"Изображение {fileName} успешно скачано и сохранено.");
-            }
-        }
-        else if (fileName.EndsWith(".mp3"))
-        {
-            using (UnityWebRequest request = UnityWebRequestMultimedia.GetAudioClip(folderUrl + fileName, AudioType.MPEG))
-            {
-                await request.SendWebRequest().ToUniTask();
-
-                if (request.result != UnityWebRequest.Result.Success)
-                {
-                    Debug.LogError($"Ошибка при загрузке аудио: {fileName}");
-                    return;
-                }
-
-                AudioClip audioClip = DownloadHandlerAudioClip.GetContent(request);
-                // byte[] audioData = WavUtility.FromAudioClip(audioClip);
-                // await UniTask.SwitchToThreadPool();
-                // File.WriteAllBytes(filePath, audioData);
-                // await UniTask.SwitchToMainThread();
-                Debug.Log($"Аудиофайл {fileName} успешно скачан и сохранен.");
-            }
-        }
-        else
-        {
-            using (UnityWebRequest request = UnityWebRequest.Get(folderUrl + fileName))
-            {
-                await request.SendWebRequest().ToUniTask();
-
-                if (request.result != UnityWebRequest.Result.Success)
-                {
-                    Debug.LogError($"Ошибка при загрузке файла: {fileName}");
-                    return;
-                }
-
-                byte[] fileData = request.downloadHandler.data;
-                await UniTask.SwitchToThreadPool();
-                File.WriteAllBytes(filePath, fileData);
-                await UniTask.SwitchToMainThread();
-                Debug.Log($"Файл {fileName} успешно скачан и сохранен.");
-            }
-        }
+        public List<FileMetadata> files;
     }
 
-    public byte[] GetFileFromCache(string folderType, string fileName)
+    [Serializable]
+    public class FileMetadata
     {
-        string filePath = Path.Combine(localCachePath, folderType, fileName);
-
-        if (File.Exists(filePath))
-            return File.ReadAllBytes(filePath);
-
-        Debug.LogWarning($"Файл {fileName} не найден в локальном репозитории.");
-        return null;
+        public string filename;
+        public DateTime updated;
     }
 }

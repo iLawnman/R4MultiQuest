@@ -3,7 +3,7 @@ using VContainer.Unity;
 
 public class UIScenesStarter : IStartable
 {
-    private ApplicationSettings _applicationSettings => _dataContainer.ApplicationSettings;
+    private ApplicationSettings _applicationSettings;
     private readonly ConfigDataContainer _dataContainer;
 
     public UIScenesStarter(ConfigDataContainer dataContainer)
@@ -13,6 +13,7 @@ public class UIScenesStarter : IStartable
 
     public void Start()
     {
-        Debug.Log("start uiscene with addressable setting "); // + _applicationSettings.AddressableKey);
+        _applicationSettings = _dataContainer.ApplicationSettings;
+        Debug.Log("start uiscene with addressable setting " + _applicationSettings.AddressableKey);
     }
 }

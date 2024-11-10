@@ -10,11 +10,13 @@ public class QuestUI : MonoBehaviour, IUISkin
     [SerializeField] private GameObject questStartPanel;
     [SerializeField] private GameObject answerControlPanel;
     [SerializeField] private GameObject continueButton;
+
     void Start()
     {
         ARSceneActions.OnARTrackedImageAdded += OnARTrackedImageAdded;
         SetSkin(skin);
     }
+
     void OnDestroy()
     {
         ARSceneActions.OnARTrackedImageAdded -= OnARTrackedImageAdded;
@@ -25,12 +27,12 @@ public class QuestUI : MonoBehaviour, IUISkin
         Debug.Log("tracked " + obj.referenceImage.name);
     }
 
-    public void SetSkin(UISkin introSkin)
+    public void SetSkin(UISkin uiSkin)
     {
-        Debug.Log("set skin " + introSkin);
-
-        skin = introSkin as QuestUISkin;
-        questStartPanel.GetComponent<Image>().sprite = skin.questStartBack;
+        //skin = uiSkin as QuestUISkin;
+        //questStartPanel.GetComponent<Image>().sprite = skin.questStartBack.LoadAssetAsync<Sprite>().WaitForCompletion();
+        //if(skin.questStartBack.)
+//            questStartPanel.GetComponent<Image>().sprite = CacheService.GetCachedImage(skin.questStartBack.name);
         continueButton.GetComponent<Image>().sprite = skin.continueButton;
     }
 }

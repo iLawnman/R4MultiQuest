@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb460eee1f6a47c99bd7083f8fa530ee, type: 3}
   m_Name: IntroUISkin
   m_EditorClassIdentifier: 
-  infoBack: {fileID: 21300000, guid: b6f2d5973eca94a78ab552292cd9499f, type: 3}
-  image: {fileID: 21300000, guid: 3f1dc0bbb93d24b2a90a1baa3a975692, type: 3}
+  infoBack: {fileID: -106510034095418683, guid: 1729d6748a94942c58a29f922095a914,
+    type: 3}
+  image: {fileID: -106510034095418683, guid: 1729d6748a94942c58a29f922095a914, type: 3}
   text: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
   taptext: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
   closeButtom: {fileID: 21300000, guid: 966fe89e154fe45c494b55483ebccb4f, type: 3}

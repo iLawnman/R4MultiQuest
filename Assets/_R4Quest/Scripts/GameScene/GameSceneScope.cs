@@ -1,7 +1,7 @@
 using VContainer;
 using VContainer.Unity;
 
-public class GameSceneScope : LifetimeScope
+public class GameSceneScope : RootScope
 {
     protected override void Configure(IContainerBuilder builder)
     {

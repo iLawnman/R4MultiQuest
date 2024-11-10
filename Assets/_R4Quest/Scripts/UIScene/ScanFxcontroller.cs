@@ -24,9 +24,9 @@ public class ScanFxcontroller : MonoBehaviour, IUISkin
         GameActions.OnShowScenFX -= ShowScenFX;
     }
 
-    public void SetSkin(UISkin scanFXSkin)
+    public void SetSkin(UISkin uiSkin)
     {
-        skin = scanFXSkin as ScanFXSkin;
+        skin = uiSkin as ScanFXSkin;
         frame.GetComponent<Image>().sprite = skin.FrameSprite;
         frame.GetComponent<Image>().color = skin.fxColor;
         FxPanel.GetComponentInChildren<Text>().font = skin.TxtFont;

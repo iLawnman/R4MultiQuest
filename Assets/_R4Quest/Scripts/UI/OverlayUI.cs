@@ -21,9 +21,9 @@ public class OverlayUI : MonoBehaviour, IUISkin
         SetSkin(skin);
     }
 
-    public void SetSkin(UISkin introSkin)
+    public void SetSkin(UISkin uiSkin)
     {
-        skin = introSkin as OverlayUISkin;
+        skin = uiSkin as OverlayUISkin;
         musicButton.GetComponent<Image>().sprite = skin.musicButton;
         lightButton.GetComponent<Image>().sprite = skin.lightButton;
         shareButton.GetComponent<Image>().sprite = skin.shareButton;

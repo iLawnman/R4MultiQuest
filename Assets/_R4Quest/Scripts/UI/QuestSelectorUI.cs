@@ -1,15 +1,14 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
+using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
-using VContainer;
 
-public class QuestSelectorUI : MonoBehaviour
+public class QuestSelectorUI : MonoBehaviour, IUISkin
 {
     [SerializeField] private List<ApplicationSettings> _applicationSettings;
     [SerializeField] private GameObject buttons;
@@ -92,6 +91,9 @@ public class QuestSelectorUI : MonoBehaviour
         app.GoogleSheetQuestTable = parts[3];
         app.GoogleSheetAnswersTable = parts[4];
         app.GoogleSheetResourcesTable = parts[5];
+        app.GoogleSheetSplashTable = parts[7];
+        app.GoogleSheetIntroTable = parts[8];
+        app.GoogleSheetOutroTable = parts[9];
         
         _applicationSettings.Add(app);
 
@@ -105,7 +107,13 @@ public class QuestSelectorUI : MonoBehaviour
         
         bootstrap.gameObject.SetActive(true);
         var setting = _applicationSettings.FirstOrDefault(x => x.applicationName.Contains(tmpTxt));
+        
         BootstrapActions.OnSelectApplication?.Invoke(setting);
         gameObject.SetActive(false);
+    }
+
+    public void SetSkin(UISkin uiSkin)
+    {
+        throw new NotImplementedException();
     }
 }

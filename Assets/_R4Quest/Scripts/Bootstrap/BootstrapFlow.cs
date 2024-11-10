@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
 using DataSakura.Runtime.Utilities;
 using DataSakura.Runtime.Utilities.Logging;
@@ -37,19 +38,34 @@ public class BootstrapFlow : IStartable
             BootstrapActions.OnSelectApplication += StartAsync;
     }
     
-    public async void StartAsync(ApplicationSettings applicationSettings)
+    private async void StartAsync(ApplicationSettings applicationSettings)
     {
-             BindInstanceToRootScope(applicationSettings);
+        await BindInstanceToRootScope(applicationSettings);
+
+        await LoadSelectedAplicationData(applicationSettings);
+    }
+
+    private async Task LoadSelectedAplicationData(ApplicationSettings applicationSettings)
+    {
+        Debug.Log("start loading data");
+
+        await _loadingService.Loading(applicationSettings, _configDataContainer);
+        BootstrapActions.OnShowInfo?.Invoke("ALL SHEETS LOADED");
+
+        Debug.Log("loaded data " + _configDataContainer.ApplicationData.Quests.Count
+                                 + " / " + _configDataContainer.ApplicationData.Answers.Count
+                                 + " / " + _configDataContainer.ApplicationData.Resources.Count
+                                 + " / " + _configDataContainer.ApplicationData.Location
+                                 + " / " + _configDataContainer.ApplicationData.SplashScreens.Count
+                                 + " / " + _configDataContainer.ApplicationData.IntroScreens.Count
+                                 + " / " + _configDataContainer.ApplicationData.OutroScreens.Count);
+        await _fileSyncService.Initilize(applicationSettings);
              
-             //await _fileSyncService.Initilize(applicationSettings);
-             //
-             // Debug.Log("start loading data");
-             // await _loadingService.Loading(applicationSettings, _configDataContainer);
-             // Debug.Log("loaded data " + _configDataContainer.ApplicationData.Quests.Count
-             //                          + " / " + _configDataContainer.ApplicationData.Answers.Count
-             //                          + " / " + _configDataContainer.ApplicationData.Resources.Count);
-             //
-             // SceneManager.LoadSceneAsync(1);
+        
+        await UniTask.Delay(1000);
+        BootstrapActions.OnShowInfo?.Invoke(string.Empty);
+        
+        SceneManager.LoadSceneAsync(1);
     }
 
     private async UniTask LoadDefaultDataSet()
@@ -58,10 +74,11 @@ public class BootstrapFlow : IStartable
         await UniTask.CompletedTask;
     }
 
-    private void BindInstanceToRootScope<T>(T Instance)
+    private async UniTask BindInstanceToRootScope(ScriptableObject Instance)
     {
         Debug.Log("try rebind selected appsetting " + Instance);
         _container.Inject(Instance);
         _configDataContainer = _container.Resolve<ConfigDataContainer>();
+        _configDataContainer.ApplicationSettings = Instance as ApplicationSettings;
     }
 }

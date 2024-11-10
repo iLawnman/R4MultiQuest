@@ -12,6 +12,39 @@ public class ApplicationData
     public List<Sprite> Sprites = new List<Sprite>();
     public List<Texture2D> Textures = new List<Texture2D>();
     public List<ResourcesData> Resources = new List<ResourcesData>();
+    public List<SplashScreenData> SplashScreens = new List<SplashScreenData>();
+    public List<IntroScreenData> IntroScreens = new List<IntroScreenData>();
+    public List<IntroScreenData> OutroScreens = new List<IntroScreenData>();
+}
+
+[Serializable]
+public class IntroScreenData
+{
+    public string Title;
+    public string Text;
+    public string Image;
+    public string Background;
+    public string NextScreenName;
+    public string AdditionalUIprefab;
+}
+
+[Serializable]
+public class SplashScreenData
+{
+    public string AlertPanelBack;
+    public string Logo;
+    public string Text;
+    public string okButton;
+    public string OfferButton;
+    public string SplashPanelBack;
+    public string CustomLogo;
+    public string R4QLogo;
+    public string Name1;
+    public string Name2;
+    public string AskPanelBack;
+    public string AskText;
+    public string YesButton;
+    public string NoButton;
 }
 
 [Serializable]

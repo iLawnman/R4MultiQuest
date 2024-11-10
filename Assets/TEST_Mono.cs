@@ -51,7 +51,7 @@ public class TEST_Mono : MonoBehaviour
     {
         if (Input.GetKeyUp(keyCode))
         {
-            SetSkin(skin).Forget();
+            //SetSkin(skin).Forget();
         }
     }
 
@@ -60,13 +60,13 @@ public class TEST_Mono : MonoBehaviour
         //CreateReferenceLibraryAsync().Forget();
     }
 
-    private async UniTask SetSkin(UISkin uiSceneSkin)
-    {
-        CacheService cacheService = new CacheService();
-        var _skin = uiSceneSkin as UISceneSkin;
-        var a = await cacheService.LoadCachedImageAsync(_skin.background.name + ".png", 1024, 1);
-        image.sprite = a;
-    }
+    // private async UniTask SetSkin(UISkin uiSceneSkin)
+    // {
+    //     CacheService cacheService = new CacheService();
+    //     var _skin = uiSceneSkin as UISceneSkin;
+    //     var a = await cacheService.LoadCachedImageAsync(_skin.background.name + ".png", 1024, 1);
+    //     image.sprite = a;
+    // }
 
     /*
     [ContextMenu("CreateReferenceLibrary")]
@@ -184,17 +184,17 @@ public class TEST_Mono : MonoBehaviour
 */
     public async UniTask SetAllSkins()
     {
-        CacheService cacheService = new CacheService();
-
-        var a = await cacheService.GetFilesByPrefix("tgid00");
-
-        foreach (var clip in a)
-        {
-            Debug.Log("clip " + clip.ToString());
-            Sprite aSprite = clip as Sprite;
-            image.sprite = aSprite;
-            await UniTask.Delay(2000);
-        }
+        // CacheService cacheService = new CacheService();
+        //
+        // var a = await cacheService.GetFilesByPrefix("tgid00");
+        //
+        // foreach (var clip in a)
+        // {
+        //     Debug.Log("clip " + clip.ToString());
+        //     Sprite aSprite = clip as Sprite;
+        //     image.sprite = aSprite;
+        //     await UniTask.Delay(2000);
+        // }
     }
 
     [ContextMenu("GetFiles")]
@@ -263,9 +263,6 @@ public class TEST_Mono : MonoBehaviour
             var fileDate = DateTime.Parse(requestHead.GetResponseHeader("Last-Modified"));
             remoteFiles.Add(x, fileDate);
         }
-
-        ;
-
         return remoteFiles;
     }
 
@@ -313,100 +310,5 @@ public class TEST_Mono : MonoBehaviour
     {
         public string filename;
         public DateTime updated;
-    }
-}
-
-public class CacheService
-{
-    private static string cacheDirectory = "Cache/";
-    private static List<string> cachedObjects;
-
-    public async UniTask<Sprite> LoadCachedImageAsync(string fileName, int textureSize, float vectorSize)
-    {
-        UpdateCache();
-        try
-        {
-            var filePath = GetFilePath(fileName);
-
-            Debug.Log("file " + filePath);
-
-            if (!File.Exists(filePath))
-            {
-                Debug.LogWarning($"Файл {filePath} не найден в кеше.");
-                return null;
-            }
-
-            byte[] imageData = await File.ReadAllBytesAsync(filePath);
-
-            Texture2D texture = new Texture2D(textureSize, textureSize);
-            if (!texture.LoadImage(imageData))
-            {
-                Debug.LogError("Не удалось загрузить изображение из данных.");
-                return null;
-            }
-
-            var a = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height),
-                new Vector2(vectorSize, vectorSize));
-            a.name = fileName;
-
-            return a;
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine(e);
-            throw;
-        }
-    }
-
-    private string GetFilePath(string fileName)
-    {
-        return Path.Combine(cacheDirectory, fileName);
-    }
-
-    public static void UpdateCache()
-    {
-        cachedObjects = Directory.GetFiles(cacheDirectory).ToList();
-    }
-
-    public async UniTask<List<object>> GetFilesByPrefix(string objectPrefix)
-    {
-        UpdateCache();
-        List<object> listObject = new List<object>();
-        List<string> list = new List<string>();
-        foreach (var cached in cachedObjects)
-        {
-            if (cached.Contains(objectPrefix))
-                list.Add(cached);
-        }
-
-        foreach (var obj in list)
-        {
-            var o = await File.ReadAllBytesAsync(obj);
-            listObject.Add(o);
-        }
-
-        return listObject;
-    }
-
-    public async Task<Texture2D> LoadCachedTextureAsync(string path, int size)
-    {
-        UpdateCache();
-        try
-        {
-            if (File.Exists(path))
-            {
-                byte[] fileData = File.ReadAllBytes(path);
-                Texture2D tex = new Texture2D(size, size);
-                tex.LoadImage(fileData);
-                return tex;
-            }
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine(e);
-            throw;
-        }
-
-        return null;
     }
 }

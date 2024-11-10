@@ -17,7 +17,6 @@ public class CoroutineService : MonoBehaviour
         return StartCoroutine(coroutine);
     }
 
-    // Остановка корутины
     public void StopCoroutineExternal(Coroutine coroutine)
     {
         StopCoroutine(coroutine);

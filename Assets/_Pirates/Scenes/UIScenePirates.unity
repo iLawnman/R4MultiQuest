@@ -633,6 +633,7 @@ GameObject:
   - component: {fileID: 113589154}
   - component: {fileID: 113589153}
   - component: {fileID: 113589157}
+  - component: {fileID: 113589158}
   m_Layer: 5
   m_Name: IntroScreensUI
   m_TagString: Untagged
@@ -756,6 +757,26 @@ MonoBehaviour:
   finalTitle: {fileID: 150415484}
   finalTxt: {fileID: 2057091540}
   finalCloseButtom: {fileID: 1656091569}
+--- !u!114 &113589158
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 113589152}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17e07a428bbc94613b779dafa67dadf4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startPanel: {fileID: 7668759246107498303}
+  questStartPanel: {fileID: 190332411}
+  introScreens: []
+  outroScreens: []
+  LastPanel: {fileID: 3240281064846771779}
+  currentScreenInx: 0
+  nextScreen: 
+  slideController: {fileID: 190332413}
 --- !u!1 &138868159
 GameObject:
   m_ObjectHideFlags: 0
@@ -4036,6 +4057,7 @@ MonoBehaviour:
   autoRun: 1
   autoInjectGameObjects:
   - {fileID: 491371919}
+  - {fileID: 113589152}
 --- !u!4 &1081309114
 Transform:
   m_ObjectHideFlags: 0

@@ -14,6 +14,6 @@ public class UIScenesStarter : IStartable
     public void Start()
     {
         _applicationSettings = _dataContainer.ApplicationSettings;
-        Debug.Log("start uiscene with addressable setting " + _applicationSettings.AddressableKey);
+        Debug.Log("start uiscene with addressable setting " + _applicationSettings?.AddressableKey);
     }
 }

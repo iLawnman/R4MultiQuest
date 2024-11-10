@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
+using VContainer;
 
 [Serializable]
     public class IntroScreen
@@ -20,6 +21,7 @@ using UnityEngine.UI;
 
     public class InfoPanelsController : MonoBehaviour
     {
+        [Inject] private ConfigDataContainer dataContainer;
         [Header("Game UI Elements")]
         public GameObject startPanel;
         public GameObject questStartPanel;
@@ -34,6 +36,15 @@ using UnityEngine.UI;
         private float toPositionNew;
         private bool slideInprogress;
         [SerializeField] SlideController slideController;
+
+        private void Start()
+        {
+            //get container
+            Debug.Log("start infopanels controller with container " + dataContainer.ApplicationSettings.AddressableKey);
+            //fill intro screens
+            //fill outro screens
+            //fill flow settings
+        }
 
         void ShowScreen(string name)
         {
@@ -160,11 +171,6 @@ using UnityEngine.UI;
                 tTimer.curTime = 0;
                 tTimer.enabled = true;
             }
-        }
-
-        public void CloseApp()
-        {
-            Application.Quit();
         }
 
         public void ShowStartSequence ()

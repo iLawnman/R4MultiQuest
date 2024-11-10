@@ -90,7 +90,7 @@ public class GoogleSheetDataLoadingService
                 {
                     var line = lines[index];
                     string[] parts = line.Split(',');
-                    BootstrapActions.AddApplicationToList.Invoke(line);
+                    //BootstrapActions.AddApplicationToList.Invoke(line);
                 }
             }
             else

@@ -49,9 +49,10 @@ public class RotatorFX : UIFXBase
         {
             yield return new WaitForSeconds(0.05f);
             int rIndx = Random.Range(0, boxes.Length);
-
-            boxes[rIndx].DOColor(targetColor, duration).SetEase(Ease.Linear);
-            boxes[rIndx].transform.DOScale(new Vector3(0.15f, 0.15f, 0.15f), duration).SetEase(Ease.Linear);
+            var _targetColor = boxes[rIndx].color == targetColor ? Color.gray : targetColor; 
+            boxes[rIndx].DOColor(_targetColor, duration).SetEase(Ease.Linear);
+            float targetScale = boxes[rIndx].transform.localScale.x != 0.15f ? 0.15f : 0.1f;
+            boxes[rIndx].transform.DOScale(new Vector3(targetScale, targetScale, targetScale), duration).SetEase(Ease.Linear);
             boxes[rIndx].GetComponent<Rigidbody2D>().gravityScale *= -1;
         }
     }

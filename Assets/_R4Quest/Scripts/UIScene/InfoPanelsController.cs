@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Newtonsoft.Json;
 using UnityEngine;
 using UnityEngine.UI;
 using VContainer;
@@ -39,9 +40,19 @@ using VContainer;
 
         private void Start()
         {
-            //get container
             Debug.Log("start infopanels controller with container " + dataContainer.ApplicationSettings.AddressableKey);
-            //fill intro screens
+            dataContainer.ApplicationData.IntroScreens.ForEach(x =>
+            {
+                IntroScreen scr = new IntroScreen()
+                {
+                    Title =  x.Background, // x.Title,
+                    text = x.Image, //x.Text,
+                    nextScreenName = nextScreen,
+                    background = CacheService.GetCachedImage(x.Background+".png"),
+                    image = CacheService.GetCachedImage(x.Image+".png"),
+                };
+                introScreens.Add(scr);
+            });
             //fill outro screens
             //fill flow settings
         }

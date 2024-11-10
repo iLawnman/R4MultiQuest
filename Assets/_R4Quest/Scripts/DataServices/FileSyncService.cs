@@ -20,7 +20,8 @@ public class FileSyncService
     public async UniTask Initilize(ApplicationSettings applicationSettings)
     {
         _currentSettings = applicationSettings;
-        siteUrl += _currentSettings.AddressableKey + "/";
+        if (!siteUrl.Contains(_currentSettings.AddressableKey))
+            siteUrl += _currentSettings.AddressableKey + "/";
         await Start();
 
         BootstrapActions.OnShowInfo("All Downloaded");
@@ -47,9 +48,9 @@ public class FileSyncService
         {
             var url = siteUrl + directory;
 
-            Debug.Log("get remote directory " + url);
-            BootstrapActions.OnShowInfo?.Invoke("Fetch remote metadata\n" + directory.Replace("/", string.Empty));
+            //Debug.Log("get remote directory " + url);
             Dictionary<string, DateTime> remoteFiles = await FetchMetadataAsync(url);
+            BootstrapActions.OnShowInfo?.Invoke("Fetch remote metadata\n" + directory.Replace("/", string.Empty));
 
             foreach (var file in remoteFiles)
             {
@@ -79,34 +80,39 @@ public class FileSyncService
     private async UniTask<Dictionary<string, DateTime>> FetchMetadataAsync(string MetadataUrl)
     {
         Dictionary<string, DateTime> remoteFiles = new Dictionary<string, DateTime>();
-        var request = UnityWebRequest.Get(MetadataUrl + "/metadata.json");
-        Debug.Log("fetch " + MetadataUrl + "/metadata.json");
-        await request.SendWebRequest();
+        var metadataJson = MetadataUrl + "/metadata.json";
+        var request = UnityWebRequest.Get(metadataJson);
+        Debug.Log("fetch " + metadataJson);
 
         try
         {
-            string json = request.downloadHandler.text;
-            var files = JsonConvert.DeserializeObject<List<string>>(json);
-            foreach (var x in files)
-            {
-                var filePath = MetadataUrl + x;
-                using var requestHead = UnityWebRequest.Head(filePath);
-                await requestHead.SendWebRequest();
-
-                var fileDate = DateTime.Parse(requestHead.GetResponseHeader("Last-Modified"));
-                remoteFiles.Add(x, fileDate);
-            }
+            await request.SendWebRequest();
         }
         catch (Exception e)
         {
-            if (request.result != UnityWebRequest.Result.Success)
-            {
-                Debug.LogError($"Не удалось получить {request} metadata.json: " + request.error);
-                return null;
-            }
-            Console.WriteLine(e);
+            Debug.LogError($"Не удалось получить {request} metadata.json: " + request.error + "\n" + e);
             throw;
         }
+
+        string json = request.downloadHandler.text;
+        var files = JsonConvert.DeserializeObject<List<string>>(json);
+        foreach (var x in files)
+        {
+            var filePath = MetadataUrl + x;
+            try
+            {
+                using var requestHead = UnityWebRequest.Head(filePath);
+                await requestHead.SendWebRequest();
+                var fileDate = DateTime.Parse(requestHead.GetResponseHeader("Last-Modified"));
+                remoteFiles.Add(x, fileDate);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+        }
+
 
         return remoteFiles;
     }
@@ -140,6 +146,7 @@ public class FileSyncService
                 Debug.LogError($"Не удалось загрузить файл {name}: {request.error}");
                 return;
             }
+
             Console.WriteLine(e);
             throw;
         }

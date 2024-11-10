@@ -20,7 +20,6 @@ public class QuestSelectorUI : MonoBehaviour, IUISkin
     void Start()
     {
         bootstrap = FindObjectOfType<BootstrapUI>(includeInactive: true);
-        BootstrapActions.AddApplicationToList += AddApplication;
         closeButton.onClick.AddListener(MakeMenu);
 
         CheckMultiQuestTable();
@@ -55,7 +54,7 @@ public class QuestSelectorUI : MonoBehaviour, IUISkin
                 {
                     var line = lines[index];
                     string[] parts = line.Split(',');
-                    BootstrapActions.AddApplicationToList.Invoke(line);
+                    AddApplication(line);
                 }
             }
             else

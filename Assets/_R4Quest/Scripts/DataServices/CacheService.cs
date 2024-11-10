@@ -10,7 +10,7 @@ using VContainer.Unity;
 public class CacheService : IStartable
 {
     private static string cacheDirectory = Application.persistentDataPath + "/Cache/";
-    private static Dictionary<string, object> cachedObjects = new Dictionary<string, object>();
+    private static Dictionary<string, byte[]> cachedObjects = new Dictionary<string, byte[]>();
 
     public void Start()
     {
@@ -44,8 +44,7 @@ public class CacheService : IStartable
                 new Vector2(vectorSize, vectorSize));
             a.name = fileName;
 
-            cachedObjects.TryAdd(fileName, a);
-
+            UpdateCache();
             return a;
         }
         catch (Exception e)
@@ -79,7 +78,20 @@ public class CacheService : IStartable
     public static Sprite GetCachedImage(string assetName)
     {
         if (cachedObjects.ContainsKey(assetName))
-            return cachedObjects.FirstOrDefault(x => x.Key == assetName).Value as Sprite;
+        {
+            byte[] bytes = cachedObjects.FirstOrDefault(x => x.Key == assetName).Value;
+            Texture2D texture = new Texture2D(1024, 1024);
+            if (!texture.LoadImage(bytes))
+            {
+                Debug.LogError("Не удалось загрузить изображение из данных.");
+                return null;
+            }
+
+            Sprite a = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height),
+                new Vector2(1, 1));
+            a.name = assetName;
+            return a;
+        }
         else
             return null;
     }

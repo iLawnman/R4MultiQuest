@@ -47,7 +47,7 @@ public class GoogleSheetDataLoadingService
          configDataContainer.ApplicationData.SplashScreens = await ReadGoogleSheets.FillDataAsync<SplashScreenData>(
              applicationSettings.GoogleSheet,
              applicationSettings.GoogleSheetSplashTable);
-         
+
          BootstrapActions.OnShowInfo?.Invoke("Loading Intro Screens");
          configDataContainer.ApplicationData.IntroScreens = await ReadGoogleSheets.FillDataAsync<IntroScreenData>(
              applicationSettings.GoogleSheet,
@@ -57,10 +57,6 @@ public class GoogleSheetDataLoadingService
          configDataContainer.ApplicationData.OutroScreens = await ReadGoogleSheets.FillDataAsync<IntroScreenData>(
              applicationSettings.GoogleSheet,
              applicationSettings.GoogleSheetOutroTable);
-         
-         //     configDataContainer.ApplicationData.Skins = await ReadGoogleSheets.FillDataAsync<SplashScreenData>(
-         //     applicationSettings.GoogleSheet,
-         //     applicationSettings.GoogleSheetSplashTable);
     }
     
     private async UniTask CheckQuestSheetTable( string id = "1r126nBWT0kMIyZIJONteKrGTDidYMU867MbnnAR19-0", string gridId = "0")

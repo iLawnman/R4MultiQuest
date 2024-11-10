@@ -49,8 +49,9 @@ public class FileSyncService
             var url = siteUrl + directory;
 
             //Debug.Log("get remote directory " + url);
-            Dictionary<string, DateTime> remoteFiles = await FetchMetadataAsync(url);
+
             BootstrapActions.OnShowInfo?.Invoke("Fetch remote metadata\n" + directory.Replace("/", string.Empty));
+            Dictionary<string, DateTime> remoteFiles = await FetchMetadataAsync(url);
 
             foreach (var file in remoteFiles)
             {

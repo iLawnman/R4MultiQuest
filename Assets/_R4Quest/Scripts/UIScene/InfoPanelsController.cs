@@ -38,22 +38,35 @@ using VContainer;
         private bool slideInprogress;
         [SerializeField] SlideController slideController;
 
-        private void Start()
+        private void Awake()
         {
             Debug.Log("start infopanels controller with container " + dataContainer.ApplicationSettings.AddressableKey);
+            
             dataContainer.ApplicationData.IntroScreens.ForEach(x =>
             {
                 IntroScreen scr = new IntroScreen()
                 {
-                    Title =  x.Background, // x.Title,
-                    text = x.Image, //x.Text,
+                    Title = x.Title,
+                    text = x.Text,
                     nextScreenName = nextScreen,
                     background = CacheService.GetCachedImage(x.Background+".png"),
                     image = CacheService.GetCachedImage(x.Image+".png"),
                 };
                 introScreens.Add(scr);
             });
-            //fill outro screens
+            
+            dataContainer.ApplicationData.OutroScreens.ForEach(x =>
+            {
+                IntroScreen scr = new IntroScreen()
+                {
+                    Title = x.Title,
+                    text = x.Text,
+                    nextScreenName = nextScreen,
+                    background = CacheService.GetCachedImage(x.Background+".png"),
+                    image = CacheService.GetCachedImage(x.Image+".png"),
+                };
+                outroScreens.Add(scr);
+            });
             //fill flow settings
         }
 

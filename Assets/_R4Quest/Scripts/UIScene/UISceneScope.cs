@@ -9,6 +9,7 @@ public class UISceneScope : LifetimeScope
     protected override void Configure(IContainerBuilder builder)
     {
         builder.RegisterComponentInHierarchy<GameflowController>();
+        builder.RegisterComponentInHierarchy<SplashScreensUI>();
         builder.RegisterComponentInHierarchy<InfoPanelsController>();
         builder.RegisterEntryPoint<UIScenesStarter>();
     }

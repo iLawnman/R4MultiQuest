@@ -15,6 +15,7 @@ public class CacheService : IStartable
     public void Start()
     {
         Debug.Log("start cache");
+        cachedObjects.Clear();
         UpdateCache();
     }
 
@@ -77,6 +78,10 @@ public class CacheService : IStartable
 
     public static Sprite GetCachedImage(string assetName)
     {
+        if (string.IsNullOrWhiteSpace(assetName) || assetName == ".png")
+            return null;
+
+        //Debug.Log("get image from cache " + assetName);
         if (cachedObjects.ContainsKey(assetName))
         {
             byte[] bytes = cachedObjects.FirstOrDefault(x => x.Key == assetName).Value;
@@ -87,12 +92,11 @@ public class CacheService : IStartable
                 return null;
             }
 
-            Sprite a = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height),
-                new Vector2(1, 1));
+            Sprite a = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(1, 1));
             a.name = assetName;
             return a;
         }
-        else
-            return null;
+
+        return null;
     }
 }

@@ -9,7 +9,7 @@ using UnityEngine.XR.ARSubsystems;
 
 public class TrackedImageARManager : MonoBehaviour
 {
-    [SerializeField] private GameObject ARSession;
+    [SerializeField] private GameObject aRSession;
     private ARTrackedImageManager aRTrackedImageManager;
     private List<ARTrackedImage> trackedImages = new List<ARTrackedImage>();
     public bool readyForTracking = true;
@@ -17,12 +17,18 @@ public class TrackedImageARManager : MonoBehaviour
     
     private void Start()
     {
+        GameActions.CallQuestStart += StartQuest;
         //check CustomReferenceLibrary in LocalRepository
         
         aRTrackedImageManager = FindObjectOfType<ARTrackedImageManager>();
         aRTrackedImageManager.trackedImagesChanged += OnTrackedImagesChanged;
         ARSceneActions.OnARSession += OnARSession;
         ARSceneActions.OnReadyForTracking += OnReadyForTracking;
+    }
+
+    private void StartQuest()
+    {
+        aRSession.SetActive(true);
     }
 
     private void OnReadyForTracking(bool state)
@@ -33,7 +39,7 @@ public class TrackedImageARManager : MonoBehaviour
 
     private void OnARSession()
     {
-        ARSession.SetActive(true);
+        aRSession.SetActive(true);
     }
 
     private void OnDisable()
@@ -54,25 +60,17 @@ public class TrackedImageARManager : MonoBehaviour
             {
                 trackedImages.Add(trackedImage);
                 ARSceneActions.OnARTrackedImageAdded?.Invoke(trackedImage);
-                Debug.Log("recognition " + trackedImage);
-                Debug.Log("recognition " + trackedImage.referenceImage.texture);
-
-                foreach (var refer in aRTrackedImageManager.referenceLibrary as MutableRuntimeReferenceImageLibrary)
-                {
-                    Debug.Log("ref " + refer.texture.name);
-                }
             }
         }
 
         foreach (var trackedImage in eventArgs.updated) 
         { 
- 
         } 
         foreach (var trackedImage in eventArgs.removed) 
         { 
             if (trackedImages.Contains(trackedImage))
             {
-                trackedImages.Add(trackedImage);
+                trackedImages.Remove(trackedImage);
             }
         }
     }

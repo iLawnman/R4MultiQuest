@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Cysharp.Threading.Tasks;
-using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Networking;
@@ -93,6 +92,7 @@ public class QuestSelectorUI : MonoBehaviour, IUISkin
         app.GoogleSheetSplashTable = parts[7];
         app.GoogleSheetIntroTable = parts[8];
         app.GoogleSheetOutroTable = parts[9];
+        app.GoogleSheetBasePrefab = parts[10];
         
         _applicationSettings.Add(app);
 

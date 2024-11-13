@@ -17,9 +17,6 @@ public class GameScenesStarter : IStartable
     }
     public void Start()
     {
-        Debug.Log("cont " + _container);
-        //applicationSettings = container.ApplicationSettings;
-
         Debug.Log("start gamescene with addressable setting " + _container.ApplicationSettings.AddressableKey);
         
         Addressables.LoadResourceLocationsAsync(_container.ApplicationSettings.AddressableKey, 

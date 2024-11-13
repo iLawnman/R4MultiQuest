@@ -1,9 +1,12 @@
+using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using VContainer;
 
 public class QuestBasePrefabView : MonoBehaviour
 {
@@ -63,11 +66,43 @@ public class QuestBasePrefabView : MonoBehaviour
         [SerializeField] private GameObject _inputDataPanel;
         [SerializeField] private TMP_InputField _inputDataField;
         [SerializeField] private Button _inputFieldOkButton;
-        //[SerializeField] private SlideController _slideController;
 
         [Header("-- Variant Button")] 
         public Button _variantButton;
         
+        private ConfigDataContainer container;
+
+        [Inject]
+        public void Construct(ConfigDataContainer configDataContainer)
+        {
+                container = configDataContainer;
+        }
+        private void Start()
+        {
+                ApplySkin();
+        }
+
+        private void ApplySkin()
+        {
+                Debug.Log("apply baseprefab skin");
+                var skin = container.ApplicationData.BasePrefabSkin[0];
+                _mainBackImg.sprite = CacheService.GetCachedImage(skin?._mainBackImg + ".png");
+                _mainBackImg1.sprite = CacheService.GetCachedImage(skin?._mainBackImg1 + ".png");
+                _mainBackImg2.sprite = CacheService.GetCachedImage(skin?._mainBackImg2 + ".png");
+                _titleBackImg.sprite = CacheService.GetCachedImage(skin?._titleBackImg + ".png");
+                _titleBackEmptyImg.GetComponentsInChildren<Image>().ToList().ToList().ForEach(x =>
+                        x.sprite = CacheService.GetCachedImage(skin?._titleBackImgEmpty + ".png"));
+                var decorImg = CacheService.GetCachedImage(skin?._decorImg + ".png");
+        // _additionalImg;
+        // _answerImg;
+        // _rightBackImg;
+        // _rightBackImgEmpty;
+        // _leftBackImg;
+        // _leftBackImgEmpty;
+        // _buttonsBackImg;
+                
+        }
+
         public void FillAnswer(AnswerData answer)
         {
                 FillImages(answer.imgs);

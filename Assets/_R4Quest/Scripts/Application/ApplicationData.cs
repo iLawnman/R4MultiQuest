@@ -15,6 +15,8 @@ public class ApplicationData
     public List<SplashScreenData> SplashScreens = new List<SplashScreenData>();
     public List<IntroScreenData> IntroScreens = new List<IntroScreenData>();
     public List<IntroScreenData> OutroScreens = new List<IntroScreenData>();
+    public List<BasePrefabSkinData> BasePrefabSkin = new List<BasePrefabSkinData>();
+    public List<string> Scripts = new List<string>();
 }
 
 [Serializable]

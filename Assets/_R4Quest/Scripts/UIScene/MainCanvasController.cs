@@ -1,14 +1,7 @@
-using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 using VContainer;
-
-public partial class GameActions
-{
-    public static Action<string, string> OnShowStartQuestPanel;
-    public static Action OffStartQuestPanel;
-}
 
 public class MainCanvasController : MonoBehaviour
 {

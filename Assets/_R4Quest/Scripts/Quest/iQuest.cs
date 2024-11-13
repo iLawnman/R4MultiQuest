@@ -1,12 +1,6 @@
 ﻿using System;
 using UnityEngine;
 
-public static partial class GameActions
-    {
-        public static Action<iQuest> OnQuestStart;
-        public static Action OnQuestStarting;
-    }
-
     public abstract class iQuest : MonoBehaviour
     {
         [Multiline(10)]
@@ -19,7 +13,7 @@ public static partial class GameActions
 
         public virtual void OnEnable()
         {
-            GameActions.OnQuestStart?.Invoke(this);            
+            GameActions.OnQuestStart?.Invoke(this.name);            
         }
 
     }

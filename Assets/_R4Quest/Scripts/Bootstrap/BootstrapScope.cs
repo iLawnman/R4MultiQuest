@@ -1,5 +1,3 @@
-using DataSakura.Runtime.Utilities;
-using Newtonsoft.Json;
 using VContainer;
 using VContainer.Unity;
 
@@ -9,7 +7,6 @@ using VContainer.Unity;
         {
             builder.Register<GoogleSheetDataLoadingService>(Lifetime.Scoped);
             builder.RegisterEntryPoint<BootstrapFlow>();
-            builder.Register<CacheService>(Lifetime.Scoped).AsImplementedInterfaces();
             builder.RegisterComponentInHierarchy<QuestSelectorUI>();
         }
 }

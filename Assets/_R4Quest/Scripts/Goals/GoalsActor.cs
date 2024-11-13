@@ -8,6 +8,6 @@ public class GoalsActor : MonoBehaviour
     private void Start()
     {
         goalControl = FindAnyObjectByType<GoalsUI>(FindObjectsInactive.Include);
-        goalControl.SetGoalsActive(goalIndex);
+        //goalControl.SetGoalsActive(goalIndex);
     }
 }

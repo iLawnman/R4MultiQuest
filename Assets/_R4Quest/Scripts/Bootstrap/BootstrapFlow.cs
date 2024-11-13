@@ -13,14 +13,14 @@ public class BootstrapFlow : IStartable
 {
     private readonly GoogleSheetDataLoadingService _loadingService;
     private ConfigDataContainer _configDataContainer;
-    private readonly IObjectResolver _container;
+    private readonly IObjectResolver _resolver;
     private FileSyncService _fileSyncService;
 
-    public BootstrapFlow(IObjectResolver container,
+    public BootstrapFlow(IObjectResolver resolver,
         GoogleSheetDataLoadingService loadingService,
         FileSyncService fileSyncService)
     {
-        _container = container;
+        _resolver = resolver;
         _loadingService = loadingService;
         _fileSyncService = fileSyncService;
     }
@@ -52,15 +52,16 @@ public class BootstrapFlow : IStartable
         await _loadingService.Loading(applicationSettings, _configDataContainer);
         BootstrapActions.OnShowInfo?.Invoke("ALL SHEETS LOADED");
 
-        Debug.Log("loaded data " + _configDataContainer.ApplicationData.Quests.Count
-                                 + " / " + _configDataContainer.ApplicationData.Answers.Count
-                                 + " / " + _configDataContainer.ApplicationData.Resources.Count
-                                 + " / " + _configDataContainer.ApplicationData.Location
-                                 + " / " + _configDataContainer.ApplicationData.SplashScreens.Count
-                                 + " / " + _configDataContainer.ApplicationData.IntroScreens.Count
-                                 + " / " + _configDataContainer.ApplicationData.OutroScreens.Count);
-        await _fileSyncService.Initilize(applicationSettings);
-             
+        Debug.Log("loaded data : QST/" + _configDataContainer.ApplicationData.Quests.Count
+                                 + " ANS/" + _configDataContainer.ApplicationData.Answers.Count
+                                 + " RES/" + _configDataContainer.ApplicationData.Resources.Count
+                                 + " LOC/" + _configDataContainer.ApplicationData.Location
+                                 + " SPL/" + _configDataContainer.ApplicationData.SplashScreens.Count
+                                 + " INT/ " + _configDataContainer.ApplicationData.IntroScreens.Count
+                                 + " OUT/ " + _configDataContainer.ApplicationData.OutroScreens.Count
+                                 + " SK/ " + _configDataContainer.ApplicationData.BasePrefabSkin.Count);
+        //await _fileSyncService.Initilize(applicationSettings);
+        GameActions.OnLoadFinish?.Invoke();
         
         await UniTask.Delay(1000);
         BootstrapActions.OnShowInfo?.Invoke(string.Empty);
@@ -77,8 +78,8 @@ public class BootstrapFlow : IStartable
     private async UniTask BindInstanceToRootScope(ScriptableObject Instance)
     {
         Debug.Log("try rebind selected appsetting " + Instance);
-        _container.Inject(Instance);
-        _configDataContainer = _container.Resolve<ConfigDataContainer>();
+        _resolver.Inject(Instance);
+        _configDataContainer = _resolver.Resolve<ConfigDataContainer>();
         _configDataContainer.ApplicationSettings = Instance as ApplicationSettings;
     }
 }

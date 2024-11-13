@@ -3,22 +3,31 @@ using VContainer;
 
 public class GameflowController : MonoBehaviour
 {
-    private ApplicationSettings applicationSettings => _configDataContainer.ApplicationSettings;
-    [Inject] ConfigDataContainer _configDataContainer;
-    // private InfoPanelsController _infoPanel;
-    // private GoalsController _goalsConteroller;
-    // private MainCanvasController _mainCanvasController;
-    // private AskPanel askPanel;
-    // private iQuest currentQuest;
-    // private iQuest previewsQuest;
-    // private QuestsTimerController _questTimeController;
-
+    [Inject] private CacheService _cacheService;
+    [Inject] private LuaScriptService _luaScriptService;
     public void Start()
     {
         Application.runInBackground = true;
-        //Application.targetFrameRate = 30;
-        Debug.Log("start gameflow " + applicationSettings);
-        // skin picture update
+
+        GameActions.CallQuestStart += CallQuestStart;
+        GameActions.OnQuestStart += OnQuestStart;
+        GameActions.OnQuestComplete += OnQuestComplete;
+    }
+
+     void CallQuestStart()
+    {
+        Debug.Log("luaService call " + _luaScriptService);
+        _luaScriptService.ExecuteAction("CallQuestStart.lua", "start", "str");
+    }
+    async void OnQuestStart(string quest)
+    {
+        //luaScriptService.ExecuteAction("CallQuestStart", "Start", "null");
+        Debug.Log("on q start " +quest);
+
+    }
+    void OnQuestComplete(string questId, bool state)
+    {
+        Debug.Log("on q complete " +questId + " " + state);
     }
 }
          /*        

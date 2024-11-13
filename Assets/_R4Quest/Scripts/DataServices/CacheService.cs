@@ -14,7 +14,6 @@ public class CacheService : IStartable
 
     public void Start()
     {
-        Debug.Log("start cache");
         cachedObjects.Clear();
         UpdateCache();
     }
@@ -73,7 +72,6 @@ public class CacheService : IStartable
             }
         });
         Debug.Log("updated cache count " + cachedObjects.Count);
-        //return UniTask.CompletedTask;
     }
 
     public static Sprite GetCachedImage(string assetName)
@@ -81,7 +79,6 @@ public class CacheService : IStartable
         if (string.IsNullOrWhiteSpace(assetName) || assetName == ".png")
             return null;
 
-        //Debug.Log("get image from cache " + assetName);
         if (cachedObjects.ContainsKey(assetName))
         {
             byte[] bytes = cachedObjects.FirstOrDefault(x => x.Key == assetName).Value;
@@ -98,5 +95,11 @@ public class CacheService : IStartable
         }
 
         return null;
+    }
+
+    public string LoadCachedObject(string name)
+    {
+        string ret = System.Text.Encoding.UTF8.GetString(cachedObjects[name]);
+        return ret;
     }
 }

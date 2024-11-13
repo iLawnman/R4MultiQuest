@@ -75,7 +75,7 @@ public class InfoPanelsController : MonoBehaviour
         {
             Destroy(chi.gameObject);
         }
-        GameActions.OnQuestStarting?.Invoke();
+        GameActions.CallQuestStart?.Invoke();
     }
 
     private void LoadFillIntroOutro()

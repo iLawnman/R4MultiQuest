@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
+using VContainer;
 
 public class GoalsUI : MonoBehaviour
 {
@@ -14,36 +16,53 @@ public class GoalsUI : MonoBehaviour
     [SerializeField] Sprite goalSuccessImages;
     [SerializeField] Color colorComplete;
     [SerializeField] Color colorActive;
+    
     [SerializeField] internal int goalsCounter;
     [SerializeField] internal List<int> successIndx = new List<int>();
     [SerializeField] private bool _colorMarkedResult;
     [SerializeField] private AudioClip successFX;
+    [Inject] private ConfigDataContainer container;
+    private List<QuestData> activeGoals;
 
-    private async void Start()
+    private void Start()
     {
-        await LoadSetCachedResources();
+        activeGoals = container.ApplicationData.Quests
+            .Where(x => !string.IsNullOrWhiteSpace(x.GoalIndex))
+            .ToList();
+        
+        goalsUIs.ForEach(x => x.SetActive(false));
+        for (int i = 0; i < activeGoals.Count; i++)
+        {
+            goalsUIs[i].SetActive(true);
+            goalsUIs[i].GetComponent<Image>().sprite = goalSuccessImgBack;
+        }
 
-        GameActions.OnQuestStarting += OnActive;
+        GameActions.CallQuestStart += OnActive;
+        GameActions.OnQuestComplete += CheckQuestComplete;
+    }
+
+    [ContextMenu("check")]
+    public void check()
+    {
+        CheckQuestComplete("Art1", true);
+    }
+    
+    private void CheckQuestComplete(string questName, bool state)
+    {
+        var goalQuest = activeGoals.FirstOrDefault(x => x.QuestID == questName);
+        if (goalQuest != null)
+        {
+            Debug.Log("set goal " + questName);  
+        }
     }
 
     private void OnActive()
     {
-        panel.SetActive(true);
-        SetImgsBack();
+        panel?.SetActive(true);
+        //SetGoalsActive(0);
     }
 
-    private async UniTask LoadSetCachedResources()
-    {
-        // load goal skin async
-    }
-
-    private void SetImgsBack()
-    {
-        if (goalSuccessImgBack)
-            goalsUIs.ForEach(x => x.GetComponent<Image>().sprite = goalSuccessImgBack);
-    }
-
-    private void GoalSuccess(int index, bool success)
+    private void SetGoalState(int index, bool success)
     { 
         index = goalsCounter - 1;
         
@@ -65,45 +84,23 @@ public class GoalsUI : MonoBehaviour
 
     public void SetGoalsActive(int index)
     {
-        goalsCounter++;
-        index = goalsCounter - 1;
+        //index = goalsCounter - 1;
         Debug.Log("activate " + goalsCounter + " / " + index);
-        
         if(index <= goalsUIs.Count)
             goalsUIs[index].GetComponent<Image>().color = colorActive;
         GetComponent<AudioSource>().PlayOneShot(successFX);
-
-        GetComponent<QuestsTimerController>()?.StartQuestTimer(goalsCounter);
-    }
-
-    public void SetCurrentState(int counter, List<int> succesIndx)
-    {
-        goalsCounter = counter;
-        successIndx = succesIndx;
         
-        Debug.Log("Set goals state " + goalsCounter);
-        for (int i = 0; i < counter; i++)
-        {
-            if(_colorMarkedResult && !successIndx.Contains(i))
-                goalsUIs[i].GetComponent<Image>().color = Color.red;
-            else 
-                goalsUIs[i].GetComponent<Image>().color = colorComplete;
-
-            goalsUIs[i].GetComponent<Image>().sprite = goalSuccessImages;
-        }
+        //GetComponent<QuestsTimerController>()?.StartQuestTimer(goalsCounter);
     }
 
-    public void GoalSuccess(string gameObjectName, bool state)
+    public void SetGoalState(string gameObjectName, bool state)
     {
         Debug.Log("goal " + state + " / " + gameObjectName);
-        GoalSuccess(0, state);
+        SetGoalState(0, state);
         GetComponent<QuestsTimerController>()?.StopQuestTimer(goalsCounter);
         if (state)
             successIndx.Add(goalsCounter);
 
-        //FindFirstObjectByType<GameflowController>(FindObjectsInactive.Include).SaveCurrentStep(gameObjectName);
-
-        //if (goalsCounter == 14)
         //TODO : get QuestListLastName and check
         if (gameObjectName.Contains("15"))
         {

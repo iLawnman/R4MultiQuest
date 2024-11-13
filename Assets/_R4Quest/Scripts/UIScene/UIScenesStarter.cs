@@ -3,17 +3,23 @@ using VContainer.Unity;
 
 public class UIScenesStarter : IStartable
 {
-    private ApplicationSettings _applicationSettings;
     private readonly ConfigDataContainer _dataContainer;
+    private readonly CacheService _cacheService;
+    private readonly LuaScriptService _luaScriptService;
 
-    public UIScenesStarter(ConfigDataContainer dataContainer)
+    public UIScenesStarter(ConfigDataContainer dataContainer, 
+        CacheService cacheService, 
+        LuaScriptService luaScriptService)
     {
         _dataContainer = dataContainer;
+        _cacheService = cacheService;
+        _luaScriptService = luaScriptService;
     }
 
     public void Start()
     {
-        _applicationSettings = _dataContainer.ApplicationSettings;
-        Debug.Log("start uiscene with addressable setting " + _applicationSettings?.AddressableKey);
+        Debug.Log("start uiscene ");
+        _cacheService.Start();
+        _luaScriptService.Start();
     }
 }

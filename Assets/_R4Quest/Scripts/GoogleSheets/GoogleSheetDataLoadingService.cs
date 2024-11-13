@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
@@ -17,15 +18,6 @@ public class GoogleSheetDataLoadingService
             Debug.Log("no need update, but for DEBUG continue loading");
             //return;
         }
-
-        // BootstrapActions.OnShowInfo?.Invoke("Loading Dependencies");
-        // Debug.Log("loading dependencies");
-        // var handle = Addressables.DownloadDependenciesAsync(applicationSettings.AddressableKey);
-        //
-        // while (!handle.IsDone)
-        // {
-        //     await UniTask.Yield();
-        // }
         
         Debug.Log("loading data");
         BootstrapActions.OnShowInfo?.Invoke("Loading Quests");
@@ -57,6 +49,11 @@ public class GoogleSheetDataLoadingService
          configDataContainer.ApplicationData.OutroScreens = await ReadGoogleSheets.FillDataAsync<IntroScreenData>(
              applicationSettings.GoogleSheet,
              applicationSettings.GoogleSheetOutroTable);
+         
+         BootstrapActions.OnShowInfo?.Invoke("Loading BasePrefab Skin");
+         configDataContainer.ApplicationData.BasePrefabSkin = await ReadGoogleSheets.FillDataAsync<BasePrefabSkinData>(
+             applicationSettings.GoogleSheet,
+             applicationSettings.GoogleSheetBasePrefab);
     }
     
     private async UniTask CheckQuestSheetTable( string id = "1r126nBWT0kMIyZIJONteKrGTDidYMU867MbnnAR19-0", string gridId = "0")

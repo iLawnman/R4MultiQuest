@@ -10,7 +10,7 @@ using Newtonsoft.Json;
 public class FileSyncService
 {
     List<string> remoteDirectories = new List<string>()
-        { "Pictures/", "RecognitionImages/", "Sounds/", "Skins/" };
+        { "Pictures/", "RecognitionImages/", "Sounds/", "Skins/" , "Scripts/" };
 
     private string siteUrl = "https://r4quest.ru/r4questdata/";
     private string cachePath = Application.persistentDataPath + "/Cache/";
@@ -137,8 +137,6 @@ public class FileSyncService
         {
             File.WriteAllBytes(fullFilePath, request.downloadHandler.data);
             Debug.Log($"Файл {fullFilePath} обновлен.");
-
-            CacheService.UpdateCache();
         }
         catch (Exception e)
         {

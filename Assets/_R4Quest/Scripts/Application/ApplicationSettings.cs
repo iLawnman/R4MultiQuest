@@ -22,4 +22,5 @@ public class ApplicationSettings : ScriptableObject
     public string GoogleSheetIntroTable;
     public string GoogleSheetOutroTable;
     public string AddressableKey;
+    public string GoogleSheetBasePrefab;
 }

@@ -22,8 +22,6 @@ public class SceneflowController : MonoBehaviour
 
         private void Start()
         {
-            Application.runInBackground = true;
-            Application.targetFrameRate = 30;
             _infoPanel = FindFirstObjectByType<InfoPanelsController>();
             _goalsConteroller = FindFirstObjectByType<GoalsUI>();
             _mainCanvasController = FindFirstObjectByType<MainCanvasController>();
@@ -97,7 +95,7 @@ public class SceneflowController : MonoBehaviour
             
             if (PlayerPrefs.HasKey("GoalsCounter"))
             {
-                _goalsConteroller.SetCurrentState(int.Parse(PlayerPrefs.GetString("GoalsCounter")), new List<int>());
+                //_goalsConteroller.SetCurrentState(int.Parse(PlayerPrefs.GetString("GoalsCounter")), new List<int>());
             }
         }
     }

@@ -47,10 +47,11 @@ public class QuestUI : MonoBehaviour, IUISkin
 
     public void SetSkin(UISkin uiSkin)
     {
-        //skin = uiSkin as QuestUISkin;
-        //questStartPanel.GetComponent<Image>().sprite = skin.questStartBack.LoadAssetAsync<Sprite>().WaitForCompletion();
-        //if(skin.questStartBack.)
-        //    questStartPanel.GetComponent<Image>().sprite = CacheService.GetCachedImage(skin.questStartBack.name);
-        //continueButton.GetComponent<Image>().sprite = skin.continueButton;
+        return;
+        
+        skin = uiSkin as QuestUISkin;
+        if(skin.questStartBack)
+            questStartPanel.GetComponent<Image>().sprite = CacheService.GetCachedImage(skin.questStartBack.name);
+        continueButton.GetComponent<Image>().sprite = skin.continueButton;
     }
 }

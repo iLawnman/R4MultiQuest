@@ -3,16 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.XR.ARFoundation;
 
-public static partial class GameActions
-{
-    public static Action<bool, string> SetReadyForTracking;
-    public static Action OnSceneStarting;
-    public static Action OnSceneStarted;
-    public static Action OnScenePaused;
-    public static Action OnSceneResumed;
-    public static Action OnSceneEnded;
-}
-
 public class SceneflowController : MonoBehaviour
     {
         private InfoPanelsController _infoPanel;

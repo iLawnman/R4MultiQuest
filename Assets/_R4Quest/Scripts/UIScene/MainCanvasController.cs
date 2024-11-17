@@ -11,12 +11,10 @@ public class MainCanvasController : MonoBehaviour
     [SerializeField] private GameObject overlayPanel;
     private void OnEnable()
     {
-        GameActions.OnShowStartQuestPanel += ShowStartQuestPanel;
     }
 
     private void OnDisable()
     {
-        GameActions.OnShowStartQuestPanel -= ShowStartQuestPanel;
     }
     
     private void ShowStartQuestPanel(string signImag, string findTxt)

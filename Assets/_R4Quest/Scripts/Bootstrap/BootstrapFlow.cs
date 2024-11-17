@@ -59,13 +59,14 @@ public class BootstrapFlow : IStartable
                                  + " SPL/" + _configDataContainer.ApplicationData.SplashScreens.Count
                                  + " INT/ " + _configDataContainer.ApplicationData.IntroScreens.Count
                                  + " OUT/ " + _configDataContainer.ApplicationData.OutroScreens.Count
-                                 + " SK/ " + _configDataContainer.ApplicationData.BasePrefabSkin.Count);
+                                 + " SCP/ " + _configDataContainer.ApplicationData.Scripts
+                                 + " SKN/ " + _configDataContainer.ApplicationData.BasePrefabSkin.Count);
+        
         //await _fileSyncService.Initilize(applicationSettings);
+        
         GameActions.OnLoadFinish?.Invoke();
-        
+        BootstrapActions.OnShowInfo.Invoke(string.Empty);
         await UniTask.Delay(1000);
-        BootstrapActions.OnShowInfo?.Invoke(string.Empty);
-        
         SceneManager.LoadSceneAsync(1);
     }
 

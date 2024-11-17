@@ -5,11 +5,6 @@ using UnityEngine;
 using UnityEngine.Networking;
 using VContainer.Unity;
 
-public static partial class GameActions
-{
-    public static Action<string> SendCurrentStep;
-}
-
 public class QuestLogging : IStartable, ILogging
 {
     //https://api.telegram.org/bot6371359479:AAHHgeEJbldkm-s_MSpcA2voTBYkqRiLA1g/sendmessage?chat_id=-1002214368660&text=%D0%A3%D0%B4%D0%B0%D1%87%D0%BD%D0%BE

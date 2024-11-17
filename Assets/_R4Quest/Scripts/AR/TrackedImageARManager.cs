@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using Unity.Collections;
 using UnityEngine;
-using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using UnityEngine.XR.ARFoundation;
-using UnityEngine.XR.ARSubsystems;
 
 public class TrackedImageARManager : MonoBehaviour
 {
@@ -13,22 +12,26 @@ public class TrackedImageARManager : MonoBehaviour
     private ARTrackedImageManager aRTrackedImageManager;
     private List<ARTrackedImage> trackedImages = new List<ARTrackedImage>();
     public bool readyForTracking = true;
-    private ResourcesService resourcesService;
     
     private void Start()
     {
-        GameActions.CallQuestStart += StartQuest;
-        //check CustomReferenceLibrary in LocalRepository
-        
-        aRTrackedImageManager = FindObjectOfType<ARTrackedImageManager>();
-        aRTrackedImageManager.trackedImagesChanged += OnTrackedImagesChanged;
+        //SceneManager.SetActiveScene(gameObject.scene);
+        //GameActions.CallQuestStart += StartQuest;
         ARSceneActions.OnARSession += OnARSession;
         ARSceneActions.OnReadyForTracking += OnReadyForTracking;
+        
+        //check CustomReferenceLibrary in LocalRepository
+        
+        aRTrackedImageManager = FindFirstObjectByType<ARTrackedImageManager>(FindObjectsInactive.Include);
+        aRTrackedImageManager.trackedImagesChanged += OnTrackedImagesChanged;
+        
+       
     }
-
-    private void StartQuest()
+    private void OnDisable()
     {
-        aRSession.SetActive(true);
+        aRTrackedImageManager.trackedImagesChanged -= OnTrackedImagesChanged;
+        ARSceneActions.OnARSession -= OnARSession;
+        ARSceneActions.OnReadyForTracking -= OnReadyForTracking;
     }
 
     private void OnReadyForTracking(bool state)
@@ -40,13 +43,6 @@ public class TrackedImageARManager : MonoBehaviour
     private void OnARSession()
     {
         aRSession.SetActive(true);
-    }
-
-    private void OnDisable()
-    {
-        aRTrackedImageManager.trackedImagesChanged -= OnTrackedImagesChanged;
-        ARSceneActions.OnARSession -= OnARSession;
-        ARSceneActions.OnReadyForTracking -= OnReadyForTracking;
     }
     
     private void OnTrackedImagesChanged(ARTrackedImagesChangedEventArgs eventArgs)

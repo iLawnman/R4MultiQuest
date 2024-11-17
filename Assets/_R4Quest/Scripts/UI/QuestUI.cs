@@ -13,35 +13,23 @@ public class QuestUI : MonoBehaviour, IUISkin
     [SerializeField] private GameObject answerControlPanel;
     [SerializeField] private GameObject continueButton;
     [Inject] private ConfigDataContainer container;
-    [Inject] private GameObjectsFactory gameObjectsFactory;
 
     void Start()
     {
-        GameActions.CallQuestStart += OnActive;
-        ARSceneActions.OnARTrackedImageAdded += OnARTrackedImageAdded;
+        UIActions.OnQuestStart += OnActive;
         SetSkin(skin);
     }
 
-    private void OnActive()
+    private void OnActive(QuestData quest, ARTrackedImage trackeImg)
     {
-        questStartPanel?.SetActive(true);
+        Debug.Log("onActive " + quest + " with img " + trackeImg.referenceImage);
+        
+        ShowQuestByRecognitionImage(quest, trackeImg);
     }
 
     void OnDestroy()
     {
-        ARSceneActions.OnARTrackedImageAdded -= OnARTrackedImageAdded;
-        GameActions.CallQuestStart -= OnActive;
-
-    }
-
-    private void OnARTrackedImageAdded(ARTrackedImage trackeImg)
-    {
-        Debug.Log("tracked " + trackeImg.referenceImage.name);
-
-        var quest = container.ApplicationData.Quests
-            .FirstOrDefault(x => x.RecognitionImage == trackeImg.referenceImage.name);
-        
-        ShowQuestByRecognitionImage(quest, trackeImg);
+        UIActions.OnQuestStart += OnActive;
     }
 
     private void ShowQuestByRecognitionImage(QuestData quest, ARTrackedImage trackeImg)
@@ -52,8 +40,6 @@ public class QuestUI : MonoBehaviour, IUISkin
         if(CacheService.GetCachedImage(quest.RecognitionImage + ".png"))
             questStartPanel.transform.Find("Image").GetComponent<Image>().sprite = 
                 CacheService.GetCachedImage(quest.RecognitionImage + ".png");
-
-        gameObjectsFactory.CreateARTarget(quest, trackeImg);
     }
 
     public void SetSkin(UISkin uiSkin)

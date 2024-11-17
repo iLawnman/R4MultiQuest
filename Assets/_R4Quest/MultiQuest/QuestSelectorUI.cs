@@ -35,12 +35,14 @@ public class QuestSelectorUI : MonoBehaviour, IUISkin
 
         using (UnityWebRequest request = UnityWebRequest.Get(url))
         {
-            var operation = request.SendWebRequest();
+            //var operation = request.SendWebRequest();
 
-            while (!operation.isDone)
-            {
-                await UniTask.Yield(); // Ожидание завершения запроса
-            }
+            // while (!operation.isDone)
+            // {
+            //     await UniTask.Yield(); // Ожидание завершения запроса
+            // }
+            var operation = request.SendWebRequest().ToUniTask();
+            await operation;
 
             if (request.result == UnityWebRequest.Result.Success)
             {

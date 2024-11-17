@@ -37,8 +37,14 @@ public class GoalsUI : MonoBehaviour
             goalsUIs[i].GetComponent<Image>().sprite = goalSuccessImgBack;
         }
 
-        GameActions.CallQuestStart += OnActive;
-        GameActions.OnQuestComplete += CheckQuestComplete;
+        UIActions.CallQuestStart += OnActive;
+        UIActions.OnQuestComplete += CheckQuestComplete;
+    }
+
+    private void OnDestroy()
+    {
+        UIActions.CallQuestStart -= OnActive;
+        UIActions.OnQuestComplete -= CheckQuestComplete;
     }
 
     [ContextMenu("check")]
@@ -64,6 +70,8 @@ public class GoalsUI : MonoBehaviour
 
     private void SetGoalState(int index, bool success)
     { 
+        Debug.Log("set goal " + index + " - " + success);
+        return;
         index = goalsCounter - 1;
         
         if (goalsUIs.Count > index)

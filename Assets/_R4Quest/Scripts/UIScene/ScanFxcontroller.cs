@@ -3,11 +3,6 @@ using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 
-public static partial class GameActions
-{
-    public static Action<bool, int> OnShowScenFX;
-}
-
 public class ScanFxcontroller : MonoBehaviour, IUISkin
 {
     [SerializeField] private ScanFXSkin skin;

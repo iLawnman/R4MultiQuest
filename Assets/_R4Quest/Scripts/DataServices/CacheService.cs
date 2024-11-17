@@ -89,17 +89,27 @@ public class CacheService : IStartable
                 return null;
             }
 
-            Sprite a = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(1, 1));
+            Sprite a = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
             a.name = assetName;
             return a;
         }
-
         return null;
     }
 
-    public string LoadCachedObject(string name)
+    public byte[] LoadCachedObject(string name)
     {
-        string ret = System.Text.Encoding.UTF8.GetString(cachedObjects[name]);
-        return ret;
+        return cachedObjects[name];
+    }
+
+    public Dictionary<string, byte[]> LoadCachedObjects(string nameMask)
+    {
+        var _objs = cachedObjects.Where(x => x.Key.Contains(nameMask)).ToList();
+        if (_objs.Count > 0)
+        {
+            Dictionary<string, byte[]> objs = new Dictionary<string, byte[]>();
+            _objs.ForEach(x => objs.Add(x.Key, x.Value));
+            return objs;
+        }
+        return null;
     }
 }

@@ -93,7 +93,10 @@ public class QuestBasePrefabView : MonoBehaviour
                 _titleBackEmptyImg.GetComponentsInChildren<Image>().ToList().ToList().ForEach(x =>
                         x.sprite = CacheService.GetCachedImage(skin?._titleBackImgEmpty + ".png"));
                 var decorImg = CacheService.GetCachedImage(skin?._decorImg + ".png");
-        // _additionalImg;
+        
+                //TO-DO
+                
+                // _additionalImg;
         // _answerImg;
         // _rightBackImg;
         // _rightBackImgEmpty;
@@ -201,10 +204,10 @@ public class QuestBasePrefabView : MonoBehaviour
 
                 await Task.Delay(1000);
                 
-                _1Button.GetComponentInChildren<Text>().text = answerC.answers.FirstOrDefault(x => x.txts._answer_ID == answers[1]).txts._mainTxt;
-                _2Button.GetComponentInChildren<Text>().text = answerC.answers.FirstOrDefault(x => x.txts._answer_ID == answers[2]).txts._mainTxt;
-                _3Button.GetComponentInChildren<Text>().text = answerC.answers.FirstOrDefault(x => x.txts._answer_ID == answers[3]).txts._mainTxt;
-                _4Button.GetComponentInChildren<Text>().text = answerC.answers.FirstOrDefault(x => x.txts._answer_ID == answers[4]).txts._mainTxt;
+                _1Button.GetComponentInChildren<Text>().text = answerC.answers.FirstOrDefault(x => x.txts._answer_ID == answers[1])?.txts._mainTxt;
+                _2Button.GetComponentInChildren<Text>().text = answerC.answers.FirstOrDefault(x => x.txts._answer_ID == answers[2])?.txts._mainTxt;
+                _3Button.GetComponentInChildren<Text>().text = answerC.answers.FirstOrDefault(x => x.txts._answer_ID == answers[3])?.txts._mainTxt;
+                _4Button.GetComponentInChildren<Text>().text = answerC.answers.FirstOrDefault(x => x.txts._answer_ID == answers[4])?.txts._mainTxt;
 
                 _1Button.onClick.AddListener(() => answerC.CheckAnswer(1));
                 _2Button.onClick.AddListener(() => answerC.CheckAnswer(2));

@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using Cysharp.Threading.Tasks;
 using MoonSharp.Interpreter;
 using UnityEngine;
 using VContainer;
@@ -18,26 +17,31 @@ public class LuaScriptService : IStartable
     }
     void RegisterAllScripts()
     {
-        var _load = cacheService.LoadCachedObject("CallQuestStart.lua");
-        string a = Convert.ToString(_load);
-        Debug.Log("register all lua " + a);
-
         scripts.Clear();
-        List<string> list = new List<string>(){a};
-        foreach (string _ta in list)
+        var _loadScripts = cacheService.LoadCachedObjects(".lua");
+        Debug.Log("register all lua - " + _loadScripts.Count);
+
+        foreach (var script in _loadScripts)
         {
-            Debug.Log("register " + _ta);
-            TextAsset ta = new TextAsset(_ta);
-            scripts.Add("CallQuestStart.lua", ta.text);
+            var s = System.Text.Encoding.UTF8.GetString(script.Value);
+            string a = Convert.ToString(s);
+            TextAsset ta = new TextAsset(a);
+            scripts.Add(script.Key, ta.text);
+            Debug.Log("register " + a);
         }
         Script.DefaultOptions.ScriptLoader = new MoonSharp.Interpreter.Loaders.UnityAssetsScriptLoader(scripts);
     }
 
     public void ExecuteAction(string scriptName, string functionName, string input)
     {
+        if (!scripts.ContainsKey(scriptName))
+        {
+            Debug.LogWarning("no lua script registered");
+            return;
+        }
+
         Script script = new Script();
         var scr = scripts[scriptName];
-        Debug.Log("scr " + scr);
         script.DoString(scr);
         DynValue result = script.Call(script.Globals[functionName], input);
         

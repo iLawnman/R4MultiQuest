@@ -16,18 +16,12 @@ public class AnswersController : MonoBehaviour
 {
     public List<AnswerData> answers = new List<AnswerData>();
     [SerializeField] private int currentAnswer;
-    private GoalsUI _goalsUI;
-
-    private void Start()
-    {
-        _goalsUI = FindFirstObjectByType<GoalsUI>(FindObjectsInactive.Include);
-    }
 
     public void InitAnswers()
     {
         GetComponent<QuestBasePrefabView>().FillAnswer(answers[0]);
         currentAnswer = 0;
-        CheckQuestionAnswer();
+        CheckAnswerOKbutton();
     }
 
     public void ShowNextAnswer()
@@ -38,7 +32,7 @@ public class AnswersController : MonoBehaviour
             currentAnswer = 0;
 
         GetComponent<QuestBasePrefabView>().FillAnswer(answers[currentAnswer]);
-        CheckQuestionAnswer();
+        CheckAnswerOKbutton();
     }
 
     public void ShowPreviewsAnswer()
@@ -49,10 +43,10 @@ public class AnswersController : MonoBehaviour
             currentAnswer--;
 
         GetComponent<QuestBasePrefabView>().FillAnswer(answers[currentAnswer]);
-        CheckQuestionAnswer();
+        CheckAnswerOKbutton();
     }
 
-    private void CheckQuestionAnswer()
+    private void CheckAnswerOKbutton()
     {
         if (currentAnswer == 0)
             GetComponent<QuestBasePrefabView>().SetOkButton(false);
@@ -97,42 +91,33 @@ public class AnswersController : MonoBehaviour
     private void NextStepWrong()
     {
         Debug.Log("next Step Wrong");
-        _goalsUI.SetGoalState(gameObject.name, false);
         var currentArtefact = GetComponent<iQuestTask>();
-        GameActions.OnShowStartQuestPanel.Invoke(currentArtefact.WrongReactionSign, currentArtefact.WrongReaction);
-        GameActions.SendCurrentStep.Invoke("Wrong quest " + currentArtefact.name);
-
+        GameActions.OnQuestComplete.Invoke(currentArtefact.name, false);
         Destroy(gameObject, 3);
     }
 
     void NextStepRight()
     {
         Debug.Log("next Step Right");
-        _goalsUI.SetGoalState(gameObject.name, true);
         var currentArtefact = GetComponent<iQuestTask>();
-        GameActions.OnShowStartQuestPanel.Invoke(currentArtefact.RightReactionSign, currentArtefact.RightReaction);
-
-        GameActions.SendCurrentStep.Invoke("Right quest " + currentArtefact.name);
-        GameActions.SetReadyForTracking.Invoke(true, currentArtefact.RightReactionSign);
+        GameActions.OnQuestComplete.Invoke(currentArtefact.name, true);
         Destroy(gameObject, 3);
     }
 
     public void NextStep()
     {
         Debug.Log("next Step");
-        _goalsUI.SetGoalState(gameObject.name, true);
         var currentArtefact = GetComponent<iQuestArtefact>();
 
         if (!currentArtefact.noArtefact)
         {
-            GameActions.OnShowStartQuestPanel.Invoke(currentArtefact.ReactionSign, currentArtefact.Question);
+            GameActions.OnQuestComplete.Invoke(currentArtefact.name, true);
             Destroy(gameObject, 3f);
         }
         else
         {
             Debug.Log("no artefact");
-            GameActions.OnShowStartQuestPanel.Invoke(currentArtefact.ReactionSign, currentArtefact.Reaction);
-
+            GameActions.OnQuestComplete.Invoke(currentArtefact.name, true);
             Destroy(gameObject, 3f);
         }
     }

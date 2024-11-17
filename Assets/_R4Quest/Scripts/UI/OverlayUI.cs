@@ -19,8 +19,12 @@ public class OverlayUI : MonoBehaviour, IUISkin
     private void Start()
     {
         SetSkin(skin);
+        questInfoButton.GetComponent<Button>().onClick.AddListener(SendOnQuestPanelCurrent);
     }
-
+    private void SendOnQuestPanelCurrent()
+    {
+        UIActions.OnQuestPanelCurrent.Invoke();
+    }
     public void SetSkin(UISkin uiSkin)
     {
         skin = uiSkin as OverlayUISkin;

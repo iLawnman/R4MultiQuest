@@ -17,6 +17,7 @@ public class ApplicationData
     public List<IntroScreenData> OutroScreens = new List<IntroScreenData>();
     public List<BasePrefabSkinData> BasePrefabSkin = new List<BasePrefabSkinData>();
     public List<string> Scripts = new List<string>();
+    public string CurrentQuest;
 }
 
 [Serializable]

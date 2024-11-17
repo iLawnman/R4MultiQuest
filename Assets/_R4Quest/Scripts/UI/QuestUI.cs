@@ -18,6 +18,9 @@ public class QuestUI : MonoBehaviour, IUISkin
     void Start()
     {
         UIActions.OnQuestStart += OnActive;
+        UIActions.OnQuestPanel += OnQuestPanel;
+        UIActions.OnQuestPanelCurrent += OnQuestPanelCurrent;
+
         SetSkin(skin);
     }
 
@@ -25,15 +28,36 @@ public class QuestUI : MonoBehaviour, IUISkin
     {
         Debug.Log("onActive " + quest.QuestID + " with img " + trackeImg.referenceImage);
         
-        ShowQuestByRecognitionImage(quest, trackeImg);
+        ShowQuestByRecognitionImageDelayed(quest);
     }
 
+    void OnQuestPanel(string txt, string imgName)
+    {
+        questStartPanel.transform.Find("Text").GetComponent<Text>().text = txt;
+        
+        if(CacheService.GetCachedImage(imgName + ".png"))
+            questStartPanel.transform.Find("Image").GetComponent<Image>().sprite = 
+                CacheService.GetCachedImage(imgName + ".png");
+        questStartPanel.SetActive(true);
+    }
+    
+    void OnQuestPanelCurrent()
+    {
+        string currentQuest = container.ApplicationData.CurrentQuest;
+        string txt = container.ApplicationData.Quests.FirstOrDefault(x => x.QuestID == currentQuest).Question;
+        string imgName = container.ApplicationData.Quests.FirstOrDefault(x => x.QuestID == currentQuest).RecognitionImage;
+        
+        OnQuestPanel(txt, imgName);
+    }
+    
     void OnDestroy()
     {
         UIActions.OnQuestStart += OnActive;
+        UIActions.OnQuestPanel -= OnQuestPanel;
+        UIActions.OnQuestPanelCurrent -= OnQuestPanelCurrent;
     }
 
-    private async UniTask ShowQuestByRecognitionImage(QuestData quest, ARTrackedImage trackeImg)
+    private async UniTask ShowQuestByRecognitionImageDelayed(QuestData quest)
     {
         await UniTask.Delay(2000);
         

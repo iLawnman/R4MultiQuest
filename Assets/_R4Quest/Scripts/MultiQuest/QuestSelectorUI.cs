@@ -75,7 +75,6 @@ public class QuestSelectorUI : MonoBehaviour, IUISkin
             button.GetComponentInChildren<Button>().onClick.AddListener(() =>
             {
                 OnSelect(tmpTxt.text);
-                menuDone = true;
             });
         }
     }
@@ -106,6 +105,7 @@ public class QuestSelectorUI : MonoBehaviour, IUISkin
         if(menuDone)
             return;
         
+        menuDone = true;
         bootstrap.gameObject.SetActive(true);
         var setting = _applicationSettings.FirstOrDefault(x => x.applicationName.Contains(tmpTxt));
         

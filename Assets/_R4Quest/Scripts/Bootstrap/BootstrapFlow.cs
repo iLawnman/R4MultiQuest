@@ -62,7 +62,7 @@ public class BootstrapFlow : IStartable
                                  + " SCP/ " + _configDataContainer.ApplicationData.Scripts
                                  + " SKN/ " + _configDataContainer.ApplicationData.BasePrefabSkin.Count);
         
-        //await _fileSyncService.Initilize(applicationSettings);
+        await _fileSyncService.Initilize(applicationSettings);
         
         GameActions.OnLoadFinish?.Invoke();
         BootstrapActions.OnShowInfo.Invoke(string.Empty);

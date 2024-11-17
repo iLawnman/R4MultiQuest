@@ -110,7 +110,6 @@ public class QuestBasePrefabView : MonoBehaviour
 
     public void FillAnswer(AnswerData answer)
     {
-        Debug.Log("fill answer " + answer.txts._helpDown);
         FillImages(answer.imgs);
         FillTexts(answer.txts);
         FillPrefabs(answer.prefabs);
@@ -148,8 +147,6 @@ public class QuestBasePrefabView : MonoBehaviour
 
     private void FillTexts(BasePrefabTexts txts)
     {
-        Debug.Log("fill txt " + txts._title);
-
         OnIfEmptyLeft(true);
         OnTitleDecor(true);
 
@@ -207,7 +204,7 @@ public class QuestBasePrefabView : MonoBehaviour
 
         var answerC = GetComponent<AnswersController>();
 
-        await Task.Delay(1000);
+        await Task.Delay(100);
 
         _1Button.GetComponentInChildren<Text>().text =
             answerC.answers.FirstOrDefault(x => x.txts._answer_ID == answers[1])?.txts._mainTxt;
@@ -243,17 +240,9 @@ public class QuestBasePrefabView : MonoBehaviour
         _rightEmptyImg.SetActive(false);
     }
 
-    void OnIfEmptyLeft(bool state)
-    {
-        Debug.Log("emptyleft");
-        _leftEmptyImg.SetActive(state);
-    }
+    void OnIfEmptyLeft(bool state) => _leftEmptyImg.SetActive(state);
 
-    void OnTitleDecor(bool state)
-    {
-        Debug.Log("emptydecor");
-        _titleBackEmptyImg.SetActive(state);
-    }
+    void OnTitleDecor(bool state) => _titleBackEmptyImg.SetActive(state);
 
     public void ResetControls()
     {

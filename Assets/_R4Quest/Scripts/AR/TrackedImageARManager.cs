@@ -15,8 +15,6 @@ public class TrackedImageARManager : MonoBehaviour
     
     private void Start()
     {
-        //SceneManager.SetActiveScene(gameObject.scene);
-        //GameActions.CallQuestStart += StartQuest;
         ARSceneActions.OnARSession += OnARSession;
         ARSceneActions.OnReadyForTracking += OnReadyForTracking;
         
@@ -55,7 +53,7 @@ public class TrackedImageARManager : MonoBehaviour
             if (!trackedImages.Contains(trackedImage))
             {
                 trackedImages.Add(trackedImage);
-                ARSceneActions.OnARTrackedImageAdded?.Invoke(trackedImage);
+                ARSceneActions.OnARTrackedImage?.Invoke(trackedImage);
             }
         }
 

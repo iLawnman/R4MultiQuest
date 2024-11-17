@@ -22,7 +22,6 @@ public class QuestLogging : IStartable, ILogging
     
     public void Start()
     {
-        GameActions.SendCurrentStep += SendCurrentStep;
     }
 
     public void SendCurrentStep(string data)

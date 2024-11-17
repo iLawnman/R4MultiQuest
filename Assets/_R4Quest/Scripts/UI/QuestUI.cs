@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.XR.ARFoundation;
@@ -22,7 +23,7 @@ public class QuestUI : MonoBehaviour, IUISkin
 
     private void OnActive(QuestData quest, ARTrackedImage trackeImg)
     {
-        Debug.Log("onActive " + quest + " with img " + trackeImg.referenceImage);
+        Debug.Log("onActive " + quest.QuestID + " with img " + trackeImg.referenceImage);
         
         ShowQuestByRecognitionImage(quest, trackeImg);
     }
@@ -32,8 +33,10 @@ public class QuestUI : MonoBehaviour, IUISkin
         UIActions.OnQuestStart += OnActive;
     }
 
-    private void ShowQuestByRecognitionImage(QuestData quest, ARTrackedImage trackeImg)
+    private async UniTask ShowQuestByRecognitionImage(QuestData quest, ARTrackedImage trackeImg)
     {
+        await UniTask.Delay(2000);
+        
         questStartPanel.SetActive(true);
         questStartPanel.transform.Find("Text").GetComponent<Text>().text = quest.Question;
         

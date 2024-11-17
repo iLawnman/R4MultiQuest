@@ -82,5 +82,7 @@ public class BootstrapFlow : IStartable
         _resolver.Inject(Instance);
         _configDataContainer = _resolver.Resolve<ConfigDataContainer>();
         _configDataContainer.ApplicationSettings = Instance as ApplicationSettings;
+
+        await UniTask.CompletedTask;
     }
 }

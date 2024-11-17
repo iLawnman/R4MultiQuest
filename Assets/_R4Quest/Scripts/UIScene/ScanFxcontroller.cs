@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
@@ -8,15 +9,16 @@ public class ScanFxcontroller : MonoBehaviour, IUISkin
     [SerializeField] private ScanFXSkin skin;
     [SerializeField] private GameObject FxPanel;
     [SerializeField] private GameObject frame;
+
     private void Start()
     {
-        GameActions.OnShowScenFX += ShowScenFX;
+        UIActions.OnShowScenFX += ShowScenFX;
         SetSkin(skin);
     }
 
     private void OnDisable()
     {
-        GameActions.OnShowScenFX -= ShowScenFX;
+        UIActions.OnShowScenFX -= ShowScenFX;
     }
 
     public void SetSkin(UISkin uiSkin)
@@ -27,16 +29,20 @@ public class ScanFxcontroller : MonoBehaviour, IUISkin
         FxPanel.GetComponentInChildren<Text>().font = skin.TxtFont;
         FxPanel.GetComponentInChildren<Text>().color = skin.fxColor;
     }
-    
-    private async void ShowScenFX(bool state, int duration)
+
+    private void ShowScenFX(bool state, int duration)
     {
-        Debug.Log(("ShowScenFX: " + state));
+        StartCoroutine(showFX(state, duration));
+    }
+
+    IEnumerator showFX(bool state, float duration)
+    {
         FxPanel.SetActive(state);
+        Debug.Log(("ShowScenFX: " + state));
         if (state)
         {
-            await Task.Delay(duration);
-            FxPanel.SetActive(false);
-            frame.SetActive(false);
+            yield return new WaitForSeconds(duration);
+            FxPanel.SetActive(false); // Disable the effect after the duration
         }
     }
 }

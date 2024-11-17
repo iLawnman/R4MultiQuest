@@ -16,28 +16,21 @@ public class GameflowController : MonoBehaviour
         
         GameActions.CallQuestStart += CallQuestStart;
         GameActions.OnQuestStart += OnQuestStart;
-        GameActions.OnShowStartQuestPanel += OnShowStartQuestPanel;
         GameActions.OnQuestComplete += OnQuestComplete;
         
-        ARSceneActions.OnARTrackedImageAdded += OnARTrackedImageAdded;
+        ARSceneActions.OnARTrackedImage += OnARTrackedImage;
     }
 
-    void OnARTrackedImageAdded(ARTrackedImage imgTrack)
+    void OnARTrackedImage(ARTrackedImage imgTrack)
     {
         Debug.Log("imgTracked " + imgTrack.referenceImage);
-        
-        //TO-DO lua script-modificator
+        UIActions.OnShowScenFX?.Invoke(true, 2);
         
         var q = container.ApplicationData.Quests
             .FirstOrDefault(x => x.RecognitionImage == imgTrack.referenceImage.name);
         gameObjectsFactory.CreateARTarget(q, imgTrack);
         
         UIActions.OnQuestStart?.Invoke(q, imgTrack);    
-    }
-
-    void OnShowStartQuestPanel(string quest, string state)
-    {
-        Debug.Log("gamecontroller OnLoadFinish");
     }
     
     void CallQuestStart()

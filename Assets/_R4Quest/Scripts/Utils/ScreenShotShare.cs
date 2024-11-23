@@ -2,6 +2,7 @@
 using UnityEngine;
 using System.IO;
 using UnityEngine.UI;
+using VContainer;
 
 public class ScreenShotShare : MonoBehaviour
 {
@@ -9,6 +10,7 @@ public class ScreenShotShare : MonoBehaviour
     [SerializeField] string Subject, ShareMessage;
     [SerializeField] string ScreenshotName = "R4QuestScreenshot.png";
     [SerializeField] private AudioClip _camShot;
+    [Inject] private AudioService audioService;
 
     private void Awake()
     {
@@ -18,7 +20,7 @@ public class ScreenShotShare : MonoBehaviour
     public void Share()
     {
         StartCoroutine(TakeSSAndShare());
-        GetComponent<AudioSource>().PlayOneShot(_camShot);
+        audioService.PlayOneShot(_camShot.name);
     }
     
     private IEnumerator TakeSSAndShare()

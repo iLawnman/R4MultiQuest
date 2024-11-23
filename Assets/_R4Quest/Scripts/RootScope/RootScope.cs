@@ -10,8 +10,7 @@ public class RootScope : LifetimeScope
     {
         builder.Register<FXManager>(Lifetime.Singleton);
         builder.Register<FileSyncService>(Lifetime.Singleton);
-        // builder.Register<CacheService>(Lifetime.Singleton);
-        // builder.Register<LuaScriptService>(Lifetime.Singleton);
+        builder.Register<AudioService>(Lifetime.Singleton);
         builder.Register<ConfigDataContainer>(Lifetime.Singleton);
         builder.Register<GameObjectsFactory>(Lifetime.Singleton);
     }

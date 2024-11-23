@@ -1,0 +1,19 @@
+# Exclude directories
+Assets/AddressableAssetsData/
+Assets/Packages/
+Assets/Plugins/
+Assets/Resources/
+Assets/Samples/
+Assets/Settings/
+Assets/TextMesh Pro/
+Assets/XR/
+Assets/XRI/
+Cache/
+Library/
+Logs/
+obj/
+Packages/
+ProjectSettings/
+ServerData/
+Temp/
+UserSettings/

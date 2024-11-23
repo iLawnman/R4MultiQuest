@@ -96,12 +96,12 @@ public class CacheService : IStartable
         return null;
     }
 
-    public byte[] LoadCachedObject(string name)
+    public static byte[] LoadCachedObject(string name)
     {
         return cachedObjects[name];
     }
 
-    public Dictionary<string, byte[]> LoadCachedObjects(string nameMask)
+    public static Dictionary<string, byte[]> LoadCachedObjects(string nameMask)
     {
         var _objs = cachedObjects.Where(x => x.Key.Contains(nameMask)).ToList();
         if (_objs.Count > 0)

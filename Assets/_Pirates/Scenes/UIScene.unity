@@ -2709,6 +2709,7 @@ GameObject:
   - component: {fileID: 595861683}
   - component: {fileID: 595861682}
   - component: {fileID: 595861687}
+  - component: {fileID: 595861688}
   m_Layer: 5
   m_Name: OverlayUI
   m_TagString: Untagged
@@ -2837,6 +2838,23 @@ MonoBehaviour:
   shareButton: {fileID: 907532792}
   mapButton: {fileID: 924111622}
   questInfoButton: {fileID: 282750933}
+--- !u!114 &595861688
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 595861680}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 66da378f05d8d4772af0c1842032f07c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shareButton: {fileID: 907532794}
+  Subject: R4Quest
+  ShareMessage: 
+  ScreenshotName: R4QuestScreenshot.png
+  _camShot: {fileID: 8300000, guid: c918cb2a15ed54bffb9c9956c6f329a6, type: 3}
 --- !u!1 &617306835
 GameObject:
   m_ObjectHideFlags: 0
@@ -6339,6 +6357,54 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1730414865}
   m_CullTransparentMesh: 0
+--- !u!1 &1801880601
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1801880603}
+  - component: {fileID: 1801880602}
+  m_Layer: 0
+  m_Name: AudioMixer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1801880602
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1801880601}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cbc64651f9e1d42ab9c8bc1ea3e87ff3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  musicMute: 0
+  def: {fileID: 24500006, guid: 405441a32f623481d9830614553706ae, type: 2}
+  mMute: {fileID: 2717119176300430338, guid: 405441a32f623481d9830614553706ae, type: 2}
+  muteButton: {fileID: 221355763}
+--- !u!4 &1801880603
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1801880601}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1911927249
 GameObject:
   m_ObjectHideFlags: 0
@@ -15248,6 +15314,7 @@ SceneRoots:
   - {fileID: 60576404}
   - {fileID: 2112645060}
   - {fileID: 1081309114}
+  - {fileID: 1801880603}
   - {fileID: 491371922}
   - {fileID: 595861686}
   - {fileID: 901255466}

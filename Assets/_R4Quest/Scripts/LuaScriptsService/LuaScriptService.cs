@@ -7,7 +7,6 @@ using VContainer.Unity;
 
 public class LuaScriptService : IStartable 
 {
-    [Inject] private CacheService cacheService;
     Dictionary<string, string> scripts = new Dictionary<string, string>();
 
     public void Start()
@@ -18,7 +17,7 @@ public class LuaScriptService : IStartable
     void RegisterAllScripts()
     {
         scripts.Clear();
-        var _loadScripts = cacheService.LoadCachedObjects(".lua");
+        var _loadScripts = CacheService.LoadCachedObjects(".lua");
         Debug.Log("register all lua - " + _loadScripts.Count);
 
         foreach (var script in _loadScripts)

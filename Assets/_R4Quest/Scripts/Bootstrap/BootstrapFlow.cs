@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
 using DataSakura.Runtime.Utilities;
@@ -28,7 +29,6 @@ public class BootstrapFlow : IStartable
     public async void Start()
     {
         //return;
-
         if (Application.internetReachability == NetworkReachability.NotReachable)
         {
             Debug.Log("no internet");

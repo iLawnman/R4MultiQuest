@@ -7,6 +7,7 @@
     <type fullname="UnityEngine.UI.Extensions.ScrollSnapBase/SelectionPageChangedEvent" preserve="nothing" serialized="true" />
   </assembly>
   <assembly fullname="R4Quest, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+    <type fullname="AMixer" preserve="all" />
     <type fullname="ApplicationSettings" preserve="all" />
     <type fullname="AskPanel" preserve="all" />
     <type fullname="GameflowController" preserve="all" />
@@ -23,6 +24,7 @@
     <type fullname="QuestUISkin" preserve="all" />
     <type fullname="ScanFxcontroller" preserve="all" />
     <type fullname="ScanFXSkin" preserve="all" />
+    <type fullname="ScreenShotShare" preserve="all" />
     <type fullname="SlideController" preserve="all" />
     <type fullname="SlidePanelUIFX" preserve="all" />
     <type fullname="SplashScreensUI" preserve="all" />
@@ -129,6 +131,7 @@
   <assembly fullname="Unity.XR.ARSubsystems, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
     <type fullname="UnityEngine.XR.ARSubsystems.XRReferenceImageLibrary" preserve="all" />
     <type fullname="UnityEngine.XR.ARSubsystems.SerializableDictionary`2" preserve="nothing" serialized="true" />
+    <type fullname="UnityEngine.XR.ARSubsystems.SerializableDictionary`2/KeyValuePair" preserve="nothing" serialized="true" />
     <type fullname="UnityEngine.XR.ARSubsystems.SerializableGuid" preserve="nothing" serialized="true" />
     <type fullname="UnityEngine.XR.ARSubsystems.XRReferenceImage" preserve="nothing" serialized="true" />
   </assembly>
@@ -151,7 +154,13 @@
     <type fullname="UnityEngine.XR.Interaction.Toolkit.UI.UIHoverEnterEvent" preserve="nothing" serialized="true" />
     <type fullname="UnityEngine.XR.Interaction.Toolkit.UI.UIHoverExitEvent" preserve="nothing" serialized="true" />
   </assembly>
+  <assembly fullname="UnityEditor.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+    <type fullname="UnityEditor.Audio.AudioMixerSnapshotController" preserve="all" />
+  </assembly>
   <assembly fullname="UnityEngine.AudioModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+    <type fullname="UnityEngine.Audio.AudioMixer" preserve="all" />
+    <type fullname="UnityEngine.Audio.AudioMixerGroup" preserve="all" />
+    <type fullname="UnityEngine.AudioClip" preserve="all" />
     <type fullname="UnityEngine.AudioListener" preserve="all" />
     <type fullname="UnityEngine.AudioSource" preserve="all" />
   </assembly>

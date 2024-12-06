@@ -26,10 +26,10 @@ public class GameflowController : MonoBehaviour
         Debug.Log("imgTracked " + imgTrack);
         var q = container.ApplicationData.Quests
             .FirstOrDefault(x => x.RecognitionImage == imgTrack);
-        gameObjectsFactory.CreateARTarget(q, imgTrack);
-
-        UIActions.OnShowScenFX?.Invoke(true, 2);
+        
         UIActions.OnQuestStart?.Invoke(q, imgTrack);    
+        UIActions.OnShowScenFX?.Invoke(true, 2);
+        gameObjectsFactory.CreateARTarget(q, imgTrack);
     }
     
     void CallQuestStart()

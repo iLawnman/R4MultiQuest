@@ -89,7 +89,7 @@ public class QuestBasePrefabView : MonoBehaviour
 
     private void ApplySkin()
     {
-        Debug.Log("apply baseprefab skin");
+        Debug.Log("apply baseprefab skin " + container.ApplicationData.BasePrefabSkin.Count);
         var skin = container.ApplicationData.BasePrefabSkin[0];
         _mainBackImg.sprite = CacheService.GetCachedImage(skin?._mainBackImg + ".png");
         _mainBackImg1.sprite = CacheService.GetCachedImage(skin?._mainBackImg1 + ".png");

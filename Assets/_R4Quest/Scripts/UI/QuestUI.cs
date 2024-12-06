@@ -24,9 +24,9 @@ public class QuestUI : MonoBehaviour, IUISkin
         SetSkin(skin);
     }
 
-    private void OnActive(QuestData quest, ARTrackedImage trackeImg)
+    private void OnActive(QuestData quest, string trackeImg)
     {
-        Debug.Log("onActive " + quest.QuestID + " with img " + trackeImg.referenceImage);
+        Debug.Log("onActive " + quest.QuestID + " with img " + trackeImg);
         
         ShowQuestByRecognitionImageDelayed(quest);
     }

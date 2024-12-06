@@ -21,19 +21,20 @@ public class GameflowController : MonoBehaviour
         GameActions.OnQuestComplete += OnQuestComplete;
     }
 
-    void OnARTrackedImage(ARTrackedImage imgTrack)
+    void OnARTrackedImage(string imgTrack)
     {
-        Debug.Log("imgTracked " + imgTrack.referenceImage.texture.name);
-        UIActions.OnShowScenFX?.Invoke(true, 2);
+        Debug.Log("imgTracked " + imgTrack);
         var q = container.ApplicationData.Quests
-            .FirstOrDefault(x => x.RecognitionImage == imgTrack.referenceImage.texture.name);
+            .FirstOrDefault(x => x.RecognitionImage == imgTrack);
         gameObjectsFactory.CreateARTarget(q, imgTrack);
+
+        UIActions.OnShowScenFX?.Invoke(true, 2);
         UIActions.OnQuestStart?.Invoke(q, imgTrack);    
     }
     
     void CallQuestStart()
     {
-        Debug.Log("gamecontroller CallQuestStart with lua modidcator");
+        Debug.Log("gamecontroller CallQuestStart with lua modidifcator");
         _luaScriptService.ExecuteAction("CallQuestStart.lua", "start", "str");
         ARSceneActions.OnARSession?.Invoke();
         ARSceneActions.OnReadyForTracking?.Invoke(true);

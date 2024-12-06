@@ -14,6 +14,7 @@ public class QuestSelectorUI : MonoBehaviour, IUISkin
     [SerializeField] private Button closeButton;
     [SerializeField] private GameObject buttonPrefab;
     [SerializeField] private BootstrapUI bootstrap;
+    private bool menuSelect;
     private bool menuDone;
 
     void Start()
@@ -66,6 +67,9 @@ public class QuestSelectorUI : MonoBehaviour, IUISkin
     }
     private void MakeMenu()
     {
+        if(menuDone)
+            return;
+        
         foreach (var application in _applicationSettings)
         {
             var button = Instantiate(buttonPrefab, buttons.transform);
@@ -77,6 +81,8 @@ public class QuestSelectorUI : MonoBehaviour, IUISkin
                 OnSelect(tmpTxt.text);
             });
         }
+
+        menuDone = true;
     }
 
     private void AddApplication(string appString)
@@ -102,10 +108,10 @@ public class QuestSelectorUI : MonoBehaviour, IUISkin
 
     private void OnSelect(string tmpTxt)
     {
-        if(menuDone)
+        if(menuSelect)
             return;
         
-        menuDone = true;
+        menuSelect = true;
         bootstrap.gameObject.SetActive(true);
         var setting = _applicationSettings.FirstOrDefault(x => x.applicationName.Contains(tmpTxt));
         

@@ -18,9 +18,9 @@ public class GameObjectsFactory
         container = _container;
     }
 
-    public void CreateARTarget(QuestData quest, ARTrackedImage trackeImg)
+    public void CreateARTarget(QuestData quest, string trackeImg)
     {
-        Debug.Log("create ar target for " + trackeImg.referenceImage.name + " quest " + quest.QuestID);
+        Debug.Log("create ar target for " + trackeImg + " quest " + quest.QuestID);
         GameObject prefab = container.ApplicationData.Prefabs.FirstOrDefault(x => x.name.Contains("BasePrefab"));
 
         //var arTarget = Object.Instantiate(prefab);

@@ -1,3 +1,7 @@
+# Ignore all files except C++, header and python files
+#*
+#!*.cpp
+
 # Exclude directories
 Assets/AddressableAssetsData/
 Assets/Packages/

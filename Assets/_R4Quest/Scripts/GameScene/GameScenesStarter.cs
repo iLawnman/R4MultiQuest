@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
@@ -15,9 +16,12 @@ public class GameScenesStarter : IStartable
     {
         _container = container;
     }
-    public void Start()
+    public async void Start()
     {
         Debug.Log("start gamescene with addressable setting " + _container.ApplicationSettings.AddressableKey);
+        
+        await Addressables.DownloadDependenciesAsync(_container.ApplicationSettings.AddressableKey);
+        Debug.Log("loadeded dependences ");
         
         Addressables.LoadResourceLocationsAsync(_container.ApplicationSettings.AddressableKey, 
                 typeof(UnityEngine.ResourceManagement.ResourceProviders.SceneInstance))

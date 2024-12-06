@@ -32,7 +32,9 @@ public class BootstrapFlow : IStartable
         if (Application.internetReachability == NetworkReachability.NotReachable)
         {
             Debug.Log("no internet");
-            await LoadDefaultDataSet();
+            BootstrapActions.OnShowInfo?.Invoke("NO INTERNET CONNECTION\nAPPLICATION WILL CLOSE");
+            await UniTask.WaitUntil(() => Input.touchCount > 0);
+            //await LoadDefaultDataSet();
         }
         else
             BootstrapActions.OnSelectApplication += StartAsync;
@@ -40,6 +42,8 @@ public class BootstrapFlow : IStartable
     
     private async void StartAsync(ApplicationSettings applicationSettings)
     {
+        BootstrapActions.OnSelectApplication -= StartAsync;
+        
         await BindInstanceToRootScope(applicationSettings);
 
         await LoadSelectedAplicationData(applicationSettings);

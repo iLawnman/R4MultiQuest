@@ -69,8 +69,8 @@ public class BootstrapFlow : IStartable
         await _fileSyncService.Initilize(applicationSettings);
         
         GameActions.OnLoadFinish?.Invoke();
-        BootstrapActions.OnShowInfo.Invoke(string.Empty);
-        await UniTask.Delay(1000);
+        BootstrapActions.OnShowInfo?.Invoke(string.Empty);
+        await UniTask.Delay(2000);
         SceneManager.LoadSceneAsync(1);
     }
 

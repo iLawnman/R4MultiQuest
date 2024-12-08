@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.XR.ARFoundation;
 using VContainer;
@@ -13,7 +15,7 @@ public class GameflowController : MonoBehaviour
     public void Start()
     {
         Application.runInBackground = false;
-        
+
         ARSceneActions.OnARTrackedImage += OnARTrackedImage;
 
         GameActions.CallQuestStart += CallQuestStart;
@@ -26,12 +28,12 @@ public class GameflowController : MonoBehaviour
         Debug.Log("imgTracked " + imgTrack);
         var q = container.ApplicationData.Quests
             .FirstOrDefault(x => x.RecognitionImage == imgTrack);
-        
-        UIActions.OnQuestStart?.Invoke(q, imgTrack);    
+
+        UIActions.OnQuestStart?.Invoke(q, imgTrack);
         UIActions.OnShowScenFX?.Invoke(true, 2);
         gameObjectsFactory.CreateARTarget(q, imgTrack);
     }
-    
+
     void CallQuestStart()
     {
         Debug.Log("gamecontroller CallQuestStart with lua modidifcator");
@@ -41,7 +43,7 @@ public class GameflowController : MonoBehaviour
     }
 
     void OnQuestStart(string quest)
-    {        
+    {
         Debug.Log("luaService onqueststart " + quest);
         container.ApplicationData.CurrentQuest = quest;
         _luaScriptService.ExecuteAction("OnQuestStart", "Start", "null");
@@ -54,7 +56,13 @@ public class GameflowController : MonoBehaviour
             .FirstOrDefault(x => x.QuestID == questId);
         var nextQuest = container.ApplicationData.Quests.FirstOrDefault(x => x.QuestID == q.RightWayQuest);
         string imgNextQuest = nextQuest.RecognitionImage;
-        UIActions.OnQuestPanel.Invoke(q.RightReaction, imgNextQuest);
+        UIActions.OnQuestPanel.Invoke(q.RightReaction, q.SignImage);
         container.ApplicationData.CurrentQuest = nextQuest.QuestID;
+
+        _luaScriptService.ExecuteAction("OnQuestComplete", "Complete", "null");
+        
+        bool asyncComplete = Convert.ToBoolean(container.ApplicationSettings.SetWaitNextQuest);
+        if (!asyncComplete)
+            UIActions.OnQuestPanel.Invoke(nextQuest.Question, nextQuest.RecognitionImage);
     }
 }

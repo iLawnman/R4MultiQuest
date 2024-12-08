@@ -33,6 +33,13 @@ public class QuestUI : MonoBehaviour, IUISkin
 
     void OnQuestPanel(string txt, string imgName)
     {
+        onQuestPanel(txt, imgName);
+    }
+    
+    async UniTask onQuestPanel(string txt, string imgName)
+    {
+        await UniTask.WaitUntil(() => questStartPanel.activeSelf);
+        
         questStartPanel.transform.Find("Text").GetComponent<Text>().text = txt;
         
         if(CacheService.GetCachedImage(imgName + ".png"))

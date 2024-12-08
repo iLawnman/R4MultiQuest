@@ -13,7 +13,7 @@ public class Bootstrap : MonoBehaviour
     {
         DontDestroyOnLoad(this);
         
-        _audioService.PlayLoop("Waiting.mp3");
+        _audioService.PlayLoop("Waiting");
 
         container.ApplicationData.Prefabs?.AddRange(applicationPrefab);
         applicationPrefab.Clear();

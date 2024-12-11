@@ -53,7 +53,7 @@ public class TrackedImageARManager : MonoBehaviour
             if (!trackedImages.Contains(trackedImage))
             {
                 trackedImages.Add(trackedImage);
-                ARSceneActions.OnARTrackedImage?.Invoke(trackedImage.referenceImage.name);
+                ARSceneActions.OnARTrackedImage?.Invoke(trackedImage.referenceImage.name, trackedImage.transform);
             }
         }
 

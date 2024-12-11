@@ -14,9 +14,11 @@ public class QuestUI : MonoBehaviour, IUISkin
     [SerializeField] private GameObject answerControlPanel;
     [SerializeField] private GameObject continueButton;
     [Inject] private ConfigDataContainer container;
+    private Queue panelsQueue;
 
     void Start()
     {
+        panelsQueue = new Queue();
         UIActions.OnQuestStart += OnActive;
         UIActions.OnQuestPanel += OnQuestPanel;
         UIActions.OnQuestPanelCurrent += OnQuestPanelCurrent;
@@ -33,13 +35,12 @@ public class QuestUI : MonoBehaviour, IUISkin
 
     void OnQuestPanel(string txt, string imgName)
     {
-        onQuestPanel(txt, imgName);
+        UniTask.Run(() =>onQuestPanel(txt, imgName));
     }
     
     async UniTask onQuestPanel(string txt, string imgName)
     {
-        await UniTask.WaitUntil(() => questStartPanel.activeSelf);
-        
+        await UniTask.WaitUntil(() => !questStartPanel.activeSelf);
         questStartPanel.transform.Find("Text").GetComponent<Text>().text = txt;
         
         if(CacheService.GetCachedImage(imgName + ".png"))

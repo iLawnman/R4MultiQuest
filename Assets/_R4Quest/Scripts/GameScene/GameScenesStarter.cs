@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
@@ -18,50 +19,24 @@ public class GameScenesStarter : IStartable
     }
     public async void Start()
     {
-        Debug.Log("start gamescene with addressable setting " + _container.ApplicationSettings.AddressableKey);
+        try
+        {
+            Debug.Log("start gamescene with addressable setting " + _container.ApplicationSettings.AddressableKey);
         
-        await Addressables.DownloadDependenciesAsync(_container.ApplicationSettings.AddressableKey);
-        Debug.Log("loadeded dependences ");
-        
-        Addressables.LoadResourceLocationsAsync(_container.ApplicationSettings.AddressableKey, 
-                typeof(UnityEngine.ResourceManagement.ResourceProviders.SceneInstance))
-            .Completed += OnLocationsLoaded;
-    }
+            await Addressables.DownloadDependenciesAsync(_container.ApplicationSettings.AddressableKey + "ReferenceImageLibrary", false);
+            await Addressables.DownloadDependenciesAsync("ARScene", false);
+            await Addressables.DownloadDependenciesAsync("UIScene", false);
+            Debug.Log("loadeded dependences ");
 
-    void OnLocationsLoaded(AsyncOperationHandle<IList<IResourceLocation>> handle)
-    {
-        if (handle.Status == AsyncOperationStatus.Succeeded)
-        {
-            var locations = handle.Result;
-            if (locations.Count > 0)
-            {
-                for (int i = 0; i < locations.Count; i++)
-                {
-                    //BootstrapActions.OnShowInfo?.Invoke("Loading Scene " + locations[i].PrimaryKey);
-                    var loadMode = i == 0 ? LoadSceneMode.Single :  LoadSceneMode.Additive;
-                    Addressables.LoadSceneAsync(locations[i], loadMode).Completed += OnSceneLoaded;
-                }
-            }
-            else
-            {
-                Debug.LogError("No scenes with label found.");
-            }
+            await Addressables.LoadSceneAsync("ARScene", LoadSceneMode.Single);
+            await Addressables.LoadSceneAsync("UIScene", LoadSceneMode.Additive);
+            
+            SceneManager.SetActiveScene(SceneManager.GetSceneByName("ARScene"));
         }
-        else
+        catch (Exception e)
         {
-            Debug.LogError($"Failed to find {handle.DebugName} with label : {handle.OperationException}");
-        }
-    }
-
-    void OnSceneLoaded(AsyncOperationHandle<UnityEngine.ResourceManagement.ResourceProviders.SceneInstance> handle)
-    {
-        if (handle.Status == AsyncOperationStatus.Succeeded)
-        {
-            Debug.Log(handle.DebugName + " loaded successfully.");
-        }
-        else
-        {
-            Debug.LogError($"Failed to load {handle.DebugName} with {handle.OperationException}");
+            Debug.LogWarning(e.Message);
+            throw;
         }
     }
 }

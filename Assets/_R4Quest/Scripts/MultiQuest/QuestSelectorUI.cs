@@ -14,6 +14,7 @@ public class QuestSelectorUI : MonoBehaviour, IUISkin
     [SerializeField] private Button closeButton;
     [SerializeField] private GameObject buttonPrefab;
     [SerializeField] private BootstrapUI bootstrap;
+    [SerializeField] private GameObject splashScreen;
     private bool menuSelect;
     private bool menuDone;
 
@@ -83,6 +84,8 @@ public class QuestSelectorUI : MonoBehaviour, IUISkin
         }
 
         menuDone = true;
+        
+        splashScreen.SetActive(false);
     }
 
     private void AddApplication(string appString)

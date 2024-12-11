@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   useSafeMode: 1
   safeModeOptions:
-    logBehaviour: 3
-    nestedTweenFailureBehaviour: 1
+    logBehaviour: 0
+    nestedTweenFailureBehaviour: 0
   timeScale: 1
   unscaledTimeScale: 1
   useSmoothDeltaTime: 0

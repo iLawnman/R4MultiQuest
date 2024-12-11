@@ -48,6 +48,8 @@ ShaderVariantCollection:
         passType: 0
       - keywords: COLOR_MULTIPLY_ADDITIVE
         passType: 0
+      - keywords: COLOR_MULTIPLY_ADDITIVE SAMPLING_RGB_SHIFT
+        passType: 0
       - keywords: COLOR_MULTIPLY_LUMINANCE
         passType: 0
       - keywords: COLOR_REPLACE

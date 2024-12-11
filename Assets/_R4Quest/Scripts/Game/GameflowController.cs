@@ -23,7 +23,7 @@ public class GameflowController : MonoBehaviour
         GameActions.OnQuestComplete += OnQuestComplete;
     }
 
-    void OnARTrackedImage(string imgTrack)
+    void OnARTrackedImage(string imgTrack, Transform position)
     {
         Debug.Log("imgTracked " + imgTrack);
         var q = container.ApplicationData.Quests
@@ -31,7 +31,7 @@ public class GameflowController : MonoBehaviour
 
         UIActions.OnQuestStart?.Invoke(q, imgTrack);
         UIActions.OnShowScenFX?.Invoke(true, 2);
-        gameObjectsFactory.CreateARTarget(q, imgTrack);
+        gameObjectsFactory.CreateARTarget(q, imgTrack, position);
     }
 
     void CallQuestStart()
@@ -55,14 +55,13 @@ public class GameflowController : MonoBehaviour
         var q = container.ApplicationData.Quests
             .FirstOrDefault(x => x.QuestID == questId);
         var nextQuest = container.ApplicationData.Quests.FirstOrDefault(x => x.QuestID == q.RightWayQuest);
-        string imgNextQuest = nextQuest.RecognitionImage;
         UIActions.OnQuestPanel.Invoke(q.RightReaction, q.SignImage);
         container.ApplicationData.CurrentQuest = nextQuest.QuestID;
 
         _luaScriptService.ExecuteAction("OnQuestComplete", "Complete", "null");
         
-        bool asyncComplete = Convert.ToBoolean(container.ApplicationSettings.SetWaitNextQuest);
-        if (!asyncComplete)
+        //bool asyncComplete = Convert.ToBoolean(container.ApplicationSettings.SetWaitNextQuest);
+        //if (!asyncComplete)
             UIActions.OnQuestPanel.Invoke(nextQuest.Question, nextQuest.RecognitionImage);
     }
 }

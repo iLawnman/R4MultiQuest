@@ -12,12 +12,13 @@ public class TrackedImageARManager : MonoBehaviour
     private ARTrackedImageManager aRTrackedImageManager;
     private List<ARTrackedImage> trackedImages = new List<ARTrackedImage>();
     public bool readyForTracking = true;
-    
+    private QuestData waitingQuestData;
+
     private void Start()
     {
         ARSceneActions.OnARSession += OnARSession;
         ARSceneActions.OnReadyForTracking += OnReadyForTracking;
-        
+        ARSceneActions.OnWaitRecognitionImage += WaitRecognitionImage;
         //check CustomReferenceLibrary in LocalRepository
         
         aRTrackedImageManager = FindFirstObjectByType<ARTrackedImageManager>(FindObjectsInactive.Include);
@@ -25,6 +26,13 @@ public class TrackedImageARManager : MonoBehaviour
         
        
     }
+
+    private void WaitRecognitionImage(QuestData questData)
+    {
+        Debug.Log("wait image " + questData.RecognitionImage);
+        waitingQuestData = questData;
+    }
+
     private void OnDisable()
     {
         aRTrackedImageManager.trackedImagesChanged -= OnTrackedImagesChanged;
@@ -52,8 +60,19 @@ public class TrackedImageARManager : MonoBehaviour
         {
             if (!trackedImages.Contains(trackedImage))
             {
-                trackedImages.Add(trackedImage);
-                ARSceneActions.OnARTrackedImage?.Invoke(trackedImage.referenceImage.name, trackedImage.transform);
+                if (waitingQuestData == null)
+                {
+                    trackedImages.Add(trackedImage);
+                    ARSceneActions.OnARTrackedImage?.Invoke(trackedImage.referenceImage.name, trackedImage.transform);
+                }
+                else
+                {
+                    if (waitingQuestData.RecognitionImage == trackedImage.referenceImage.name)
+                    {
+                        trackedImages.Add(trackedImage);
+                        ARSceneActions.OnARTrackedImage?.Invoke(trackedImage.referenceImage.name, trackedImage.transform);
+                    }
+                }
             }
         }
 

@@ -54,14 +54,17 @@ public class GameflowController : MonoBehaviour
         Debug.Log("luaService onquestcomplete " + questId + " " + state);
         var q = container.ApplicationData.Quests
             .FirstOrDefault(x => x.QuestID == questId);
-        var nextQuest = container.ApplicationData.Quests.FirstOrDefault(x => x.QuestID == q.RightWayQuest);
+        QuestData nextQuest = container.ApplicationData.Quests.FirstOrDefault(x => x.QuestID == q.RightWayQuest);
         UIActions.OnQuestPanel.Invoke(q.RightReaction, q.SignImage);
         container.ApplicationData.CurrentQuest = nextQuest.QuestID;
 
         _luaScriptService.ExecuteAction("OnQuestComplete", "Complete", "null");
-        
+
         //bool asyncComplete = Convert.ToBoolean(container.ApplicationSettings.SetWaitNextQuest);
         //if (!asyncComplete)
-            UIActions.OnQuestPanel.Invoke(nextQuest.Question, nextQuest.RecognitionImage);
+        {
+            ARSceneActions.OnWaitRecognitionImage?.Invoke(nextQuest);
+            UIActions.OnQuestPanel.Invoke("ПРОДОЛЖАЙТЕ\nИЩИТЕ ЗНАК КАК НА КАРТИНКЕ", nextQuest.RecognitionImage);
+        }
     }
 }

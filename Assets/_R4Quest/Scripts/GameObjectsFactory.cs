@@ -26,6 +26,8 @@ public class GameObjectsFactory
         //var arTarget = Object.Instantiate(prefab);
         var arTarget = resolver.Instantiate(prefab, transform);
         arTarget.transform.localPosition = Vector3.zero;
+        arTarget.transform.localRotation = Quaternion.identity;
+        arTarget.AddComponent<ARAnchor>();
         arTarget.name = quest.QuestID;
         resolver.InjectGameObject(arTarget);
         

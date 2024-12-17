@@ -23,5 +23,7 @@ public class ApplicationSettings : ScriptableObject
     public string GoogleSheetOutroTable;
     public string AddressableKey;
     public string GoogleSheetBasePrefab;
-    public string SetWaitNextQuest;
+    
+    [Header("MoveToSavedSOPlayerPref")]
+    public string WaitConcreteNextQuest;
 }

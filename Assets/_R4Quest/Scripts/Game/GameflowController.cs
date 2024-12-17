@@ -12,8 +12,10 @@ public class GameflowController : MonoBehaviour
     [Inject] private GameObjectsFactory gameObjectsFactory;
     [Inject] private ConfigDataContainer container;
 
-    public void Start()
+    public async void Start()
     {
+        await CheckPlayerPrefsSaved();
+        
         Application.runInBackground = false;
 
         ARSceneActions.OnARTrackedImage += OnARTrackedImage;
@@ -21,16 +23,39 @@ public class GameflowController : MonoBehaviour
         GameActions.CallQuestStart += CallQuestStart;
         GameActions.OnQuestStart += OnQuestStart;
         GameActions.OnQuestComplete += OnQuestComplete;
+
+        if (container.ApplicationSettings.WaitConcreteNextQuest != string.Empty)
+        {
+            Debug.Log("set wait recognition image " + container.ApplicationSettings.WaitConcreteNextQuest);
+            var q = container.ApplicationData.Quests
+                .FirstOrDefault(x => x.RecognitionImage == container.ApplicationSettings.WaitConcreteNextQuest);
+            ARSceneActions.OnWaitRecognitionImage?.Invoke(q);
+        }
     }
 
-    void OnARTrackedImage(string imgTrack, Transform position)
+    private async UniTask CheckPlayerPrefsSaved()
+    {
+        if (PlayerPrefs.HasKey("GoalsCounter"))
+        {
+            Debug.Log("saved " + PlayerPrefs.GetInt("GoalsCounter"));
+        }
+        await UniTask.CompletedTask;
+    }
+
+    public void OnARTrackedImage(string imgTrack, Transform position)
     {
         Debug.Log("imgTracked " + imgTrack);
         var q = container.ApplicationData.Quests
             .FirstOrDefault(x => x.RecognitionImage == imgTrack);
 
-        UIActions.OnQuestStart?.Invoke(q, imgTrack);
         UIActions.OnShowScenFX?.Invoke(true, 2);
+        UIActions.OnQuestStart?.Invoke(q, imgTrack);
+        CreateAR(q, imgTrack, position).Forget();
+    }
+
+    async UniTask CreateAR(QuestData q, string imgTrack, Transform position)
+    {
+        await UniTask.Delay(2000);
         gameObjectsFactory.CreateARTarget(q, imgTrack, position);
     }
 
@@ -47,24 +72,69 @@ public class GameflowController : MonoBehaviour
         Debug.Log("luaService onqueststart " + quest);
         container.ApplicationData.CurrentQuest = quest;
         _luaScriptService.ExecuteAction("OnQuestStart", "Start", "null");
+        
+        PlayerPrefs.SetString("CurrentQuest", quest);
+
+        AddQuestCounter();
+    }
+
+    private void AddQuestCounter()
+    {
+        if(PlayerPrefs.HasKey("GoalsCounter") && PlayerPrefs.GetInt("GoalsCounter") >= 0)
+        {
+            PlayerPrefs.SetInt("GoalsCounter", PlayerPrefs.GetInt("GoalsCounter") + 1);
+        }
+        else
+        {
+            PlayerPrefs.SetInt("GoalsCounter", 0);
+        }
     }
 
     void OnQuestComplete(string questId, bool state)
     {
         Debug.Log("luaService onquestcomplete " + questId + " " + state);
+
+        if (CheckLastQuest())
+            StartEndSequence();
+
         var q = container.ApplicationData.Quests
             .FirstOrDefault(x => x.QuestID == questId);
-        QuestData nextQuest = container.ApplicationData.Quests.FirstOrDefault(x => x.QuestID == q.RightWayQuest);
-        UIActions.OnQuestPanel.Invoke(q.RightReaction, q.SignImage);
-        container.ApplicationData.CurrentQuest = nextQuest.QuestID;
+        QuestData nextQuest = null;
 
+        if (state)
+        {
+            nextQuest = container.ApplicationData.Quests.FirstOrDefault(x => x.QuestID == q.RightWayQuest);
+            UIActions.OnQuestPanel.Invoke(q.RightReaction, q.SignImage);
+        }
+        else
+        {
+            nextQuest = container.ApplicationData.Quests.FirstOrDefault(x => x.QuestID == q.WrongWayQuest);
+            UIActions.OnQuestPanel.Invoke(q.WrongReaction, q.SignImage);
+        }
+
+        container.ApplicationData.CurrentQuest = nextQuest.QuestID;
+        container.ApplicationSettings.WaitConcreteNextQuest = nextQuest.RecognitionImage;
         _luaScriptService.ExecuteAction("OnQuestComplete", "Complete", "null");
 
-        //bool asyncComplete = Convert.ToBoolean(container.ApplicationSettings.SetWaitNextQuest);
-        //if (!asyncComplete)
+        if (container.ApplicationSettings.WaitConcreteNextQuest != string.Empty)
         {
             ARSceneActions.OnWaitRecognitionImage?.Invoke(nextQuest);
             UIActions.OnQuestPanel.Invoke("ПРОДОЛЖАЙТЕ\nИЩИТЕ ЗНАК КАК НА КАРТИНКЕ", nextQuest.RecognitionImage);
         }
+    }
+
+    private void StartEndSequence()
+    {
+        Debug.Log("Start EndSequence");
+    }
+
+    private bool CheckLastQuest()
+    {
+        Debug.Log("check last quest " + PlayerPrefs.GetInt("GoalsCounter") + " / " +
+                  container.ApplicationData.Quests.Count);
+        if (PlayerPrefs.GetInt("GoalsCounter") == container.ApplicationData.Quests.Count)
+            return true;
+
+        return false;
     }
 }

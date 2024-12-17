@@ -172,9 +172,23 @@ ShaderVariantCollection:
       variants:
       - keywords: COLOR_ADDITIVE SAMPLING_BLUR_FAST
         passType: 0
+      - keywords: COLOR_MULTIPLY_ADDITIVE SAMPLING_BLUR_DETAIL
+        passType: 0
+      - keywords: COLOR_MULTIPLY_ADDITIVE SAMPLING_PIXELATION
+        passType: 0
+      - keywords: COLOR_MULTIPLY_ADDITIVE SAMPLING_RGB_SHIFT
+        passType: 0
       - keywords: SAMPLING_PIXELATION TONE_RETRO
         passType: 0
+      - keywords: SAMPLING_RGB_SHIFT
+        passType: 0
       - keywords: TRANSITION_BURN TRANSITION_COLOR_MULTIPLY_ADDITIVE
+        passType: 0
+      - keywords: TRANSITION_COLOR_ADDITIVE TRANSITION_SHINY
+        passType: 0
+      - keywords: TRANSITION_COLOR_CONTRAST TRANSITION_SHINY
+        passType: 0
+      - keywords: TRANSITION_COLOR_MULTIPLY TRANSITION_SHINY
         passType: 0
       - keywords: TRANSITION_COLOR_MULTIPLY_ADDITIVE TRANSITION_DISSOLVE
         passType: 0
@@ -183,4 +197,6 @@ ShaderVariantCollection:
       - keywords: TRANSITION_COLOR_MULTIPLY_ADDITIVE TRANSITION_SHINY
         passType: 0
       - keywords: TRANSITION_COLOR_MULTIPLY_LUMINANCE TRANSITION_SHINY
+        passType: 0
+      - keywords: TRANSITION_COLOR_SUBTRACTIVE TRANSITION_SHINY
         passType: 0

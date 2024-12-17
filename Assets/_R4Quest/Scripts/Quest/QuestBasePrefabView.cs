@@ -98,7 +98,7 @@ public class QuestBasePrefabView : MonoBehaviour
         _titleBackEmptyImg.GetComponentsInChildren<Image>().ToList().ToList().ForEach(x =>
             x.sprite = CacheService.GetCachedImage(skin?._titleBackImgEmpty + ".png"));
         var decorImg = CacheService.GetCachedImage(skin?._decorImg + ".png");
-        _additionalImg.sprite = CacheService.GetCachedImage(skin._additionalImg + ".png");
+        //_additionalImg.sprite = CacheService.GetCachedImage(skin._additionalImg + ".png");
         _rightBackImg.sprite = CacheService.GetCachedImage(skin._rightBackImg + ".png");
         _rightEmptyImg.GetComponentInChildren<SpriteRenderer>().sprite =
             CacheService.GetCachedImage(skin._rightBackImgEmpty + ".png");
@@ -151,7 +151,8 @@ public class QuestBasePrefabView : MonoBehaviour
         OnTitleDecor(true);
 
         _title.text = txts._title;
-        _mainTxt.text = txts._mainTxt;
+        if(txts._mainTxt != null)
+            _mainTxt.text = txts._mainTxt;
         _helpUp.text = txts._helpUp;
         _helpDown.text = txts._helpDown;
 

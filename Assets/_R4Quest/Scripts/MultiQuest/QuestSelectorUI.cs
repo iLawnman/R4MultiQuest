@@ -37,12 +37,6 @@ public class QuestSelectorUI : MonoBehaviour, IUISkin
 
         using (UnityWebRequest request = UnityWebRequest.Get(url))
         {
-            //var operation = request.SendWebRequest();
-
-            // while (!operation.isDone)
-            // {
-            //     await UniTask.Yield(); // Ожидание завершения запроса
-            // }
             var operation = request.SendWebRequest().ToUniTask();
             await operation;
 
@@ -103,6 +97,7 @@ public class QuestSelectorUI : MonoBehaviour, IUISkin
         app.GoogleSheetIntroTable = parts[8];
         app.GoogleSheetOutroTable = parts[9];
         app.GoogleSheetBasePrefab = parts[10];
+        app.WaitConcreteNextQuest = "tgid0000";
         
         _applicationSettings.Add(app);
 

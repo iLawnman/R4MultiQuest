@@ -565,6 +565,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   applicationPrefab:
   - {fileID: 6094310158578891817, guid: 1bf5e0f07cd094c78ad0be70ee46787b, type: 3}
+  - {fileID: 6926840106241035660, guid: fbfabcba258f44508aec5318649ddc72, type: 3}
+  - {fileID: 2811103891017516349, guid: 45296d8f3007c429eb9e939a2a505a30, type: 3}
+  - {fileID: 2811103891017516349, guid: 8724f88e9d1bd418191fea0ecefc9539, type: 3}
+  - {fileID: 2811103891017516349, guid: 79e7f7c4d776c48fb860ba4dd8df3485, type: 3}
+  - {fileID: 2811103891017516349, guid: cd9b6522f57894de69469543a9278a25, type: 3}
+  - {fileID: 2811103891017516349, guid: 175df9798b94d4fd0a01c310c11de4fc, type: 3}
+  - {fileID: 2811103891017516349, guid: d1988fc4252624454bdb06b4a436c8b4, type: 3}
+  - {fileID: 2811103891017516349, guid: f1ee3f47c06354d0a8544bbe5a000942, type: 3}
 --- !u!1 &1065415524
 GameObject:
   m_ObjectHideFlags: 0
@@ -5904,7 +5912,7 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   m_Delay: 0
-  m_Duration: 2
+  m_Duration: 3
   m_Interval: 0
   m_RestartOnEnable: 1
   m_WrapMode: 1
@@ -11163,17 +11171,17 @@ MonoBehaviour:
   m_SamplingFilter: 0
   m_SamplingIntensity: 0.5
   m_TransitionFilter: 4
-  m_TransitionRate: 0.5
+  m_TransitionRate: 0
   m_TransitionReverse: 0
   m_TransitionTex: {fileID: 2800000, guid: 944c3fa29663042a1bdc35546c2eda58, type: 3}
   m_TransitionTexScale: {x: 1, y: 1}
   m_TransitionTexOffset: {x: 0, y: 0}
   m_TransitionRotation: 135
   m_TransitionKeepAspectRatio: 1
-  m_TransitionWidth: 0.207
-  m_TransitionSoftness: 0.5
-  m_TransitionColorFilter: 5
-  m_TransitionColor: {r: 0, g: 1, b: 1, a: 1}
+  m_TransitionWidth: 0.189
+  m_TransitionSoftness: 0.381
+  m_TransitionColorFilter: 3
+  m_TransitionColor: {r: 1, g: 1, b: 1, a: 1}
   m_TargetMode: 0
   m_TargetColor: {r: 1, g: 1, b: 1, a: 1}
   m_TargetRange: 1

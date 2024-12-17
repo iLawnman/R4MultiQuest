@@ -49,10 +49,14 @@ public class GameObjectsFactory
         {
             if (quest.AnswerList.Contains(a.Answer_ID))
             {
+                string _mTxt = a.MainText;
+                if (string.IsNullOrWhiteSpace(a.MainText))
+                    _mTxt = quest.Question;
+                
                 BasePrefabTexts txts = new BasePrefabTexts
                 {
                     _answer_ID = a.Answer_ID,
-                    _mainTxt = a.MainText,
+                    _mainTxt = _mTxt,
                     _title = a.TitleText,
                     _helpUp = a.HelpUpText,
                     _helpDown = a.HelpDownText
@@ -60,7 +64,8 @@ public class GameObjectsFactory
 
                 BasePrefabImages imgs = new BasePrefabImages()
                 {
-                    _answerImg = container.ApplicationData.Sprites.FirstOrDefault(x => x.name == a.AnswerPicture)
+                    //_answerImg = container.ApplicationData.Sprites.FirstOrDefault(x => x.name == a.AnswerPicture)
+                    _answerImg = CacheService.GetCachedImage(a.AnswerPicture + ".png")
                 };
                 BasePrefabPrefabs prfbs = new BasePrefabPrefabs()
                 {
@@ -123,11 +128,12 @@ public class GameObjectsFactory
         q.Reaction = quest.RightReaction;
         q.ReactionSign = quest.RightReactionSign;
 
-        if (q.artefactPref != string.Empty)
+        if (string.IsNullOrWhiteSpace(q.artefactPref))
             BuildAdditionalPrefab(q.artefactPref, arTarget.transform);
-        q.Timer = int.Parse(quest.Timer);
+        if (!string.IsNullOrWhiteSpace(quest.Timer))
+            q.Timer = int.Parse(quest.Timer);
     }
-    
+
     public void BuildLocations(QuestData _quest, GameObject arTarget, string referenceImageName)
     {
         referenceImageName = referenceImageName.Substring(1);
@@ -221,7 +227,7 @@ public class GameObjectsFactory
             FillAnswers(quest, arTarget);
         }
 
-        if (prefab.Contains("ArtPrefab"))
+        if (prefab.Contains("A") || prefab.Contains("a"))
         {
             questView.OnNextButton();
         }

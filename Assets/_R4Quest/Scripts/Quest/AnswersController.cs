@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 [Serializable]
@@ -88,18 +89,25 @@ public class AnswersController : MonoBehaviour
             NextStepWrong();
     }
 
-    private void NextStepWrong()
+    async UniTask NextStepWrong()
     {
         Debug.Log("next Step Wrong");
         var currentArtefact = GetComponent<iQuestTask>();
+
+        FXManager.PlayFx(gameObject, new HideRendererEffect(), 3).Forget();
+        await UniTask.Delay(3000);
+
         GameActions.OnQuestComplete.Invoke(currentArtefact.name, false);
         Destroy(gameObject, 3);
     }
 
-    void NextStepRight()
+    async UniTask NextStepRight()
     {
         Debug.Log("next Step Right");
         var currentArtefact = GetComponent<iQuestTask>();
+
+        FXManager.PlayFx(gameObject, new HideRendererEffect(), 3).Forget();
+        await UniTask.Delay(3000);
         GameActions.OnQuestComplete.Invoke(currentArtefact.name, true);
         Destroy(gameObject, 3);
     }
@@ -108,17 +116,14 @@ public class AnswersController : MonoBehaviour
     {
         Debug.Log("next Step");
         var currentArtefact = GetComponent<iQuestArtefact>();
+        OnCompleteAsync(currentArtefact);
+    }
 
-        if (!currentArtefact.noArtefact)
-        {
-            GameActions.OnQuestComplete.Invoke(currentArtefact.name, true);
-            Destroy(gameObject, 3f);
-        }
-        else
-        {
-            Debug.Log("no artefact");
-            GameActions.OnQuestComplete.Invoke(currentArtefact.name, true);
-            Destroy(gameObject, 3f);
-        }
+    async UniTask OnCompleteAsync(iQuestArtefact currentArtefact)
+    {
+        FXManager.PlayFx(gameObject, new HideRendererEffect(), 3).Forget();
+        await UniTask.Delay(3000);
+        GameActions.OnQuestComplete.Invoke(currentArtefact.name, true);
+        Destroy(gameObject, 3f);
     }
 }

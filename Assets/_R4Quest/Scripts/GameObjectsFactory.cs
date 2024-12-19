@@ -18,10 +18,14 @@ public class GameObjectsFactory
         container = _container;
     }
 
-    public void CreateARTarget(QuestData quest, string trackeImg, Transform transform)
+    public GameObject CreateARTarget(QuestData quest, string trackeImg, Transform transform)
     {
         Debug.Log("create ar target for " + trackeImg + " quest " + quest.QuestID);
-        GameObject prefab = container.ApplicationData.Prefabs.FirstOrDefault(x => x.name.Contains("BasePrefab"));
+        GameObject prefab = null;
+        if(quest.BasePrefab =="Art")
+            prefab = container.ApplicationData.Prefabs.FirstOrDefault(x => x.name == "Art");
+        else
+            prefab = container.ApplicationData.Prefabs.FirstOrDefault(x => x.name.Contains("Base"));
 
         //var arTarget = Object.Instantiate(prefab);
         var arTarget = resolver.Instantiate(prefab, transform);
@@ -40,6 +44,8 @@ public class GameObjectsFactory
             BuildTask(quest, arTarget);
         else
             BuildArtefact(quest, arTarget);
+
+        return arTarget;
     }
     private List<AnswerData> BuildAnswers(QuestData quest)
     {
@@ -132,6 +138,9 @@ public class GameObjectsFactory
             BuildAdditionalPrefab(q.artefactPref, arTarget.transform);
         if (!string.IsNullOrWhiteSpace(quest.Timer))
             q.Timer = int.Parse(quest.Timer);
+        
+        GameObject artprefab = container.ApplicationData.Prefabs.FirstOrDefault(x => x.name.Contains(quest.QuestID));
+        resolver.Instantiate(artprefab, arTarget.transform);
     }
 
     public void BuildLocations(QuestData _quest, GameObject arTarget, string referenceImageName)

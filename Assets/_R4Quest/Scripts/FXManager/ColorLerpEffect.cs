@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 public class ColorLerpEffect : IEffect
@@ -16,7 +17,7 @@ public class ColorLerpEffect : IEffect
         this.duration = duration;
     }
 
-    public async Task PlayAsync(GameObject target, float duration1)
+    public async UniTask PlayAsync(GameObject target, float duration1)
     {
         float elapsedTime = 0f;
 

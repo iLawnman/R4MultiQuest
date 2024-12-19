@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.XR.ARFoundation;
@@ -20,7 +19,7 @@ public class GameflowController : MonoBehaviour
 
         ARSceneActions.OnARTrackedImage += OnARTrackedImage;
 
-        GameActions.CallQuestStart += CallQuestStart;
+        GameActions.CallQuestStart += StartARQuest;
         GameActions.OnQuestStart += OnQuestStart;
         GameActions.OnQuestComplete += OnQuestComplete;
 
@@ -49,17 +48,20 @@ public class GameflowController : MonoBehaviour
             .FirstOrDefault(x => x.RecognitionImage == imgTrack);
 
         UIActions.OnShowScenFX?.Invoke(true, 2);
-        UIActions.OnQuestStart?.Invoke(q, imgTrack);
         CreateAR(q, imgTrack, position).Forget();
     }
 
     async UniTask CreateAR(QuestData q, string imgTrack, Transform position)
     {
         await UniTask.Delay(2000);
-        gameObjectsFactory.CreateARTarget(q, imgTrack, position);
+        GameObject arTarget = gameObjectsFactory.CreateARTarget(q, imgTrack, position);
+        
+        FXManager.PlayFx(arTarget, new UnhideRendererEffect(), 3).Forget();
+        await UniTask.Delay(3000);
+        UIActions.OnQuestStart?.Invoke(q, imgTrack);
     }
 
-    void CallQuestStart()
+    void StartARQuest()
     {
         Debug.Log("gamecontroller CallQuestStart with lua modidifcator");
         _luaScriptService.ExecuteAction("CallQuestStart.lua", "start", "str");
@@ -119,7 +121,7 @@ public class GameflowController : MonoBehaviour
         if (container.ApplicationSettings.WaitConcreteNextQuest != string.Empty)
         {
             ARSceneActions.OnWaitRecognitionImage?.Invoke(nextQuest);
-            UIActions.OnQuestPanel.Invoke("ПРОДОЛЖАЙТЕ\nИЩИТЕ ЗНАК КАК НА КАРТИНКЕ", nextQuest.RecognitionImage);
+            UIActions.OnQuestPanel.Invoke("ПРОДОЛЖАЙТЕ\n\nИЩИТЕ ЗНАК КАК НА КАРТИНКЕ", nextQuest.RecognitionImage);
         }
     }
 

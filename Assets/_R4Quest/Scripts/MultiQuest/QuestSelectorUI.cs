@@ -15,6 +15,7 @@ public class QuestSelectorUI : MonoBehaviour, IUISkin
     [SerializeField] private GameObject buttonPrefab;
     [SerializeField] private BootstrapUI bootstrap;
     [SerializeField] private GameObject splashScreen;
+    [SerializeField] private GameObject selectorMenu;
     private bool menuSelect;
     private bool menuDone;
 
@@ -22,6 +23,8 @@ public class QuestSelectorUI : MonoBehaviour, IUISkin
     {
         bootstrap = FindObjectOfType<BootstrapUI>(includeInactive: true);
         closeButton.onClick.AddListener(MakeMenu);
+
+        selectorMenu.SetActive(false);
 
         CheckMultiQuestTable();
     }
@@ -80,6 +83,7 @@ public class QuestSelectorUI : MonoBehaviour, IUISkin
         menuDone = true;
         
         splashScreen.SetActive(false);
+        selectorMenu.SetActive(true);
     }
 
     private void AddApplication(string appString)

@@ -10,13 +10,13 @@ public class GameflowController : MonoBehaviour
     [Inject] private LuaScriptService _luaScriptService;
     [Inject] private GameObjectsFactory gameObjectsFactory;
     [Inject] private ConfigDataContainer container;
+    [Inject] private AudioService _audioService;
 
-    public async void Start()
+    public void Start()
     {
-        await CheckPlayerPrefsSaved();
+        _audioService.PlayLoop2D("seashore.mp3").Forget();
+        //await CheckPlayerPrefsSaved();
         
-        Application.runInBackground = false;
-
         ARSceneActions.OnARTrackedImage += OnARTrackedImage;
 
         GameActions.CallQuestStart += StartARQuest;
@@ -57,13 +57,13 @@ public class GameflowController : MonoBehaviour
         GameObject arTarget = gameObjectsFactory.CreateARTarget(q, imgTrack, position);
         
         FXManager.PlayFx(arTarget, new UnhideRendererEffect(), 3).Forget();
-        await UniTask.Delay(3000);
+        await UniTask.Delay(2000);
         UIActions.OnQuestStart?.Invoke(q, imgTrack);
     }
 
     void StartARQuest()
     {
-        Debug.Log("gamecontroller CallQuestStart with lua modidifcator");
+        Debug.Log("gameflowcontroller CallQuestStart with lua modificator");
         _luaScriptService.ExecuteAction("CallQuestStart.lua", "start", "str");
         ARSceneActions.OnARSession?.Invoke();
         ARSceneActions.OnReadyForTracking?.Invoke(true);
@@ -83,13 +83,9 @@ public class GameflowController : MonoBehaviour
     private void AddQuestCounter()
     {
         if(PlayerPrefs.HasKey("GoalsCounter") && PlayerPrefs.GetInt("GoalsCounter") >= 0)
-        {
             PlayerPrefs.SetInt("GoalsCounter", PlayerPrefs.GetInt("GoalsCounter") + 1);
-        }
         else
-        {
             PlayerPrefs.SetInt("GoalsCounter", 0);
-        }
     }
 
     void OnQuestComplete(string questId, bool state)
@@ -106,12 +102,12 @@ public class GameflowController : MonoBehaviour
         if (state)
         {
             nextQuest = container.ApplicationData.Quests.FirstOrDefault(x => x.QuestID == q.RightWayQuest);
-            UIActions.OnQuestPanel.Invoke(q.RightReaction, q.SignImage);
+            UIActions.OnQuestPanel.Invoke(q.RightReaction, nextQuest.RecognitionImage);
         }
         else
         {
             nextQuest = container.ApplicationData.Quests.FirstOrDefault(x => x.QuestID == q.WrongWayQuest);
-            UIActions.OnQuestPanel.Invoke(q.WrongReaction, q.SignImage);
+            UIActions.OnQuestPanel.Invoke(q.WrongReaction, nextQuest.RecognitionImage);
         }
 
         container.ApplicationData.CurrentQuest = nextQuest.QuestID;
@@ -121,7 +117,7 @@ public class GameflowController : MonoBehaviour
         if (container.ApplicationSettings.WaitConcreteNextQuest != string.Empty)
         {
             ARSceneActions.OnWaitRecognitionImage?.Invoke(nextQuest);
-            UIActions.OnQuestPanel.Invoke("ПРОДОЛЖАЙТЕ\n\nИЩИТЕ ЗНАК КАК НА КАРТИНКЕ", nextQuest.RecognitionImage);
+            //UIActions.OnQuestPanel.Invoke("ПРОДОЛЖАЙТЕ\n\nИЩИТЕ ЗНАК КАК НА КАРТИНКЕ", nextQuest.RecognitionImage);
         }
     }
 

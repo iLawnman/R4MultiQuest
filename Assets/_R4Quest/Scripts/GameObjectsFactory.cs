@@ -32,6 +32,7 @@ public class GameObjectsFactory
         arTarget.transform.localPosition = Vector3.zero;
         arTarget.transform.localRotation = Quaternion.identity;
         arTarget.AddComponent<ARAnchor>();
+        arTarget.transform.SetParent(null);
         arTarget.name = quest.QuestID;
         resolver.InjectGameObject(arTarget);
         

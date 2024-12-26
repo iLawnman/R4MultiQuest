@@ -98,11 +98,13 @@ public class CacheService : IStartable
 
     public static byte[] LoadCachedObject(string name)
     {
+        UpdateCache();
         return cachedObjects[name];
     }
 
     public static Dictionary<string, byte[]> LoadCachedObjects(string nameMask)
     {
+        Debug.Log("ask from cache " + nameMask);
         var _objs = cachedObjects.Where(x => x.Key.Contains(nameMask)).ToList();
         if (_objs.Count > 0)
         {

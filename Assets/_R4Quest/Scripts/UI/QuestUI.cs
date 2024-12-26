@@ -52,7 +52,7 @@ public class QuestUI : MonoBehaviour, IUISkin
     void OnQuestPanelCurrent()
     {
         string currentQuest = container.ApplicationData.CurrentQuest;
-        string txt = "ПРОДОЛЖАЙТЕ ПРОГУЛКУ\nИЩИТЕ ЗНАК КАК НА КАРТИНКЕ";//container.ApplicationData.Quests.FirstOrDefault(x => x.QuestID == currentQuest).Question;
+        string txt = container.ApplicationData.Quests.FirstOrDefault(x => x.QuestID == currentQuest).Question;
         string imgName = container.ApplicationData.Quests.FirstOrDefault(x => x.QuestID == currentQuest).RecognitionImage;
         
         OnQuestPanel(txt, imgName);

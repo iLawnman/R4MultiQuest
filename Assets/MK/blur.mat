@@ -21,7 +21,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: blur
-  m_Shader: {fileID: 4800000, guid: a7b13085d76ad4a579b8cd4b744827a9, type: 3}
+  m_Shader: {fileID: 4800000, guid: 04e3b2f5a00e44e33ab1cb0b468e6d66, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -82,7 +82,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: b6f2d5973eca94a78ab552292cd9499f, type: 3}
+        m_Texture: {fileID: 8400000, guid: 5e1acd24c7c864cdbab47fbdcb6d9266, type: 2}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Mask:
@@ -145,7 +145,7 @@ Material:
     - _Blend: 0
     - _BlendModePreserveSpecular: 1
     - _BlendOp: 0
-    - _BlurSize: 5.43
+    - _BlurSize: 0
     - _BlurStrength: 0.47
     - _BumpAmt: 10
     - _BumpScale: 1

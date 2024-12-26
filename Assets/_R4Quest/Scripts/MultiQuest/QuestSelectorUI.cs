@@ -15,6 +15,7 @@ public class QuestSelectorUI : MonoBehaviour, IUISkin
     [SerializeField] private GameObject buttonPrefab;
     [SerializeField] private BootstrapUI bootstrap;
     [SerializeField] private GameObject splashScreen;
+    [SerializeField] private GameObject UIRoot;
     [SerializeField] private GameObject selectorMenu;
     private bool menuSelect;
     private bool menuDone;
@@ -83,6 +84,7 @@ public class QuestSelectorUI : MonoBehaviour, IUISkin
         menuDone = true;
         
         splashScreen.SetActive(false);
+        UIRoot.SetActive(false);
         selectorMenu.SetActive(true);
     }
 

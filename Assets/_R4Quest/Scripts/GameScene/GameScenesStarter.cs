@@ -17,20 +17,26 @@ public class GameScenesStarter : IStartable
     {
         _container = container;
     }
-    public async void Start()
+
+    public void Start()
+    {
+        StartAsync().Forget();
+    }
+
+    async UniTask StartAsync()
     {
         try
         {
             Debug.Log("start gamescene with addressable setting " + _container.ApplicationSettings.AddressableKey);
-        
+
             await Addressables.DownloadDependenciesAsync(_container.ApplicationSettings.AddressableKey + "ReferenceImageLibrary", false);
             await Addressables.DownloadDependenciesAsync("ARScene", false);
             await Addressables.DownloadDependenciesAsync("UIScene", false);
             Debug.Log("loadeded dependences ");
 
-            await Addressables.LoadSceneAsync("ARScene", LoadSceneMode.Single);
-            await Addressables.LoadSceneAsync("UIScene", LoadSceneMode.Additive);
-            
+            await SceneManager.LoadSceneAsync("ARScene", LoadSceneMode.Single);
+            await SceneManager.LoadSceneAsync("UIScene", LoadSceneMode.Additive);
+
             SceneManager.SetActiveScene(SceneManager.GetSceneByName("ARScene"));
         }
         catch (Exception e)

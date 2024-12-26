@@ -8,19 +8,20 @@ public class ScreenShotShare : MonoBehaviour
 {
     [SerializeField] private Button shareButton;
     [SerializeField] string Subject, ShareMessage;
-    [SerializeField] string ScreenshotName = "R4QuestScreenshot.png";
+    [SerializeField] string ScreenshotName;
     [SerializeField] private AudioClip _camShot;
     [Inject] private AudioService audioService;
 
-    private void Awake()
+    private void Start()
     {
         shareButton.onClick.AddListener(Share);
+        ScreenshotName = "R4QuestScreenshot." +Application.version;
     }
 
-    public void Share()
+    private void Share()
     {
         StartCoroutine(TakeSSAndShare());
-        audioService.PlayOneShot(_camShot.name);
+        //audioService.PlayOneShot(_camShot.name);
     }
     
     private IEnumerator TakeSSAndShare()

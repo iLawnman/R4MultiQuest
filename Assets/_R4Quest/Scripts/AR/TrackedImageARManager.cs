@@ -23,8 +23,6 @@ public class TrackedImageARManager : MonoBehaviour
         
         aRTrackedImageManager = FindFirstObjectByType<ARTrackedImageManager>(FindObjectsInactive.Include);
         aRTrackedImageManager.trackedImagesChanged += OnTrackedImagesChanged;
-        
-       
     }
 
     private void WaitRecognitionImage(QuestData questData)
@@ -42,7 +40,10 @@ public class TrackedImageARManager : MonoBehaviour
 
     private void OnReadyForTracking(bool state)
     {
-        Debug.Log("tracking ready " + state);
+        Debug.Log("tracking ready " + state + " with arsession " + ARSession.state);
+        if(ARSession.state != ARSessionState.Ready)
+            Debug.Log("arsession " + ARSession.notTrackingReason);
+
         readyForTracking = state;
     }
 

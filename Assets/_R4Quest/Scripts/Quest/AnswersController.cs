@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
@@ -11,6 +12,7 @@ public class AnswerData
     public BasePrefabImages imgs;
     public BasePrefabPrefabs prefabs;
     public BasePrefabDecor decor;
+    public string Sound;
 }
 
 public class AnswersController : MonoBehaviour
@@ -34,6 +36,15 @@ public class AnswersController : MonoBehaviour
 
         GetComponent<QuestBasePrefabView>().FillAnswer(answers[currentAnswer]);
         CheckAnswerOKbutton();
+
+        var sounds = answers[currentAnswer].Sound.Split(',')
+            .Select(s => s.Trim())
+            .ToArray();
+        foreach (var se in sounds.ToArray())
+        {
+            Debug.Log("answer show sound " + se);  
+        } 
+        //BootstrapActions.PlaySounds(sounds);
     }
 
     public void ShowPreviewsAnswer()
@@ -94,8 +105,8 @@ public class AnswersController : MonoBehaviour
         Debug.Log("next Step Wrong");
         var currentArtefact = GetComponent<iQuestTask>();
 
-        FXManager.PlayFx(gameObject, new HideRendererEffect(), 3).Forget();
-        await UniTask.Delay(3000);
+        await FXManager.PlayFx(gameObject, new HideRendererEffect(), 3);
+        //await UniTask.Delay(3000);
 
         GameActions.OnQuestComplete.Invoke(currentArtefact.name, false);
         Destroy(gameObject, 3);
@@ -106,8 +117,9 @@ public class AnswersController : MonoBehaviour
         Debug.Log("next Step Right");
         var currentArtefact = GetComponent<iQuestTask>();
 
-        FXManager.PlayFx(gameObject, new HideRendererEffect(), 3).Forget();
-        await UniTask.Delay(3000);
+        await FXManager.PlayFx(gameObject, new HideRendererEffect(), 3);
+        //await UniTask.Delay(3000);
+        
         GameActions.OnQuestComplete.Invoke(currentArtefact.name, true);
         Destroy(gameObject, 3);
     }

@@ -59,6 +59,9 @@ public class GameflowController : MonoBehaviour
         FXManager.PlayFx(arTarget, new UnhideRendererEffect(), 3).Forget();
         await UniTask.Delay(2000);
         UIActions.OnQuestStart?.Invoke(q, imgTrack);
+
+        Debug.Log("quest start sound " + q.Sound);
+        //_audioService.PlayOneShot2D("queststart.mp3").Forget();
     }
 
     void StartARQuest()

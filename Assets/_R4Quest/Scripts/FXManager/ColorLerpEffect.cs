@@ -17,7 +17,7 @@ public class ColorLerpEffect : IEffect
         this.duration = duration;
     }
 
-    public async UniTask PlayAsync(GameObject target, float duration1)
+    public async Task<UniTask> PlayAsync(GameObject target, float duration1)
     {
         float elapsedTime = 0f;
 
@@ -30,6 +30,7 @@ public class ColorLerpEffect : IEffect
         }
 
         spriteRenderer.color = targetColor; // Устанавливаем окончательный цвет
+        return UniTask.CompletedTask;
     }
 
     public void StopFX()

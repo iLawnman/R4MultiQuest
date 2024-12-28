@@ -93,6 +93,7 @@ public class GameObjectsFactory
                 answerData.imgs = imgs;
                 answerData.prefabs = prfbs;
                 answerData.decor = decor;
+                answerData.Sound = a.Sound;
                 returnData.Add(answerData);
             }
         }

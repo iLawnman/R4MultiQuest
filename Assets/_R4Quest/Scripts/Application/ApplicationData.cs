@@ -78,6 +78,7 @@ public class AnswersData
     public string RightEmptyImg;
     public string AdditionalPref;
     public string TextDecor;
+    public string Sound;
 }
 [Serializable]
 public class QuestData

@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using TMPro;
@@ -7,7 +8,7 @@ using UnityEngine.UI;
 
 public class UnhideRendererEffect : IEffect
 {
-    public async UniTask PlayAsync(GameObject target, float duration)
+    public async Task<UniTask> PlayAsync(GameObject target, float duration)
     {
         foreach (SpriteRenderer spriteRenderer in target.GetComponentsInChildren<SpriteRenderer>())
         {
@@ -24,10 +25,12 @@ public class UnhideRendererEffect : IEffect
             tmpText.DOFade(0, 0); //.onComplete = () => spriteRenderer.gameObject.SetActive(false);
         }
 
-        UnHide(target, duration);
+        await UnHide(target, duration);
+        
+        return UniTask.CompletedTask;
     }
 
-    UniTask UnHide(GameObject target, float duration)
+    async Task<UniTask> UnHide(GameObject target, float duration)
     {
         foreach (SpriteRenderer spriteRenderer in target.GetComponentsInChildren<SpriteRenderer>())
         {
@@ -44,7 +47,7 @@ public class UnhideRendererEffect : IEffect
             tmpText.DOFade(1, duration); //.onComplete = () => spriteRenderer.gameObject.SetActive(false);
         }
 
-        return default;
+        return UniTask.CompletedTask;
     }
 
     public void StopFX()

@@ -33,7 +33,7 @@ public class Bootstrap : MonoBehaviour
 
     private void OnApplicationFocus(bool hasFocus)
     {
-        Debug.Log("application focus " + hasFocus);
+        //Debug.Log("application focus " + hasFocus);
     }
 
     private void OnApplicationPause(bool pauseStatus)

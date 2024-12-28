@@ -8,11 +8,57 @@ using DG.Tweening;
 using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.Networking;
+using VContainer.Unity;
 
 public class AudioService
 {
     private string cacheDirectory = Application.persistentDataPath + "/Cache/";
     private AudioSource playingLoop;
+
+    public AudioService()
+    {
+        AudioActions.PlayLoop2D += OnPlayLoop2D;
+        AudioActions.PlayOneShot2D += OnPlayOneShot2D;
+        AudioActions.PlayLoop3D += OnPlayLoop3D;
+        AudioActions.PlayOneShot3D += OnPlayOneShot3D;
+        AudioActions.PlaySounds += OnPlaySounds;
+    }
+
+    private void OnPlaySounds(string[] sounds)
+    {
+        foreach (var sound in sounds)
+        {
+            switch (sound)
+            {
+                case string s when s.Contains("loop"):
+                    PlayLoop2D("loop").Forget();
+                    break;
+                case string s when !s.Contains("loop"):
+                    PlayOneShot2D("shot").Forget();
+                    break;
+            }
+        }
+    }
+
+    private void OnPlayOneShot3D(string nameClip, Transform transform)
+    {
+        PlayOneShot3D(nameClip, transform).Forget();
+    }
+
+    private void OnPlayLoop3D(string nameClip, Transform transform)
+    {
+        PlayLoop3D(nameClip, transform).Forget();
+    }
+
+    private void OnPlayOneShot2D(string nameClip)
+    {
+        PlayOneShot2D(nameClip).Forget();
+    }
+
+    private void OnPlayLoop2D(string nameClip)
+    {
+        PlayLoop2D(nameClip).Forget();
+    }
 
     private async UniTask<AudioClip> GetClip(string audioName)
     {
@@ -78,9 +124,13 @@ public class AudioService
         aSource.clip = clip;
         aSource.loop = true;
         aSource.volume = 0;
-        
-        if(playingLoop != null)
-            playingLoop.DOFade(0, 3).OnComplete(() => AudioSourcesPool.Return(playingLoop));
+
+        if (playingLoop != null)
+            playingLoop.DOFade(0, 3).OnComplete(() =>
+            {
+                playingLoop.Stop();
+                AudioSourcesPool.Return(playingLoop);
+            });
         aSource.Play();
         aSource.DOFade(1, 3).OnComplete(() => playingLoop = aSource);
     }

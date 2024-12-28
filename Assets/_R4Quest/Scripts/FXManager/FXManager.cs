@@ -1,10 +1,11 @@
+using System;
 using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 public interface IEffect
 {
-    UniTask PlayAsync(GameObject target, float duration);
+    Task<UniTask> PlayAsync(GameObject target, float duration);
     void StopFX();
 }
 

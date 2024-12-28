@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1302544829932973160}
-  - component: {fileID: 5217248219795170867}
+  - component: {fileID: 5447105219449524973}
   m_Layer: 0
   m_Name: Art1
   m_TagString: Untagged
@@ -34,28 +34,28 @@ Transform:
   - {fileID: 9054546445038411679}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!95 &5217248219795170867
-Animator:
-  serializedVersion: 7
+--- !u!114 &5447105219449524973
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2811103891017516349}
   m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: c4ffc9c1358ca4eeb866f578842d94cd, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 1
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_AnimatePhysics: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e85df03f985674948b77730717e3b606, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  effect:
+    rid: 8545492934909231220
+  references:
+    version: 2
+    RefIds:
+    - rid: 8545492934909231220
+      type: {class: ScaleUnhideFX, ns: , asm: R4Quest}
+      data:
+        _duration: 3
+        endScale: 2
 --- !u!1001 &1545470524468555358
 PrefabInstance:
   m_ObjectHideFlags: 0

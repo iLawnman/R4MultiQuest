@@ -38,6 +38,7 @@ public class InfoPanelsController : MonoBehaviour
     private float toPositionNew;
     private bool slideInprogress;
     [SerializeField] SlideController slideController;
+    [Inject] private ICacheService _cacheService;
 
     private void Start()
     {
@@ -87,8 +88,8 @@ public class InfoPanelsController : MonoBehaviour
                 Title = x.Title,
                 text = x.Text,
                 nextScreenName = x.NextScreenName,
-                background = CacheService.GetCachedImage(x.Background + ".png"),
-                image = CacheService.GetCachedImage(x.Image + ".png"),
+                background = _cacheService.GetCachedImage(x.Background + ".png"),
+                image = _cacheService.GetCachedImage(x.Image + ".png"),
             };
             introScreens.Add(scr);
         });
@@ -100,8 +101,8 @@ public class InfoPanelsController : MonoBehaviour
                 Title = x.Title,
                 text = x.Text,
                 nextScreenName = x.NextScreenName,
-                background = CacheService.GetCachedImage(x.Background + ".png"),
-                image = CacheService.GetCachedImage(x.Image + ".png"),
+                background = _cacheService.GetCachedImage(x.Background + ".png"),
+                image = _cacheService.GetCachedImage(x.Image + ".png"),
             };
             outroScreens.Add(scr);
         });

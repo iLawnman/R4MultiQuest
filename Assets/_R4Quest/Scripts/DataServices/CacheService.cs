@@ -7,7 +7,7 @@ using Cysharp.Threading.Tasks;
 using UnityEngine;
 using VContainer.Unity;
 
-public class CacheService : IStartable
+public class R4questCacheService : ICacheService
 {
     private static string cacheDirectory = Application.persistentDataPath + "/Cache/";
     private static Dictionary<string, byte[]> cachedObjects = new Dictionary<string, byte[]>();
@@ -59,7 +59,7 @@ public class CacheService : IStartable
         return Path.Combine(cacheDirectory, fileName);
     }
 
-    public static void UpdateCache()
+    public void UpdateCache()
     {
         var cachedObjectNames = Directory.GetFiles(cacheDirectory).ToList();
         cachedObjectNames.ForEach(x =>
@@ -74,7 +74,7 @@ public class CacheService : IStartable
         Debug.Log("updated cache count " + cachedObjects.Count);
     }
 
-    public static Sprite GetCachedImage(string assetName)
+    public Sprite GetCachedImage(string assetName)
     {
         if (string.IsNullOrWhiteSpace(assetName) || assetName == ".png")
             return null;
@@ -96,13 +96,13 @@ public class CacheService : IStartable
         return null;
     }
 
-    public static byte[] LoadCachedObject(string name)
+    public byte[] LoadCachedObject(string name)
     {
         UpdateCache();
         return cachedObjects[name];
     }
 
-    public static Dictionary<string, byte[]> LoadCachedObjects(string nameMask)
+    public Dictionary<string, byte[]> LoadCachedObjects(string nameMask)
     {
         Debug.Log("ask from cache " + nameMask);
         var _objs = cachedObjects.Where(x => x.Key.Contains(nameMask)).ToList();

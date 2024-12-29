@@ -4,11 +4,11 @@ using VContainer.Unity;
 public class UIScenesStarter : IStartable
 {
     private readonly ConfigDataContainer _dataContainer;
-    private readonly CacheService _cacheService;
+    private readonly ICacheService _cacheService;
     private readonly LuaScriptService _luaScriptService;
 
     public UIScenesStarter(ConfigDataContainer dataContainer, 
-        CacheService cacheService, 
+        ICacheService cacheService, 
         LuaScriptService luaScriptService)
     {
         _dataContainer = dataContainer;

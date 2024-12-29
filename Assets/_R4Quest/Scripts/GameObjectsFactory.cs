@@ -11,11 +11,15 @@ public class GameObjectsFactory
 {
     private ConfigDataContainer container;
     private readonly IObjectResolver resolver;
+    private ICacheService _cacheService;
 
-    public GameObjectsFactory(IObjectResolver _resolver, ConfigDataContainer _container)
+    public GameObjectsFactory(IObjectResolver _resolver, 
+        ConfigDataContainer _container,
+        ICacheService cacheService)
     {
         resolver = _resolver;
         container = _container;
+        _cacheService = cacheService;
     }
 
     public GameObject CreateARTarget(QuestData quest, string trackeImg, Transform transform)
@@ -72,7 +76,7 @@ public class GameObjectsFactory
                 BasePrefabImages imgs = new BasePrefabImages()
                 {
                     //_answerImg = container.ApplicationData.Sprites.FirstOrDefault(x => x.name == a.AnswerPicture)
-                    _answerImg = CacheService.GetCachedImage(a.AnswerPicture + ".png")
+                    _answerImg = _cacheService.GetCachedImage(a.AnswerPicture + ".png")
                 };
                 BasePrefabPrefabs prfbs = new BasePrefabPrefabs()
                 {

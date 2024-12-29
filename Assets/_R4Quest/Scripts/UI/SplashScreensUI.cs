@@ -30,6 +30,7 @@ public class SplashScreensUI : MonoBehaviour, IUISkin
     [SerializeField] private Button yesButton;
     [SerializeField] private Button noButton;
     [Inject] private ConfigDataContainer dataContainer;
+    [Inject] private ICacheService cacheService;
 
     private void Awake()
     {
@@ -41,37 +42,37 @@ public class SplashScreensUI : MonoBehaviour, IUISkin
     {
         dataContainer.ApplicationData.SplashScreens.ForEach(x =>
         {
-            if (CacheService.GetCachedImage(x.AlertPanelBack))
-                alertPanelBack.sprite = CacheService.GetCachedImage(x.AlertPanelBack);
+            if (cacheService.GetCachedImage(x.AlertPanelBack))
+                alertPanelBack.sprite = cacheService.GetCachedImage(x.AlertPanelBack);
             
-            if (CacheService.GetCachedImage(x.Logo))
-                logo.sprite = CacheService.GetCachedImage(x.Logo);
+            if (cacheService.GetCachedImage(x.Logo))
+                logo.sprite = cacheService.GetCachedImage(x.Logo);
 
-            if (CacheService.GetCachedImage(x.okButton))
-                okButton.GetComponent<Image>().sprite = CacheService.GetCachedImage(x.okButton);
+            if (cacheService.GetCachedImage(x.okButton))
+                okButton.GetComponent<Image>().sprite = cacheService.GetCachedImage(x.okButton);
 
-            if (CacheService.GetCachedImage(x.OfferButton))
-                offerButton.GetComponent<Image>().sprite = CacheService.GetCachedImage(x.OfferButton);
+            if (cacheService.GetCachedImage(x.OfferButton))
+                offerButton.GetComponent<Image>().sprite = cacheService.GetCachedImage(x.OfferButton);
 
-            if (CacheService.GetCachedImage(x.SplashPanelBack))
-                splashPanelBack.sprite = CacheService.GetCachedImage(x.SplashPanelBack);
+            if (cacheService.GetCachedImage(x.SplashPanelBack))
+                splashPanelBack.sprite = cacheService.GetCachedImage(x.SplashPanelBack);
 
-            if (CacheService.GetCachedImage(x.CustomLogo))
-                customlogo.sprite = CacheService.GetCachedImage(x.CustomLogo);
+            if (cacheService.GetCachedImage(x.CustomLogo))
+                customlogo.sprite = cacheService.GetCachedImage(x.CustomLogo);
             
-            if (CacheService.GetCachedImage(x.R4QLogo))
-                r4logo.sprite = CacheService.GetCachedImage(x.R4QLogo);
+            if (cacheService.GetCachedImage(x.R4QLogo))
+                r4logo.sprite = cacheService.GetCachedImage(x.R4QLogo);
             
-            if (CacheService.GetCachedImage(x.AskPanelBack))
-                askPanelBack.sprite = CacheService.GetCachedImage(x.AskPanelBack);
+            if (cacheService.GetCachedImage(x.AskPanelBack))
+                askPanelBack.sprite = cacheService.GetCachedImage(x.AskPanelBack);
             if(!string.IsNullOrWhiteSpace(x.AskText))
                 askText.text = x.AskText;
             
-            if (CacheService.GetCachedImage(x.YesButton))
-                yesButton.GetComponent<Image>().sprite = CacheService.GetCachedImage(x.YesButton);
+            if (cacheService.GetCachedImage(x.YesButton))
+                yesButton.GetComponent<Image>().sprite = cacheService.GetCachedImage(x.YesButton);
             
-            if (CacheService.GetCachedImage(x.NoButton))
-                noButton.GetComponent<Image>().sprite = CacheService.GetCachedImage(x.NoButton);
+            if (cacheService.GetCachedImage(x.NoButton))
+                noButton.GetComponent<Image>().sprite = cacheService.GetCachedImage(x.NoButton);
             
             if(!string.IsNullOrWhiteSpace(x.Name1))
                 name1text.text = x.Name1;

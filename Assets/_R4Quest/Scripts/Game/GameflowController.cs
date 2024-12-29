@@ -6,7 +6,7 @@ using VContainer;
 
 public class GameflowController : MonoBehaviour
 {
-    [Inject] private CacheService _cacheService;
+    [Inject] private ICacheService _cacheService;
     [Inject] private LuaScriptService _luaScriptService;
     [Inject] private GameObjectsFactory gameObjectsFactory;
     [Inject] private ConfigDataContainer container;

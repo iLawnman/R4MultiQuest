@@ -290,7 +290,7 @@ public class TEST_Mono : MonoBehaviour
             File.WriteAllBytes(fullFilePath, request.downloadHandler.data);
             Debug.Log($"Файл {fullFilePath} обновлен.");
 
-            CacheService.UpdateCache();
+            //CacheService.UpdateCache();
         }
         catch (Exception e)
         {

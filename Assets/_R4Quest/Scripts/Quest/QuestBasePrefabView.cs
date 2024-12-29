@@ -75,11 +75,14 @@ public class QuestBasePrefabView : MonoBehaviour
     [Header("-- Variant Button")] public Button _variantButton;
 
     private ConfigDataContainer container;
+    private ICacheService cacheService;
 
     [Inject]
-    public void Construct(ConfigDataContainer configDataContainer)
+    public void Construct(ConfigDataContainer configDataContainer,
+        ICacheService _cacheService)
     {
         container = configDataContainer;
+        cacheService = _cacheService;
     }
 
     private void Start()
@@ -91,21 +94,21 @@ public class QuestBasePrefabView : MonoBehaviour
     {
         Debug.Log("apply baseprefab skin " + container.ApplicationData.BasePrefabSkin.Count);
         var skin = container.ApplicationData.BasePrefabSkin[0];
-        _mainBackImg.sprite = CacheService.GetCachedImage(skin?._mainBackImg + ".png");
-        _mainBackImg1.sprite = CacheService.GetCachedImage(skin?._mainBackImg1 + ".png");
-        _mainBackImg2.sprite = CacheService.GetCachedImage(skin?._mainBackImg2 + ".png");
-        _titleBackImg.sprite = CacheService.GetCachedImage(skin?._titleBackImg + ".png");
+        _mainBackImg.sprite = cacheService.GetCachedImage(skin?._mainBackImg + ".png");
+        _mainBackImg1.sprite = cacheService.GetCachedImage(skin?._mainBackImg1 + ".png");
+        _mainBackImg2.sprite = cacheService.GetCachedImage(skin?._mainBackImg2 + ".png");
+        _titleBackImg.sprite = cacheService.GetCachedImage(skin?._titleBackImg + ".png");
         _titleBackEmptyImg.GetComponentsInChildren<Image>().ToList().ToList().ForEach(x =>
-            x.sprite = CacheService.GetCachedImage(skin?._titleBackImgEmpty + ".png"));
-        var decorImg = CacheService.GetCachedImage(skin?._decorImg + ".png");
+            x.sprite = cacheService.GetCachedImage(skin?._titleBackImgEmpty + ".png"));
+        var decorImg = cacheService.GetCachedImage(skin?._decorImg + ".png");
         //_additionalImg.sprite = CacheService.GetCachedImage(skin._additionalImg + ".png");
-        _rightBackImg.sprite = CacheService.GetCachedImage(skin._rightBackImg + ".png");
+        _rightBackImg.sprite = cacheService.GetCachedImage(skin._rightBackImg + ".png");
         _rightEmptyImg.GetComponentInChildren<SpriteRenderer>().sprite =
-            CacheService.GetCachedImage(skin._rightBackImgEmpty + ".png");
-        _leftBackImg.sprite = CacheService.GetCachedImage(skin._leftBackImg + ".png");
+            cacheService.GetCachedImage(skin._rightBackImgEmpty + ".png");
+        _leftBackImg.sprite = cacheService.GetCachedImage(skin._leftBackImg + ".png");
         _leftEmptyImg.GetComponentInChildren<SpriteRenderer>().sprite =
-            CacheService.GetCachedImage(skin._leftBackImgEmpty + ".png");
-        _buttonsBackImg.sprite = CacheService.GetCachedImage(skin._buttonsBackImg + ".png");
+            cacheService.GetCachedImage(skin._leftBackImgEmpty + ".png");
+        _buttonsBackImg.sprite = cacheService.GetCachedImage(skin._buttonsBackImg + ".png");
     }
 
     public void FillAnswer(AnswerData answer)

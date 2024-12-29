@@ -15,6 +15,7 @@ public class QuestUI : MonoBehaviour, IUISkin
     [SerializeField] private GameObject continueButton;
     [Inject] private ConfigDataContainer container;
     private Queue panelsQueue;
+    [Inject] private ICacheService _cacheService;
 
     void Start()
     {
@@ -43,9 +44,9 @@ public class QuestUI : MonoBehaviour, IUISkin
         await UniTask.WaitUntil(() => !questStartPanel.activeSelf);
         questStartPanel.transform.Find("Text").GetComponent<Text>().text = txt;
         
-        if(CacheService.GetCachedImage(imgName + ".png"))
+        if(_cacheService.GetCachedImage(imgName + ".png"))
             questStartPanel.transform.Find("Image").GetComponent<Image>().sprite = 
-                CacheService.GetCachedImage(imgName + ".png");
+                _cacheService.GetCachedImage(imgName + ".png");
         questStartPanel.SetActive(true);
     }
     
@@ -72,9 +73,9 @@ public class QuestUI : MonoBehaviour, IUISkin
         questStartPanel.SetActive(true);
         questStartPanel.transform.Find("Text").GetComponent<Text>().text = quest.Question;
         
-        if(CacheService.GetCachedImage(quest.RecognitionImage + ".png"))
+        if(_cacheService.GetCachedImage(quest.RecognitionImage + ".png"))
             questStartPanel.transform.Find("Image").GetComponent<Image>().sprite = 
-                CacheService.GetCachedImage(quest.RecognitionImage + ".png");
+                _cacheService.GetCachedImage(quest.RecognitionImage + ".png");
     }
 
     public void SetSkin(UISkin uiSkin)
@@ -83,7 +84,7 @@ public class QuestUI : MonoBehaviour, IUISkin
         
         skin = uiSkin as QuestUISkin;
         if(skin.questStartBack)
-            questStartPanel.GetComponent<Image>().sprite = CacheService.GetCachedImage(skin.questStartBack.name);
+            questStartPanel.GetComponent<Image>().sprite = _cacheService.GetCachedImage(skin.questStartBack.name);
         continueButton.GetComponent<Image>().sprite = skin.continueButton;
     }
 }
